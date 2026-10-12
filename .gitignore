@@ -1,0 +1,22 @@
+# --- Gizli bilgiler (asla repoya girmemeli) ---
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+key.properties
+
+# --- IDE ve editör dosyaları ---
+.vs/
+.idea/
+*.user
+.vscode/*
+!.vscode/extensions.json
+
+# --- İşletim sistemi dosyaları ---
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# --- Docker'ın yerel verileri ---
+infra/data/
