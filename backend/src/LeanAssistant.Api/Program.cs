@@ -5,6 +5,8 @@ using LeanAssistant.Infrastructure.Logging;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 using Serilog.Events;
+using LeanAssistant.Api.Validation;
+using LeanAssistant.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +33,8 @@ builder.Services.AddProblemDetails(options =>
     });
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
-builder.Services.AddControllers();
+builder.Services.AddApplication();
+builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>());
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
