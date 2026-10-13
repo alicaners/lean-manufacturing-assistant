@@ -8,15 +8,20 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
-        string connectionString)
+        string databaseConnectionString,
+        string redisConnectionString)
     {
         services.AddSingleton(TimeProvider.System);
         services.AddSingleton<AuditInterceptor>();
 
         services.AddDbContext<AppDbContext>((serviceProvider, options) =>
             options
-                .UseNpgsql(connectionString)
+                .UseNpgsql(databaseConnectionString)
                 .AddInterceptors(serviceProvider.GetRequiredService<AuditInterceptor>()));
+
+        services.AddHealthChecks()
+            .AddDbContextCheck<AppDbContext>(name: "database", tags: ["ready"])
+            .AddRedis(redisConnectionString, name: "redis", tags: ["ready"]);
 
         return services;
     }
