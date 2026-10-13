@@ -7,6 +7,7 @@ using Serilog;
 using Serilog.Events;
 using LeanAssistant.Api.Validation;
 using LeanAssistant.Application;
+using LeanAssistant.Api.Observability;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,7 @@ var redisConnection = builder.Configuration.GetConnectionString("Redis")
     ?? throw new InvalidOperationException("Connection string 'Redis' is not configured.");
 
 builder.Services.AddInfrastructure(databaseConnection, redisConnection);
+builder.Services.AddObservability(builder.Configuration);
 
 builder.Services.AddProblemDetails(options =>
     options.CustomizeProblemDetails = context =>
