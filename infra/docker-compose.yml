@@ -78,6 +78,30 @@ services:
       - "127.0.0.1:4317:4317"     # OTLP gRPC (traces from the API)
       - "127.0.0.1:4318:4318"     # OTLP HTTP
 
+  api:
+    # Runs only with: docker compose --profile api up
+    profiles: ["api"]
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    image: lean-assistant-api:local
+    container_name: lean-api
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__Database: "Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
+      ConnectionStrings__Redis: "redis:6379,password=${REDIS_PASSWORD}"
+      OpenTelemetry__OtlpEndpoint: "http://jaeger:4317"
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      jaeger:
+        condition: service_started
+
 volumes:
   postgres-data:
   redis-data:
