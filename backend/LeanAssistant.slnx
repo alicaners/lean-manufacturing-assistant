@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/LeanAssistant.Api/LeanAssistant.Api.csproj" />
+    <Project Path="src/LeanAssistant.Application/LeanAssistant.Application.csproj" />
+    <Project Path="src/LeanAssistant.Domain/LeanAssistant.Domain.csproj" />
+    <Project Path="src/LeanAssistant.Infrastructure/LeanAssistant.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/LeanAssistant.ArchitectureTests/LeanAssistant.ArchitectureTests.csproj" />
+    <Project Path="tests/LeanAssistant.IntegrationTests/LeanAssistant.IntegrationTests.csproj" />
+    <Project Path="tests/LeanAssistant.UnitTests/LeanAssistant.UnitTests.csproj" />
+  </Folder>
+</Solution>
