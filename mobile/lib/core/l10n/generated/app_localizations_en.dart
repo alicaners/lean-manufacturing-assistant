@@ -48,4 +48,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonGoHome => 'Go to home';
+
+  @override
+  String get errorNetwork =>
+      'Cannot reach the server. Check your internet connection.';
+
+  @override
+  String get errorUnauthorized =>
+      'Your session has expired. Please sign in again.';
+
+  @override
+  String get errorForbidden => 'You do not have permission to do this.';
+
+  @override
+  String get errorNotFound => 'The record could not be found.';
+
+  @override
+  String get errorConflict =>
+      'Someone else changed this record. Please check its latest state.';
+
+  @override
+  String get errorValidation => 'Please check the highlighted fields.';
 }

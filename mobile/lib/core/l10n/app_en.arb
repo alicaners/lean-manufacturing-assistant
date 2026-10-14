@@ -12,5 +12,11 @@
   "loginComingSoon": "The sign-in screen will appear here soon.",
   "notFoundTitle": "Page not found",
   "notFoundMessage": "The page you are looking for does not exist.",
-  "commonGoHome": "Go to home"
+   "commonGoHome": "Go to home",
+  "errorNetwork": "Cannot reach the server. Check your internet connection.",
+  "errorUnauthorized": "Your session has expired. Please sign in again.",
+  "errorForbidden": "You do not have permission to do this.",
+  "errorNotFound": "The record could not be found.",
+  "errorConflict": "Someone else changed this record. Please check its latest state.",
+  "errorValidation": "Please check the highlighted fields."
 }

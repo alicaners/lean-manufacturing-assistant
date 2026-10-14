@@ -48,4 +48,25 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get commonGoHome => 'Ana sayfaya dön';
+
+  @override
+  String get errorNetwork =>
+      'Sunucuya ulaşılamıyor. İnternet bağlantınızı kontrol edin.';
+
+  @override
+  String get errorUnauthorized =>
+      'Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın.';
+
+  @override
+  String get errorForbidden => 'Bu işlem için yetkiniz yok.';
+
+  @override
+  String get errorNotFound => 'Aradığınız kayıt bulunamadı.';
+
+  @override
+  String get errorConflict =>
+      'Bu kayıt başka biri tarafından değiştirildi. Lütfen güncel hâlini kontrol edin.';
+
+  @override
+  String get errorValidation => 'Lütfen işaretli alanları kontrol edin.';
 }

@@ -61,8 +61,38 @@
     "description": "Message shown when the user opens an unknown route."
   },
 
-  "commonGoHome": "Ana sayfaya dön",
+    "commonGoHome": "Ana sayfaya dön",
   "@commonGoHome": {
     "description": "Button label that navigates to the home page."
+  },
+
+  "errorNetwork": "Sunucuya ulaşılamıyor. İnternet bağlantınızı kontrol edin.",
+  "@errorNetwork": {
+    "description": "Shown when the device cannot reach the server."
+  },
+
+  "errorUnauthorized": "Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın.",
+  "@errorUnauthorized": {
+    "description": "Shown on HTTP 401."
+  },
+
+  "errorForbidden": "Bu işlem için yetkiniz yok.",
+  "@errorForbidden": {
+    "description": "Shown on HTTP 403."
+  },
+
+  "errorNotFound": "Aradığınız kayıt bulunamadı.",
+  "@errorNotFound": {
+    "description": "Shown on HTTP 404."
+  },
+
+  "errorConflict": "Bu kayıt başka biri tarafından değiştirildi. Lütfen güncel hâlini kontrol edin.",
+  "@errorConflict": {
+    "description": "Shown on HTTP 409 (optimistic concurrency conflict)."
+  },
+
+  "errorValidation": "Lütfen işaretli alanları kontrol edin.",
+  "@errorValidation": {
+    "description": "Shown on HTTP 400 validation errors."
   }
 }

@@ -175,6 +175,42 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Ana sayfaya dön'**
   String get commonGoHome;
+
+  /// Shown when the device cannot reach the server.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sunucuya ulaşılamıyor. İnternet bağlantınızı kontrol edin.'**
+  String get errorNetwork;
+
+  /// Shown on HTTP 401.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın.'**
+  String get errorUnauthorized;
+
+  /// Shown on HTTP 403.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu işlem için yetkiniz yok.'**
+  String get errorForbidden;
+
+  /// Shown on HTTP 404.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aradığınız kayıt bulunamadı.'**
+  String get errorNotFound;
+
+  /// Shown on HTTP 409 (optimistic concurrency conflict).
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu kayıt başka biri tarafından değiştirildi. Lütfen güncel hâlini kontrol edin.'**
+  String get errorConflict;
+
+  /// Shown on HTTP 400 validation errors.
+  ///
+  /// In tr, this message translates to:
+  /// **'Lütfen işaretli alanları kontrol edin.'**
+  String get errorValidation;
 }
 
 class _AppLocalizationsDelegate
