@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lean_assistant/core/l10n/l10n.dart';
 import 'package:lean_assistant/core/theme/app_theme.dart';
-import 'package:lean_assistant/features/dashboard/presentation/home_page.dart';
 
 /// Root widget of the application.
 class LeanAssistantApp extends StatelessWidget {
-  const LeanAssistantApp({super.key});
+  const LeanAssistantApp({super.key, required this.router});
+
+  final GoRouter router;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       onGenerateTitle: (context) => context.l10n.appTitle,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
@@ -17,7 +20,6 @@ class LeanAssistantApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       // Turkish first: used when the device language is not supported.
       supportedLocales: const [Locale('tr'), Locale('en')],
-      home: const HomePage(),
     );
   }
 }

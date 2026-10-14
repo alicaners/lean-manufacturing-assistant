@@ -139,6 +139,42 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Ekranlar yakında burada olacak.'**
   String get homeEmptyMessage;
+
+  /// Temporary button on the home page that opens the sign-in screen.
+  ///
+  /// In tr, this message translates to:
+  /// **'Giriş ekranını aç'**
+  String get homeGoToLogin;
+
+  /// App bar title of the sign-in screen.
+  ///
+  /// In tr, this message translates to:
+  /// **'Giriş'**
+  String get loginTitle;
+
+  /// Placeholder text until the real sign-in form is built.
+  ///
+  /// In tr, this message translates to:
+  /// **'Giriş ekranı yakında burada olacak.'**
+  String get loginComingSoon;
+
+  /// Title shown when the user opens an unknown route.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sayfa bulunamadı'**
+  String get notFoundTitle;
+
+  /// Message shown when the user opens an unknown route.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aradığınız sayfa mevcut değil.'**
+  String get notFoundMessage;
+
+  /// Button label that navigates to the home page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ana sayfaya dön'**
+  String get commonGoHome;
 }
 
 class _AppLocalizationsDelegate

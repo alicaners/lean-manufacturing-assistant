@@ -31,8 +31,38 @@
     "description": "Shown when a list has no items."
   },
 
-  "homeEmptyMessage": "Ekranlar yakında burada olacak.",
+    "homeEmptyMessage": "Ekranlar yakında burada olacak.",
   "@homeEmptyMessage": {
     "description": "Temporary message on the home page until features are added."
+  },
+
+  "homeGoToLogin": "Giriş ekranını aç",
+  "@homeGoToLogin": {
+    "description": "Temporary button on the home page that opens the sign-in screen."
+  },
+
+  "loginTitle": "Giriş",
+  "@loginTitle": {
+    "description": "App bar title of the sign-in screen."
+  },
+
+  "loginComingSoon": "Giriş ekranı yakında burada olacak.",
+  "@loginComingSoon": {
+    "description": "Placeholder text until the real sign-in form is built."
+  },
+
+  "notFoundTitle": "Sayfa bulunamadı",
+  "@notFoundTitle": {
+    "description": "Title shown when the user opens an unknown route."
+  },
+
+  "notFoundMessage": "Aradığınız sayfa mevcut değil.",
+  "@notFoundMessage": {
+    "description": "Message shown when the user opens an unknown route."
+  },
+
+  "commonGoHome": "Ana sayfaya dön",
+  "@commonGoHome": {
+    "description": "Button label that navigates to the home page."
   }
 }

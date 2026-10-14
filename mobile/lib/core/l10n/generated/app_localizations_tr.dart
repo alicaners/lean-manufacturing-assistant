@@ -30,4 +30,22 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get homeEmptyMessage => 'Ekranlar yakında burada olacak.';
+
+  @override
+  String get homeGoToLogin => 'Giriş ekranını aç';
+
+  @override
+  String get loginTitle => 'Giriş';
+
+  @override
+  String get loginComingSoon => 'Giriş ekranı yakında burada olacak.';
+
+  @override
+  String get notFoundTitle => 'Sayfa bulunamadı';
+
+  @override
+  String get notFoundMessage => 'Aradığınız sayfa mevcut değil.';
+
+  @override
+  String get commonGoHome => 'Ana sayfaya dön';
 }

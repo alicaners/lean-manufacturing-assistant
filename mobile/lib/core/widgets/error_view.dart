@@ -2,13 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:lean_assistant/core/l10n/l10n.dart';
 import 'package:lean_assistant/core/widgets/primary_button.dart';
 
-/// Centered error state with an optional retry action.
+/// Centered error state with an optional action button.
 class ErrorView extends StatelessWidget {
-  const ErrorView({super.key, this.title, this.message, this.onRetry});
+  const ErrorView({
+    super.key,
+    this.title,
+    this.message,
+    this.onRetry,
+    this.actionLabel,
+  });
 
   final String? title;
   final String? message;
   final VoidCallback? onRetry;
+
+  /// Label of the action button. Defaults to "Try again".
+  final String? actionLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +45,10 @@ class ErrorView extends StatelessWidget {
             ),
             if (retry != null) ...[
               const SizedBox(height: 24),
-              PrimaryButton(label: l10n.commonRetry, onPressed: retry),
+              PrimaryButton(
+                label: actionLabel ?? l10n.commonRetry,
+                onPressed: retry,
+              ),
             ],
           ],
         ),

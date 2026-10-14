@@ -30,4 +30,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeEmptyMessage => 'Screens will appear here soon.';
+
+  @override
+  String get homeGoToLogin => 'Open sign-in screen';
+
+  @override
+  String get loginTitle => 'Sign in';
+
+  @override
+  String get loginComingSoon => 'The sign-in screen will appear here soon.';
+
+  @override
+  String get notFoundTitle => 'Page not found';
+
+  @override
+  String get notFoundMessage => 'The page you are looking for does not exist.';
+
+  @override
+  String get commonGoHome => 'Go to home';
 }
