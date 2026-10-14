@@ -6,6 +6,7 @@ analyzer:
     - android/**
     - lib/core/l10n/generated/**
     - lib/**/*.config.dart
+    - lib/firebase_options_*.dart
   language:
     strict-casts: true
     strict-inference: true
