@@ -1,7 +1,14 @@
-/// Environment-specific settings. Values come from the active flavor.
-class AppConfig {
-  const AppConfig({required this.apiBaseUrl});
+/// Which build of the app is running.
+enum AppEnvironment { dev, prod }
 
-  /// Base address of the backend API, e.g. `http://10.0.2.2:5069`.
+/// Environment-specific settings, provided by the flavor's entry point.
+class AppConfig {
+  const AppConfig({required this.environment, required this.apiBaseUrl});
+
+  final AppEnvironment environment;
+
+  /// Base address of the backend API.
   final String apiBaseUrl;
+
+  bool get isProduction => environment == AppEnvironment.prod;
 }

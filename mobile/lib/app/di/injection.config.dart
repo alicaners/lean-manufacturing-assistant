@@ -28,7 +28,6 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final appModule = _$AppModule();
     final networkModule = _$NetworkModule();
-    gh.singleton<_i345.AppConfig>(() => appModule.config);
     gh.lazySingleton<_i583.GoRouter>(() => appModule.router);
     gh.lazySingleton<_i361.Dio>(() => networkModule.dio(gh<_i345.AppConfig>()));
     gh.lazySingleton<_i150.ApiClient>(() => _i150.ApiClient(gh<_i361.Dio>()));

@@ -28,6 +28,25 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
+    
+    buildFeatures {
+        resValues = true
+    }
+
+    flavorDimensions += "environment"
+
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            resValue("string", "app_name", "Yalın (Dev)")
+        }
+        create("prod") {
+            dimension = "environment"
+            resValue("string", "app_name", "Yalın Üretim Asistanı")
+        }
+    }
 
     buildTypes {
         release {
