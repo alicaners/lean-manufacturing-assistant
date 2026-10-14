@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "262666620267",
+    "project_id": "yalin-uretim-asistani",
+    "storage_bucket": "yalin-uretim-asistani.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262666620267:android:e6512acd7f3bd1ea69102e",
+        "android_client_info": {
+          "package_name": "com.alicaners.lean_assistant"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG5koigEAMSRXSup7b0Rw1UgQv1xR6v7M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262666620267:android:7b0054667d1d41aa69102e",
+        "android_client_info": {
+          "package_name": "com.alicaners.lean_assistant.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG5koigEAMSRXSup7b0Rw1UgQv1xR6v7M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

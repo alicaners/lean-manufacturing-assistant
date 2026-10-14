@@ -1,0 +1,98 @@
+{
+  "@@locale": "tr",
+
+  "appTitle": "Yalın Üretim Asistanı",
+  "@appTitle": {
+    "description": "Application name shown in the app bar and the launcher."
+  },
+
+  "commonRetry": "Tekrar dene",
+  "@commonRetry": {
+    "description": "Button label to retry a failed operation."
+  },
+
+  "commonLoading": "Yükleniyor…",
+  "@commonLoading": {
+    "description": "Shown while data is being loaded."
+  },
+
+  "errorGenericTitle": "Bir şeyler ters gitti",
+  "@errorGenericTitle": {
+    "description": "Title of the generic error view."
+  },
+
+  "errorGenericMessage": "İşlem tamamlanamadı. Lütfen biraz sonra tekrar deneyin.",
+  "@errorGenericMessage": {
+    "description": "Body of the generic error view."
+  },
+
+  "emptyGenericMessage": "Burada henüz bir şey yok.",
+  "@emptyGenericMessage": {
+    "description": "Shown when a list has no items."
+  },
+
+    "homeEmptyMessage": "Ekranlar yakında burada olacak.",
+  "@homeEmptyMessage": {
+    "description": "Temporary message on the home page until features are added."
+  },
+
+  "homeGoToLogin": "Giriş ekranını aç",
+  "@homeGoToLogin": {
+    "description": "Temporary button on the home page that opens the sign-in screen."
+  },
+
+  "loginTitle": "Giriş",
+  "@loginTitle": {
+    "description": "App bar title of the sign-in screen."
+  },
+
+  "loginComingSoon": "Giriş ekranı yakında burada olacak.",
+  "@loginComingSoon": {
+    "description": "Placeholder text until the real sign-in form is built."
+  },
+
+  "notFoundTitle": "Sayfa bulunamadı",
+  "@notFoundTitle": {
+    "description": "Title shown when the user opens an unknown route."
+  },
+
+  "notFoundMessage": "Aradığınız sayfa mevcut değil.",
+  "@notFoundMessage": {
+    "description": "Message shown when the user opens an unknown route."
+  },
+
+    "commonGoHome": "Ana sayfaya dön",
+  "@commonGoHome": {
+    "description": "Button label that navigates to the home page."
+  },
+
+  "errorNetwork": "Sunucuya ulaşılamıyor. İnternet bağlantınızı kontrol edin.",
+  "@errorNetwork": {
+    "description": "Shown when the device cannot reach the server."
+  },
+
+  "errorUnauthorized": "Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın.",
+  "@errorUnauthorized": {
+    "description": "Shown on HTTP 401."
+  },
+
+  "errorForbidden": "Bu işlem için yetkiniz yok.",
+  "@errorForbidden": {
+    "description": "Shown on HTTP 403."
+  },
+
+  "errorNotFound": "Aradığınız kayıt bulunamadı.",
+  "@errorNotFound": {
+    "description": "Shown on HTTP 404."
+  },
+
+  "errorConflict": "Bu kayıt başka biri tarafından değiştirildi. Lütfen güncel hâlini kontrol edin.",
+  "@errorConflict": {
+    "description": "Shown on HTTP 409 (optimistic concurrency conflict)."
+  },
+
+  "errorValidation": "Lütfen işaretli alanları kontrol edin.",
+  "@errorValidation": {
+    "description": "Shown on HTTP 400 validation errors."
+  }
+}

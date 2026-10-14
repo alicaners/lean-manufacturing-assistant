@@ -12,6 +12,7 @@ key.properties
 *.user
 .vscode/*
 !.vscode/extensions.json
+!.vscode/launch.json
 
 # --- İşletim sistemi dosyaları ---
 Thumbs.db
