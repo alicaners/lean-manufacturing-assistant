@@ -1,10 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lean_assistant/app/app.dart';
+import 'package:lean_assistant/features/dashboard/presentation/home_page.dart';
 
 void main() {
-  testWidgets('App starts and shows the app name', (tester) async {
+  testWidgets('App starts on the home page', (tester) async {
     await tester.pumpWidget(const LeanAssistantApp());
+    await tester.pumpAndSettle();
 
-    expect(find.text('Yalın Üretim Asistanı'), findsOneWidget);
+    expect(find.byType(HomePage), findsOneWidget);
   });
 }
