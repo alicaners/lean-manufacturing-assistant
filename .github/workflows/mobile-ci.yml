@@ -1,0 +1,67 @@
+name: Mobile CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze-and-test:
+    name: "Mobile: analyze and test"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    defaults:
+      run:
+        working-directory: mobile
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v7
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: mobile/pubspec.yaml
+          cache: true
+
+      - name: Install packages
+        run: flutter pub get
+
+      - name: Check generated code is up to date
+        run: |
+          flutter gen-l10n
+          dart run build_runner build --delete-conflicting-outputs
+          git diff --exit-code -- lib
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Test with coverage
+        run: flutter test --coverage
+
+      - name: Generate coverage report
+        run: |
+          dotnet tool install --global dotnet-reportgenerator-globaltool
+          "$HOME/.dotnet/tools/reportgenerator" \
+            -reports:coverage/lcov.info \
+            -targetdir:CoverageReport \
+            -reporttypes:"HtmlInline;MarkdownSummaryGithub" \
+            -filefilters:"-*.config.dart;-*generated*;-*firebase_options*"
+          cat CoverageReport/SummaryGithub.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v6
+        with:
+          name: mobile-coverage
+          path: mobile/CoverageReport
+          retention-days: 14
