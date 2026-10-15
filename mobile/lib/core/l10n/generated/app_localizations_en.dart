@@ -69,4 +69,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorValidation => 'Please check the highlighted fields.';
+
+  @override
+  String get serverStatusTitle => 'Server connection';
+
+  @override
+  String get serverStatusChecking => 'Checking…';
+
+  @override
+  String get serverStatusOnline => 'Connected';
+
+  @override
+  String get serverStatusDegraded =>
+      'Connected, some services are running slowly';
+
+  @override
+  String get serverStatusRefresh => 'Check again';
 }

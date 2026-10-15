@@ -69,4 +69,19 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errorValidation => 'Lütfen işaretli alanları kontrol edin.';
+
+  @override
+  String get serverStatusTitle => 'Sunucu bağlantısı';
+
+  @override
+  String get serverStatusChecking => 'Kontrol ediliyor…';
+
+  @override
+  String get serverStatusOnline => 'Bağlı';
+
+  @override
+  String get serverStatusDegraded => 'Bağlı, bazı servisler yavaş çalışıyor';
+
+  @override
+  String get serverStatusRefresh => 'Yeniden kontrol et';
 }

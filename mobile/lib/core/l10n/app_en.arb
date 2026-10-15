@@ -18,5 +18,10 @@
   "errorForbidden": "You do not have permission to do this.",
   "errorNotFound": "The record could not be found.",
   "errorConflict": "Someone else changed this record. Please check its latest state.",
-  "errorValidation": "Please check the highlighted fields."
+   "errorValidation": "Please check the highlighted fields.",
+  "serverStatusTitle": "Server connection",
+  "serverStatusChecking": "Checking…",
+  "serverStatusOnline": "Connected",
+  "serverStatusDegraded": "Connected, some services are running slowly",
+  "serverStatusRefresh": "Check again"
 }

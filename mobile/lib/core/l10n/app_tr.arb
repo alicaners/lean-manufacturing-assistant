@@ -91,8 +91,33 @@
     "description": "Shown on HTTP 409 (optimistic concurrency conflict)."
   },
 
-  "errorValidation": "Lütfen işaretli alanları kontrol edin.",
+    "errorValidation": "Lütfen işaretli alanları kontrol edin.",
   "@errorValidation": {
     "description": "Shown on HTTP 400 validation errors."
+  },
+
+  "serverStatusTitle": "Sunucu bağlantısı",
+  "@serverStatusTitle": {
+    "description": "Title of the card on the home page that shows whether the backend is reachable."
+  },
+
+  "serverStatusChecking": "Kontrol ediliyor…",
+  "@serverStatusChecking": {
+    "description": "Shown while the app is asking the backend for its health."
+  },
+
+  "serverStatusOnline": "Bağlı",
+  "@serverStatusOnline": {
+    "description": "Shown when the backend answered Healthy."
+  },
+
+  "serverStatusDegraded": "Bağlı, bazı servisler yavaş çalışıyor",
+  "@serverStatusDegraded": {
+    "description": "Shown when the backend answered Degraded."
+  },
+
+  "serverStatusRefresh": "Yeniden kontrol et",
+  "@serverStatusRefresh": {
+    "description": "Tooltip of the button that checks the backend again."
   }
 }
