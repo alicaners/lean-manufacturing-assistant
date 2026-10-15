@@ -1,0 +1,144 @@
+name: Main CI
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/main-ci.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  backend-integration:
+    name: "Backend: migrations and integration tests"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: lean
+          POSTGRES_PASSWORD: ci-only-password
+          POSTGRES_DB: lean_assistant_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U lean -d lean_assistant_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    defaults:
+      run:
+        working-directory: backend
+
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      ConnectionStrings__Database: Host=localhost;Port=5432;Database=lean_assistant_ci;Username=lean;Password=ci-only-password
+      ConnectionStrings__Redis: localhost:6379
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v7
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: backend/global.json
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v6
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('backend/**/*.csproj', 'backend/Directory.Build.props') }}
+          restore-keys: nuget-${{ runner.os }}-
+
+      - name: Restore
+        run: |
+          dotnet restore
+          dotnet tool restore
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Apply migrations to an empty database
+        run: >
+          dotnet ef database update
+          --project src/LeanAssistant.Infrastructure
+          --startup-project src/LeanAssistant.Api
+          --configuration Release
+          --no-build
+
+      - name: Integration tests
+        run: >
+          dotnet test tests/LeanAssistant.IntegrationTests
+          --no-build --configuration Release
+
+  backend-docker:
+    name: "Backend: Docker image"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v7
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build image
+        uses: docker/build-push-action@v7
+        with:
+          context: backend
+          push: false
+          tags: lean-assistant-api:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  mobile-apk:
+    name: "Mobile: build release APK"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    defaults:
+      run:
+        working-directory: mobile
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v7
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: mobile/pubspec.yaml
+          cache: true
+
+      - name: Install packages
+        run: flutter pub get
+
+      - name: Build prod APK
+        run: flutter build apk --flavor prod -t lib/main_prod.dart --release
