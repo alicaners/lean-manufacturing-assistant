@@ -211,6 +211,36 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Lütfen işaretli alanları kontrol edin.'**
   String get errorValidation;
+
+  /// Title of the card on the home page that shows whether the backend is reachable.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sunucu bağlantısı'**
+  String get serverStatusTitle;
+
+  /// Shown while the app is asking the backend for its health.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kontrol ediliyor…'**
+  String get serverStatusChecking;
+
+  /// Shown when the backend answered Healthy.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bağlı'**
+  String get serverStatusOnline;
+
+  /// Shown when the backend answered Degraded.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bağlı, bazı servisler yavaş çalışıyor'**
+  String get serverStatusDegraded;
+
+  /// Tooltip of the button that checks the backend again.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeniden kontrol et'**
+  String get serverStatusRefresh;
 }
 
 class _AppLocalizationsDelegate

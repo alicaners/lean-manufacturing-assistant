@@ -1,9 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lean_assistant/app/app.dart';
+import 'package:lean_assistant/app/di/injection.dart';
 import 'package:lean_assistant/app/router/app_router.dart';
 import 'package:lean_assistant/features/dashboard/presentation/home_page.dart';
 
+import 'helpers/test_dependencies.dart';
+
 void main() {
+  setUp(registerTestDependencies);
+  tearDown(getIt.reset);
+
   testWidgets('App starts on the home page', (tester) async {
     await tester.pumpWidget(LeanAssistantApp(router: createRouter()));
     await tester.pumpAndSettle();
