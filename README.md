@@ -1,5 +1,9 @@
 # Yalın Üretim Asistanı (Lean Manufacturing Assistant)
 
+[![Backend CI](https://github.com/alicaners/lean-manufacturing-assistant/actions/workflows/backend-ci.yml/badge.svg?branch=main)](https://github.com/alicaners/lean-manufacturing-assistant/actions/workflows/backend-ci.yml)
+[![Mobile CI](https://github.com/alicaners/lean-manufacturing-assistant/actions/workflows/mobile-ci.yml/badge.svg?branch=main)](https://github.com/alicaners/lean-manufacturing-assistant/actions/workflows/mobile-ci.yml)
+[![Main CI](https://github.com/alicaners/lean-manufacturing-assistant/actions/workflows/main-ci.yml/badge.svg?branch=main)](https://github.com/alicaners/lean-manufacturing-assistant/actions/workflows/main-ci.yml)
+
 Kaizen, 5S ve Andon süreçlerini kâğıttan çıkarıp tek bir mobil uygulamada
 birleştiren, offline çalışabilen bir fabrika uygulaması.
 
