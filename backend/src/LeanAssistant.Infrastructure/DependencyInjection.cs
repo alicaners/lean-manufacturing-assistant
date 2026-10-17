@@ -1,3 +1,5 @@
+using LeanAssistant.Application.Identity;
+using LeanAssistant.Infrastructure.Identity;
 using LeanAssistant.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +24,11 @@ public static class DependencyInjection
         services.AddHealthChecks()
             .AddDbContextCheck<AppDbContext>(name: "database", tags: ["ready"])
             .AddRedis(redisConnectionString, name: "redis", tags: ["ready"]);
+
+        // Identity: security services. All are stateless, so one instance is shared.
+        services.AddSingleton<IPasswordHasher, IdentityPasswordHasher>();
+        services.AddSingleton<IRefreshTokenGenerator, RefreshTokenGenerator>();
+        services.AddSingleton<IAccessTokenIssuer, JwtAccessTokenIssuer>();
 
         return services;
     }

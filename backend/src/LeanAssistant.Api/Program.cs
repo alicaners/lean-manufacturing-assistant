@@ -8,6 +8,7 @@ using Serilog.Events;
 using LeanAssistant.Api.Validation;
 using LeanAssistant.Application;
 using LeanAssistant.Api.Observability;
+using LeanAssistant.Application.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,13 @@ var redisConnection = builder.Configuration.GetConnectionString("Redis")
     ?? throw new InvalidOperationException("Connection string 'Redis' is not configured.");
 
 builder.Services.AddInfrastructure(databaseConnection, redisConnection);
+builder.Services.AddOptions<AuthOptions>()
+    .Bind(builder.Configuration.GetSection(AuthOptions.SectionName))
+    .Validate(
+        options => options.IsValid(),
+        "Auth settings are missing or invalid. Set Auth:SigningKey " +
+        $"(at least {AuthOptions.MinimumSigningKeyLength} characters) in User Secrets or as an environment variable.")
+    .ValidateOnStart();
 builder.Services.AddObservability(builder.Configuration);
 
 builder.Services.AddProblemDetails(options =>
