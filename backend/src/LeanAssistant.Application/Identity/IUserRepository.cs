@@ -8,4 +8,8 @@ public interface IUserRepository
     Task<User?> FindByUserNameAsync(string userName, CancellationToken cancellationToken);
 
     Task<User?> FindByIdAsync(Guid id, CancellationToken cancellationToken);
+
+    Task<bool> AnyAsync(CancellationToken cancellationToken);
+
+    void Add(User user);
 }

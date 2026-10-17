@@ -201,6 +201,12 @@ public class AuthServiceTests
 
         public Task<User?> FindByIdAsync(Guid id, CancellationToken cancellationToken) =>
             Task.FromResult(Items.SingleOrDefault(user => user.Id == id));
+
+            
+        public Task<bool> AnyAsync(CancellationToken cancellationToken) =>
+            Task.FromResult(Items.Count > 0);
+
+        public void Add(User user) => Items.Add(user);
     }
 
     private sealed class InMemoryRefreshTokens : IRefreshTokenRepository
