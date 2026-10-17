@@ -1,10 +1,12 @@
 using System.Linq.Expressions;
+using LeanAssistant.Application.Abstractions;
 using LeanAssistant.Domain.SharedKernel;
 using Microsoft.EntityFrameworkCore;
 
 namespace LeanAssistant.Infrastructure.Persistence;
 
-public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+public sealed class AppDbContext(DbContextOptions<AppDbContext> options)
+    : DbContext(options), IUnitOfWork
 {
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
