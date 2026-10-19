@@ -56,17 +56,20 @@ public static class IdentityApiExtensions
                 .RequireAuthenticatedUser()
                 .Build());
 
+                // Sign-in attempts per minute from one IP address. Tests raise it, because
+        // every request in the in-memory test server comes from the same "address".
+        var loginPermitLimit = configuration.GetValue("RateLimiting:LoginPermitLimit", 5);
+
         services.AddRateLimiter(options =>
         {
             options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 
-            // At most 5 sign-in attempts per minute from one IP address.
             options.AddPolicy(LoginRateLimitPolicy, httpContext =>
                 RateLimitPartition.GetFixedWindowLimiter(
                     partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
                     factory: _ => new FixedWindowRateLimiterOptions
                     {
-                        PermitLimit = 5,
+                        PermitLimit = loginPermitLimit,
                         Window = TimeSpan.FromMinutes(1),
                         QueueLimit = 0
                     }));
