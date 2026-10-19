@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
+using LeanAssistant.Domain.Identity;
 
 namespace LeanAssistant.Api.Identity;
 
@@ -49,12 +50,22 @@ public static class IdentityApiExtensions
                 };
             });
 
-        // Secure by default: every endpoint needs a signed-in user
+                // Secure by default: every endpoint needs a signed-in user
         // unless it is explicitly marked with [AllowAnonymous].
-        services.AddAuthorizationBuilder()
+        var authorization = services.AddAuthorizationBuilder()
             .SetFallbackPolicy(new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
                 .Build());
+
+        // One policy per permission, named after it, e.g. "ManageUsers".
+        foreach (var permission in Enum.GetValues<Permission>())
+        {
+            var roles = RolePermissions.RolesFor(permission)
+                .Select(role => role.ToString())
+                .ToArray();
+
+            authorization.AddPolicy(permission.ToString(), policy => policy.RequireRole(roles));
+        }
 
                 // Sign-in attempts per minute from one IP address. Tests raise it, because
         // every request in the in-memory test server comes from the same "address".
