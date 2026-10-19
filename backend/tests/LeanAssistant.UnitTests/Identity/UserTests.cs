@@ -107,4 +107,25 @@ public class UserTests
         user.Activate();
         Assert.True(user.IsActive);
     }
+    
+    [Fact]
+    public void New_user_does_not_have_to_change_password()
+    {
+        var user = User.Create("ali.sezer", "Ali Caner Sezer", "hash", Role.Operator);
+
+        Assert.False(user.MustChangePassword);
+    }
+
+    [Fact]
+    public void Changing_the_password_clears_a_required_change()
+    {
+        var user = User.Create("ali.sezer", "Ali Caner Sezer", "hash", Role.Operator);
+        user.RequirePasswordChange();
+        Assert.True(user.MustChangePassword);
+
+        user.ChangePassword("new-hash");
+
+        Assert.False(user.MustChangePassword);
+        Assert.Equal("new-hash", user.PasswordHash);
+    }
 }

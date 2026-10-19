@@ -46,6 +46,13 @@ public sealed class User : Entity, IFactoryScoped
     /// <summary>The production line, for roles that work on one line.</summary>
     public Guid? LineId { get; private set; }
 
+    
+    /// <summary>
+    /// True when the password was set by an admin (new account or reset).
+    /// Such a user can do nothing but change it.
+    /// </summary>
+    public bool MustChangePassword { get; private set; }
+
     public static User Create(string userName, string fullName, string passwordHash, Role role)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(userName);
@@ -124,4 +131,15 @@ public sealed class User : Entity, IFactoryScoped
     public void Deactivate() => IsActive = false;
 
     public void Activate() => IsActive = true;
+
+    
+    /// <summary>Called when an admin sets the password: someone else knows it now.</summary>
+    public void RequirePasswordChange() => MustChangePassword = true;
+
+    /// <summary>The user chose a new password themselves.</summary>
+    public void ChangePassword(string passwordHash)
+    {
+        ReplacePasswordHash(passwordHash);
+        MustChangePassword = false;
+    }
 }

@@ -48,7 +48,10 @@ public sealed class UserManagementService(
         }
 
         var user = User.Create(userName, request.FullName, passwordHasher.Hash(request.Password), request.Role);
-        user.AssignScope(request.FactoryId, request.LineId);
+        user.AssignScope(request.FactoryId, request.LineId); 
+        
+        // The admin knows this password, so the user must replace it at first sign-in.
+        user.RequirePasswordChange();
 
         users.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);
@@ -150,7 +153,8 @@ public sealed class UserManagementService(
             return UserManagementResult.Failure(UserManagementError.NotFound);
         }
 
-        user.ReplacePasswordHash(passwordHasher.Hash(request.NewPassword));
+        user.ReplacePasswordHash(passwordHasher.Hash(request.NewPassword)); 
+        user.RequirePasswordChange();
 
         // Anyone who knew the old password may still hold a session.
         await RevokeSessionsAsync(user.Id, cancellationToken);

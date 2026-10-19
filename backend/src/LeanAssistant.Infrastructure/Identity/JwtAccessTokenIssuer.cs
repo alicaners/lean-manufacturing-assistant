@@ -18,7 +18,10 @@ public sealed class JwtAccessTokenIssuer(
 {
     public const string RoleClaim = "role";
     public const string FactoryClaim = "factory";
-    public const string LineClaim = "line";
+    public const string LineClaim = "line"; 
+    
+    /// <summary>Present only while the user must change their password.</summary>
+    public const string PasswordChangeClaim = "pwd_change";
 
     private readonly JsonWebTokenHandler _handler = new();
 
@@ -45,6 +48,11 @@ public sealed class JwtAccessTokenIssuer(
         if (user.LineId is { } lineId)
         {
             claims[LineClaim] = lineId.ToString();
+        }
+        
+        if (user.MustChangePassword)
+        {
+            claims[PasswordChangeClaim] = "true";
         }
 
         var descriptor = new SecurityTokenDescriptor

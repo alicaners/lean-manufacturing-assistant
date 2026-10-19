@@ -9,6 +9,7 @@ public sealed record UserResponse(
     string FullName,
     Role Role,
     bool IsActive,
+    bool MustChangePassword,
     Guid? FactoryId,
     Guid? LineId,
     DateTimeOffset CreatedAt)
@@ -19,6 +20,7 @@ public sealed record UserResponse(
         user.FullName,
         user.Role,
         user.IsActive,
+        user.MustChangePassword,
         user.FactoryId,
         user.LineId,
         user.CreatedAt);

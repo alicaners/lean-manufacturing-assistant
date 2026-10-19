@@ -112,6 +112,9 @@ namespace LeanAssistant.Infrastructure.Persistence.Migrations
                     b.Property<Guid?>("LineId")
                         .HasColumnType("uuid");
 
+                    b.Property<bool>("MustChangePassword")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(256)

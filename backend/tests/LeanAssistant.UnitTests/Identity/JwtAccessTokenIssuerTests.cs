@@ -80,6 +80,19 @@ public class JwtAccessTokenIssuerTests
 
         Assert.DoesNotContain(jwt.Claims, claim => claim.Type == JwtAccessTokenIssuer.FactoryClaim);
     }
+        [Fact]
+    public void Token_marks_a_pending_password_change()
+    {
+        var user = User.Create("new.user", "New User", "hash", Role.Operator);
+
+        var normal = new JsonWebToken(CreateIssuer().Issue(user).Token);
+        Assert.DoesNotContain(normal.Claims, claim => claim.Type == JwtAccessTokenIssuer.PasswordChangeClaim);
+
+        user.RequirePasswordChange();
+
+        var pending = new JsonWebToken(CreateIssuer().Issue(user).Token);
+        Assert.Equal("true", pending.GetClaim(JwtAccessTokenIssuer.PasswordChangeClaim).Value);
+    }
 
     private static JwtAccessTokenIssuer CreateIssuer() =>
         new(Options.Create(Settings), new FixedTimeProvider(Now));

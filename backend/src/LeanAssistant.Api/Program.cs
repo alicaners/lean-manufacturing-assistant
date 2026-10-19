@@ -83,6 +83,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<PasswordChangeRequiredMiddleware>();
 app.UseRateLimiter();
 
 app.MapControllers();

@@ -13,5 +13,8 @@ public enum RefreshTokenRevocationReason
     LoggedOut,
 
     /// <summary>An admin changed the user's role, scope, status or password.</summary>
-    UserChanged
+    UserChanged,
+
+    /// <summary>The user changed their own password; their other sessions were closed.</summary>
+    PasswordChanged
 }
