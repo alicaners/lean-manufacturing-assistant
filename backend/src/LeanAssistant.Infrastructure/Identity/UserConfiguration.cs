@@ -32,5 +32,9 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasConversion<string>()
             .HasMaxLength(32)
             .IsRequired();
+
+            
+        // Every scoped query filters users by plant.
+        builder.HasIndex(user => user.FactoryId);
     }
 }

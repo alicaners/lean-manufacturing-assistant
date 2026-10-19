@@ -6,8 +6,13 @@ using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace LeanAssistant.Api.Identity;
 
+/// <summary>
+/// Sign-in, session and password endpoints. They all stay open for a user who must change
+/// their password, because they are the way out of that state.
+/// </summary>
 [ApiController]
 [Route("api/auth")]
+[AllowDuringPasswordChange]
 public sealed class AuthController(AuthService authService, IUserRepository users) : ControllerBase
 {
     [HttpPost("login")]
@@ -64,8 +69,7 @@ public sealed class AuthController(AuthService authService, IUserRepository user
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<CurrentUserResponse>> Me(CancellationToken cancellationToken)
     {
-        var subject = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
-        if (!Guid.TryParse(subject, out var userId))
+        if (CurrentUserId() is not { } userId)
         {
             return Unauthorized();
         }
@@ -76,8 +80,43 @@ public sealed class AuthController(AuthService authService, IUserRepository user
             return Unauthorized();
         }
 
-        return Ok(new CurrentUserResponse(user.Id, user.UserName, user.FullName, user.Role.ToString()));
+        return Ok(new CurrentUserResponse(
+            user.Id, user.UserName, user.FullName, user.Role.ToString(), user.MustChangePassword));
     }
+
+    /// <summary>
+    /// Replaces the signed-in user's password. Closes every other session and returns
+    /// new tokens for this device.
+    /// </summary>
+    [HttpPost("change-password")]
+    [EnableRateLimiting(IdentityApiExtensions.LoginRateLimitPolicy)]
+    [ProducesResponseType<AuthTokens>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
+    public async Task<ActionResult<AuthTokens>> ChangePassword(
+        ChangePasswordRequest request, CancellationToken cancellationToken)
+    {
+        if (CurrentUserId() is not { } userId)
+        {
+            return Unauthorized();
+        }
+
+        var tokens = await authService.ChangePasswordAsync(
+            userId, request.CurrentPassword, request.NewPassword, cancellationToken);
+
+        if (tokens is null)
+        {
+            ModelState.AddModelError(nameof(request.CurrentPassword), "The current password is not correct.");
+            return ValidationProblem(ModelState);
+        }
+
+        return Ok(tokens);
+    }
+
+    private Guid? CurrentUserId() =>
+        Guid.TryParse(User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value, out var id) ? id : null;
 }
 
-public sealed record CurrentUserResponse(Guid Id, string UserName, string FullName, string Role);
+public sealed record CurrentUserResponse(
+    Guid Id, string UserName, string FullName, string Role, bool MustChangePassword);

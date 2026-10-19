@@ -10,5 +10,11 @@ public enum RefreshTokenRevocationReason
     ReuseDetected,
 
     /// <summary>The user signed out.</summary>
-    LoggedOut
+    LoggedOut,
+
+    /// <summary>An admin changed the user's role, scope, status or password.</summary>
+    UserChanged,
+
+    /// <summary>The user changed their own password; their other sessions were closed.</summary>
+    PasswordChanged
 }

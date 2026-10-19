@@ -61,6 +61,12 @@ jobs:
           dotnet test tests/LeanAssistant.ArchitectureTests
           --no-build --configuration Release
 
+          
+      - name: Integration tests
+        run: >
+          dotnet test tests/LeanAssistant.IntegrationTests
+          --no-build --configuration Release
+
       - name: Generate coverage report
         run: |
           dotnet tool install --global dotnet-reportgenerator-globaltool

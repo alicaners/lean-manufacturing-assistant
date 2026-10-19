@@ -6,7 +6,7 @@ namespace LeanAssistant.Domain.Identity;
 /// A person who can sign in to the app.
 /// The password itself is never stored, only its hash.
 /// </summary>
-public sealed class User : Entity
+public sealed class User : Entity, IFactoryScoped
 {
     public const int UserNameMaxLength = 64;
     public const int FullNameMaxLength = 128;
@@ -36,6 +36,22 @@ public sealed class User : Entity
 
     /// <summary>Inactive users cannot sign in or refresh their session.</summary>
     public bool IsActive { get; private set; }
+
+    /// <summary>
+    /// The plant this user works in. Empty only for a system-wide admin;
+    /// any other user without a plant can see nothing.
+    /// </summary>
+    public Guid? FactoryId { get; private set; }
+
+    /// <summary>The production line, for roles that work on one line.</summary>
+    public Guid? LineId { get; private set; }
+
+    
+    /// <summary>
+    /// True when the password was set by an admin (new account or reset).
+    /// Such a user can do nothing but change it.
+    /// </summary>
+    public bool MustChangePassword { get; private set; }
 
     public static User Create(string userName, string fullName, string passwordHash, Role role)
     {
@@ -81,5 +97,49 @@ public sealed class User : Entity
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(passwordHash);
         PasswordHash = passwordHash;
+    }
+
+    /// <summary>Sets the plant and line this user works in.</summary>
+    public void AssignScope(Guid? factoryId, Guid? lineId)
+    {
+        if (factoryId == Guid.Empty || lineId == Guid.Empty)
+        {
+            throw new ArgumentException("Scope ids cannot be empty.");
+        }
+
+        if (lineId is not null && factoryId is null)
+        {
+            throw new ArgumentException(
+                "A line can only be assigned together with its plant.", nameof(lineId));
+        }
+
+        FactoryId = factoryId;
+        LineId = lineId;
+    }
+    
+    public void ChangeRole(Role role)
+    {
+        if (!Enum.IsDefined(role))
+        {
+            throw new ArgumentOutOfRangeException(nameof(role), role, "Unknown role.");
+        }
+
+        Role = role;
+    }
+
+    /// <summary>The user can no longer sign in. Their data stays.</summary>
+    public void Deactivate() => IsActive = false;
+
+    public void Activate() => IsActive = true;
+
+    
+    /// <summary>Called when an admin sets the password: someone else knows it now.</summary>
+    public void RequirePasswordChange() => MustChangePassword = true;
+
+    /// <summary>The user chose a new password themselves.</summary>
+    public void ChangePassword(string passwordHash)
+    {
+        ReplacePasswordHash(passwordHash);
+        MustChangePassword = false;
     }
 }

@@ -10,5 +10,10 @@ public interface IRefreshTokenRepository
     Task<IReadOnlyList<RefreshToken>> ListActiveInFamilyAsync(
         Guid familyId, CancellationToken cancellationToken);
 
+        
+    /// <summary>Tokens of the user that have not been revoked yet, across all their devices.</summary>
+    Task<IReadOnlyList<RefreshToken>> ListActiveForUserAsync(
+        Guid userId, CancellationToken cancellationToken);
+
     void Add(RefreshToken token);
 }

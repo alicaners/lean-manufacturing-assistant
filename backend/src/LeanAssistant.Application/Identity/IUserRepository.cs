@@ -11,5 +11,15 @@ public interface IUserRepository
 
     Task<bool> AnyAsync(CancellationToken cancellationToken);
 
+    
+    /// <summary>Users the current caller may see, ordered by user name.</summary>
+    Task<IReadOnlyList<User>> ListAsync(CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Checks every plant, not only the caller's: user names are unique across the whole system.
+    /// </summary>
+    /// <param name="userName">Already normalized with <see cref="User.NormalizeUserName"/>.</param>
+    Task<bool> IsUserNameTakenAsync(string userName, CancellationToken cancellationToken);
+
     void Add(User user);
 }

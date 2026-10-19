@@ -158,6 +158,65 @@ public class AuthServiceTests
         Assert.Null(await _service.RefreshAsync(tokens.RefreshToken, CancellationToken.None));
     }
 
+    [Fact]
+    public async Task Token_revoked_for_another_reason_raises_no_reuse_alarm()
+    {
+        var tokens = await LoginAsync();
+        await _service.LogoutAsync(tokens.RefreshToken, CancellationToken.None);
+        var savesBefore = _unitOfWork.SaveCount;
+
+        var result = await _service.RefreshAsync(tokens.RefreshToken, CancellationToken.None);
+
+        Assert.Null(result);
+        // No family revocation happened, so nothing new was saved.
+        Assert.Equal(savesBefore, _unitOfWork.SaveCount);
+        Assert.Equal(RefreshTokenRevocationReason.LoggedOut, Assert.Single(_refreshTokens.Items).RevocationReason);
+    }
+        [Fact]
+    public async Task Login_reports_a_pending_password_change()
+    {
+        _user.RequirePasswordChange();
+
+        var tokens = await LoginAsync();
+
+        Assert.True(tokens.MustChangePassword);
+    }
+
+    [Fact]
+    public async Task ChangePassword_replaces_the_password_and_keeps_only_a_new_session()
+    {
+        const string newPassword = "Brand-New-Password-7";
+        _user.RequirePasswordChange();
+        await LoginAsync();
+        await LoginAsync(); // a second device
+
+        var tokens = await _service.ChangePasswordAsync(_user.Id, Password, newPassword, CancellationToken.None);
+
+        Assert.NotNull(tokens);
+        Assert.False(tokens.MustChangePassword);
+        Assert.False(_user.MustChangePassword);
+        Assert.Equal(FakePasswordHasher.HashOf(newPassword), _user.PasswordHash);
+
+        // Both old sessions are closed; only the one just created is active.
+        Assert.Equal(3, _refreshTokens.Items.Count);
+        Assert.All(_refreshTokens.Items.Take(2), token =>
+            Assert.Equal(RefreshTokenRevocationReason.PasswordChanged, token.RevocationReason));
+        Assert.True(_refreshTokens.Items[2].IsActive(Now));
+    }
+
+    [Fact]
+    public async Task ChangePassword_with_a_wrong_current_password_changes_nothing()
+    {
+        await LoginAsync();
+
+        var tokens = await _service.ChangePasswordAsync(
+            _user.Id, "wrong-password", "Brand-New-Password-7", CancellationToken.None);
+
+        Assert.Null(tokens);
+        Assert.Equal(FakePasswordHasher.HashOf(Password), _user.PasswordHash);
+        Assert.True(Assert.Single(_refreshTokens.Items).IsActive(Now));
+    }
+
     private async Task<AuthTokens> LoginAsync()
     {
         var tokens = await _service.LoginAsync("ali.sezer", Password, CancellationToken.None);
@@ -202,9 +261,14 @@ public class AuthServiceTests
         public Task<User?> FindByIdAsync(Guid id, CancellationToken cancellationToken) =>
             Task.FromResult(Items.SingleOrDefault(user => user.Id == id));
 
-            
         public Task<bool> AnyAsync(CancellationToken cancellationToken) =>
             Task.FromResult(Items.Count > 0);
+
+        public Task<IReadOnlyList<User>> ListAsync(CancellationToken cancellationToken) =>
+            Task.FromResult<IReadOnlyList<User>>(Items.OrderBy(user => user.UserName).ToList());
+
+        public Task<bool> IsUserNameTakenAsync(string userName, CancellationToken cancellationToken) =>
+            Task.FromResult(Items.Any(user => user.UserName == userName));
 
         public void Add(User user) => Items.Add(user);
     }
@@ -220,6 +284,11 @@ public class AuthServiceTests
             Guid familyId, CancellationToken cancellationToken) =>
             Task.FromResult<IReadOnlyList<RefreshToken>>(
                 Items.Where(token => token.FamilyId == familyId && !token.IsRevoked).ToList());
+
+        public Task<IReadOnlyList<RefreshToken>> ListActiveForUserAsync(
+            Guid userId, CancellationToken cancellationToken) =>
+            Task.FromResult<IReadOnlyList<RefreshToken>>(
+                Items.Where(token => token.UserId == userId && !token.IsRevoked).ToList());
 
         public void Add(RefreshToken token) => Items.Add(token);
     }

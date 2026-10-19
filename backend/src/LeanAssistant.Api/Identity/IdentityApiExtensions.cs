@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
+using LeanAssistant.Domain.Identity;
+using LeanAssistant.Application.Abstractions;
 
 namespace LeanAssistant.Api.Identity;
 
@@ -24,7 +26,8 @@ public static class IdentityApiExtensions
                 "Auth settings are missing or invalid. Set Auth:SigningKey " +
                 $"(at least {AuthOptions.MinimumSigningKeyLength} characters) in User Secrets or as an environment variable.")
             .ValidateOnStart();
-
+        services.AddHttpContextAccessor();
+        services.AddScoped<ICurrentUser, HttpCurrentUser>();
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer();
 
@@ -49,24 +52,37 @@ public static class IdentityApiExtensions
                 };
             });
 
-        // Secure by default: every endpoint needs a signed-in user
+                // Secure by default: every endpoint needs a signed-in user
         // unless it is explicitly marked with [AllowAnonymous].
-        services.AddAuthorizationBuilder()
+        var authorization = services.AddAuthorizationBuilder()
             .SetFallbackPolicy(new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
                 .Build());
+
+        // One policy per permission, named after it, e.g. "ManageUsers".
+        foreach (var permission in Enum.GetValues<Permission>())
+        {
+            var roles = RolePermissions.RolesFor(permission)
+                .Select(role => role.ToString())
+                .ToArray();
+
+            authorization.AddPolicy(permission.ToString(), policy => policy.RequireRole(roles));
+        }
+
+                // Sign-in attempts per minute from one IP address. Tests raise it, because
+        // every request in the in-memory test server comes from the same "address".
+        var loginPermitLimit = configuration.GetValue("RateLimiting:LoginPermitLimit", 5);
 
         services.AddRateLimiter(options =>
         {
             options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 
-            // At most 5 sign-in attempts per minute from one IP address.
             options.AddPolicy(LoginRateLimitPolicy, httpContext =>
                 RateLimitPartition.GetFixedWindowLimiter(
                     partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
                     factory: _ => new FixedWindowRateLimiterOptions
                     {
-                        PermitLimit = 5,
+                        PermitLimit = loginPermitLimit,
                         Window = TimeSpan.FromMinutes(1),
                         QueueLimit = 0
                     }));

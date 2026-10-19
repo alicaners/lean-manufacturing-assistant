@@ -18,5 +18,18 @@ public sealed class UserRepository(AppDbContext dbContext) : IUserRepository
     public Task<bool> AnyAsync(CancellationToken cancellationToken) =>
         dbContext.Set<User>().AnyAsync(cancellationToken);
 
+    public async Task<IReadOnlyList<User>> ListAsync(CancellationToken cancellationToken) =>
+        await dbContext.Set<User>()
+            .AsNoTracking()
+            .OrderBy(user => user.UserName)
+            .ToListAsync(cancellationToken);
+
+    // IgnoreQueryFilters also drops the soft-delete filter, so it is added back by hand.
+    // The unique index covers only users that are not deleted, so this matches it exactly.
+    public Task<bool> IsUserNameTakenAsync(string userName, CancellationToken cancellationToken) =>
+        dbContext.Set<User>()
+            .IgnoreQueryFilters()
+            .AnyAsync(user => user.UserName == userName && !user.IsDeleted, cancellationToken);
+
     public void Add(User user) => dbContext.Set<User>().Add(user);
 }
