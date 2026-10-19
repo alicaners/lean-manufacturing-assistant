@@ -38,7 +38,7 @@ Her işlem iki kontrolden geçer ve **ikisi de backend'de** yapılır:
 | 5S denetimi yapma | Şef | Kendi fabrikası |
 | Tamamlanmış denetimi düzeltme | Şef | Gerekçe zorunlu, audit log'a yazılır |
 | Pano ve raporlar | Yönetici; Şef (yalnızca kendi hattı) | Kendi fabrikası |
-| Kullanıcı ve organizasyon yönetimi | Admin | Tüm sistem |
+| Kullanıcı ve organizasyon yönetimi | Admin | Fabrika atanmamış Admin: tüm sistem. Fabrikaya atanmış Admin: yalnızca kendi fabrikası |
 
 **Kapsam dışı kayıt:** Kullanıcı kendi fabrikası dışındaki bir kaydın kimliğiyle istek
 yaparsa sunucu **404 Not Found** döner. Kaydın var olduğu bile belli edilmez.

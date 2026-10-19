@@ -45,4 +45,35 @@ public class UserTests
         Assert.Throws<ArgumentOutOfRangeException>(
             () => User.Create("ali.sezer", "Ali Caner Sezer", "hash", (Role)99));
     }
+
+    
+    [Fact]
+    public void AssignScope_sets_plant_and_line()
+    {
+        var user = User.Create("ali.sezer", "Ali Caner Sezer", "hash", Role.Operator);
+        var factoryId = Guid.CreateVersion7();
+        var lineId = Guid.CreateVersion7();
+
+        user.AssignScope(factoryId, lineId);
+
+        Assert.Equal(factoryId, user.FactoryId);
+        Assert.Equal(lineId, user.LineId);
+    }
+
+    [Fact]
+    public void Line_without_a_plant_is_rejected()
+    {
+        var user = User.Create("ali.sezer", "Ali Caner Sezer", "hash", Role.Operator);
+
+        Assert.Throws<ArgumentException>(() => user.AssignScope(null, Guid.CreateVersion7()));
+    }
+
+    [Fact]
+    public void New_user_has_no_scope()
+    {
+        var user = User.Create("ali.sezer", "Ali Caner Sezer", "hash", Role.Operator);
+
+        Assert.Null(user.FactoryId);
+        Assert.Null(user.LineId);
+    }
 }

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using LeanAssistant.Domain.Identity;
+using LeanAssistant.Application.Abstractions;
 
 namespace LeanAssistant.Api.Identity;
 
@@ -25,7 +26,8 @@ public static class IdentityApiExtensions
                 "Auth settings are missing or invalid. Set Auth:SigningKey " +
                 $"(at least {AuthOptions.MinimumSigningKeyLength} characters) in User Secrets or as an environment variable.")
             .ValidateOnStart();
-
+        services.AddHttpContextAccessor();
+        services.AddScoped<ICurrentUser, HttpCurrentUser>();
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer();
 

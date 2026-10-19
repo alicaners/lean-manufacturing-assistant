@@ -59,6 +59,28 @@ public class JwtAccessTokenIssuerTests
         Assert.False(result.IsValid);
     }
 
+    [Fact]
+    public void Token_carries_plant_and_line_when_assigned()
+    {
+        var operatorUser = User.Create("op.1", "Line Operator", "hash", Role.Operator);
+        var factoryId = Guid.CreateVersion7();
+        var lineId = Guid.CreateVersion7();
+        operatorUser.AssignScope(factoryId, lineId);
+
+        var jwt = new JsonWebToken(CreateIssuer().Issue(operatorUser).Token);
+
+        Assert.Equal(factoryId.ToString(), jwt.GetClaim(JwtAccessTokenIssuer.FactoryClaim).Value);
+        Assert.Equal(lineId.ToString(), jwt.GetClaim(JwtAccessTokenIssuer.LineClaim).Value);
+    }
+
+    [Fact]
+    public void Token_of_a_system_wide_user_has_no_plant_claim()
+    {
+        var jwt = new JsonWebToken(CreateIssuer().Issue(Supervisor).Token);
+
+        Assert.DoesNotContain(jwt.Claims, claim => claim.Type == JwtAccessTokenIssuer.FactoryClaim);
+    }
+
     private static JwtAccessTokenIssuer CreateIssuer() =>
         new(Options.Create(Settings), new FixedTimeProvider(Now));
 

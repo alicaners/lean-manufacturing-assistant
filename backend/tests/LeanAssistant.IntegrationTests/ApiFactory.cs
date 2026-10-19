@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Testcontainers.PostgreSql;
+using LeanAssistant.Application.Abstractions;
+using LeanAssistant.Domain.Identity;
 
 namespace LeanAssistant.IntegrationTests;
 
@@ -27,7 +29,7 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
         var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseNpgsql(_database.GetConnectionString())
             .Options;
-        await using (var dbContext = new AppDbContext(options))
+                await using (var dbContext = new AppDbContext(options, new NoCurrentUser()))
         {
             await dbContext.Database.MigrateAsync();
         }
@@ -56,4 +58,19 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
 
     private static void SetSetting(string name, string value) =>
         Environment.SetEnvironmentVariable(name, value);
+
+        
+    /// <summary>Migrations run before the app starts, outside any request.</summary>
+    private sealed class NoCurrentUser : ICurrentUser
+    {
+        public bool IsAuthenticated => false;
+
+        public Guid? UserId => null;
+
+        public Role? Role => null;
+
+        public Guid? FactoryId => null;
+
+        public Guid? LineId => null;
+    }
 }
