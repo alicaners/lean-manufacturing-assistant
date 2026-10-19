@@ -69,19 +69,22 @@ public sealed class AuthService(
 
         var now = timeProvider.GetUtcNow();
 
-        if (stored.IsRevoked)
+                if (stored.IsRevoked)
         {
-            // This token was already used or revoked, yet someone presented it again.
-            // We cannot tell the real user from a thief, so the whole sign-in is closed.
-            await RevokeFamilyAsync(stored.FamilyId, now, cancellationToken);
+            // A token that was already exchanged is presented again. We cannot tell
+            // the real user from a thief, so the whole sign-in is closed.
+            // Tokens revoked for other reasons (sign-out, admin change) are just rejected.
+            if (stored.RevocationReason == RefreshTokenRevocationReason.Rotated)
+            {
+                await RevokeFamilyAsync(stored.FamilyId, now, cancellationToken);
 
-            logger.LogWarning(
-                "Refresh token reuse detected for user {UserId}; family {FamilyId} was revoked",
-                stored.UserId, stored.FamilyId);
+                logger.LogWarning(
+                    "Refresh token reuse detected for user {UserId}; family {FamilyId} was revoked",
+                    stored.UserId, stored.FamilyId);
+            }
 
             return null;
         }
-
         if (stored.IsExpired(now))
         {
             return null;

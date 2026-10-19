@@ -17,5 +17,11 @@ public sealed class RefreshTokenRepository(AppDbContext dbContext) : IRefreshTok
             .Where(token => token.FamilyId == familyId && token.RevokedAt == null)
             .ToListAsync(cancellationToken);
 
+    public async Task<IReadOnlyList<RefreshToken>> ListActiveForUserAsync(
+        Guid userId, CancellationToken cancellationToken) =>
+        await dbContext.Set<RefreshToken>()
+            .Where(token => token.UserId == userId && token.RevokedAt == null)
+            .ToListAsync(cancellationToken);
+
     public void Add(RefreshToken token) => dbContext.Set<RefreshToken>().Add(token);
 }

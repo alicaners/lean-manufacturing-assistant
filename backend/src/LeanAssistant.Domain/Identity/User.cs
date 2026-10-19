@@ -109,4 +109,19 @@ public sealed class User : Entity, IFactoryScoped
         FactoryId = factoryId;
         LineId = lineId;
     }
+    
+    public void ChangeRole(Role role)
+    {
+        if (!Enum.IsDefined(role))
+        {
+            throw new ArgumentOutOfRangeException(nameof(role), role, "Unknown role.");
+        }
+
+        Role = role;
+    }
+
+    /// <summary>The user can no longer sign in. Their data stays.</summary>
+    public void Deactivate() => IsActive = false;
+
+    public void Activate() => IsActive = true;
 }

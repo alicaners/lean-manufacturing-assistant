@@ -158,6 +158,21 @@ public class AuthServiceTests
         Assert.Null(await _service.RefreshAsync(tokens.RefreshToken, CancellationToken.None));
     }
 
+    [Fact]
+    public async Task Token_revoked_for_another_reason_raises_no_reuse_alarm()
+    {
+        var tokens = await LoginAsync();
+        await _service.LogoutAsync(tokens.RefreshToken, CancellationToken.None);
+        var savesBefore = _unitOfWork.SaveCount;
+
+        var result = await _service.RefreshAsync(tokens.RefreshToken, CancellationToken.None);
+
+        Assert.Null(result);
+        // No family revocation happened, so nothing new was saved.
+        Assert.Equal(savesBefore, _unitOfWork.SaveCount);
+        Assert.Equal(RefreshTokenRevocationReason.LoggedOut, Assert.Single(_refreshTokens.Items).RevocationReason);
+    }
+
     private async Task<AuthTokens> LoginAsync()
     {
         var tokens = await _service.LoginAsync("ali.sezer", Password, CancellationToken.None);
@@ -202,9 +217,14 @@ public class AuthServiceTests
         public Task<User?> FindByIdAsync(Guid id, CancellationToken cancellationToken) =>
             Task.FromResult(Items.SingleOrDefault(user => user.Id == id));
 
-            
         public Task<bool> AnyAsync(CancellationToken cancellationToken) =>
             Task.FromResult(Items.Count > 0);
+
+        public Task<IReadOnlyList<User>> ListAsync(CancellationToken cancellationToken) =>
+            Task.FromResult<IReadOnlyList<User>>(Items.OrderBy(user => user.UserName).ToList());
+
+        public Task<bool> IsUserNameTakenAsync(string userName, CancellationToken cancellationToken) =>
+            Task.FromResult(Items.Any(user => user.UserName == userName));
 
         public void Add(User user) => Items.Add(user);
     }
@@ -220,6 +240,11 @@ public class AuthServiceTests
             Guid familyId, CancellationToken cancellationToken) =>
             Task.FromResult<IReadOnlyList<RefreshToken>>(
                 Items.Where(token => token.FamilyId == familyId && !token.IsRevoked).ToList());
+
+        public Task<IReadOnlyList<RefreshToken>> ListActiveForUserAsync(
+            Guid userId, CancellationToken cancellationToken) =>
+            Task.FromResult<IReadOnlyList<RefreshToken>>(
+                Items.Where(token => token.UserId == userId && !token.IsRevoked).ToList());
 
         public void Add(RefreshToken token) => Items.Add(token);
     }

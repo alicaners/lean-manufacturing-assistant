@@ -76,4 +76,35 @@ public class UserTests
         Assert.Null(user.FactoryId);
         Assert.Null(user.LineId);
     }
+
+    
+    [Fact]
+    public void ChangeRole_sets_the_new_role()
+    {
+        var user = User.Create("ali.sezer", "Ali Caner Sezer", "hash", Role.Operator);
+
+        user.ChangeRole(Role.Supervisor);
+
+        Assert.Equal(Role.Supervisor, user.Role);
+    }
+
+    [Fact]
+    public void ChangeRole_rejects_an_unknown_role()
+    {
+        var user = User.Create("ali.sezer", "Ali Caner Sezer", "hash", Role.Operator);
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => user.ChangeRole((Role)99));
+    }
+
+    [Fact]
+    public void Deactivated_user_can_be_activated_again()
+    {
+        var user = User.Create("ali.sezer", "Ali Caner Sezer", "hash", Role.Operator);
+
+        user.Deactivate();
+        Assert.False(user.IsActive);
+
+        user.Activate();
+        Assert.True(user.IsActive);
+    }
 }
