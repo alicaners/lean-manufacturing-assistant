@@ -1,13 +1,14 @@
 using LeanAssistant.Api.ErrorHandling;
+using LeanAssistant.Api.Identity;
 using LeanAssistant.Api.Middleware;
+using LeanAssistant.Api.Observability;
+using LeanAssistant.Api.Validation;
+using LeanAssistant.Application;
 using LeanAssistant.Infrastructure;
 using LeanAssistant.Infrastructure.Logging;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 using Serilog.Events;
-using LeanAssistant.Api.Validation;
-using LeanAssistant.Application;
-using LeanAssistant.Api.Observability;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,7 @@ var redisConnection = builder.Configuration.GetConnectionString("Redis")
     ?? throw new InvalidOperationException("Connection string 'Redis' is not configured.");
 
 builder.Services.AddInfrastructure(databaseConnection, redisConnection);
+builder.Services.AddIdentityApi(builder.Configuration);
 builder.Services.AddObservability(builder.Configuration);
 
 builder.Services.AddProblemDetails(options =>
@@ -37,9 +39,11 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddApplication();
 builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>());
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options => options.AddDocumentTransformer<BearerSecuritySchemeTransformer>());
 
 var app = builder.Build();
+
+await app.EnsureBootstrapAdminAsync();
 
 app.UseMiddleware<CorrelationIdMiddleware>();
 app.UseSerilogRequestLogging(options =>
@@ -62,24 +66,29 @@ app.UseStatusCodePages();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.MapOpenApi().AllowAnonymous();
     app.UseSwaggerUI(options =>
-        options.SwaggerEndpoint("/openapi/v1.json", "Lean Assistant API v1"));
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "Lean Assistant API v1");
+        options.EnablePersistAuthorization();
+    });
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
+app.UseRateLimiter();
 
 app.MapControllers();
 
 app.MapHealthChecks("/health", new HealthCheckOptions
 {
     Predicate = _ => false
-});
+}).AllowAnonymous();
 
 app.MapHealthChecks("/ready", new HealthCheckOptions
 {
     Predicate = check => check.Tags.Contains("ready")
-});
+}).AllowAnonymous();
 
-app.Run();
+await app.RunAsync();

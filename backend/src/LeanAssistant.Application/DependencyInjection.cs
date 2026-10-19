@@ -1,5 +1,6 @@
 using System.Globalization;
 using FluentValidation;
+using LeanAssistant.Application.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LeanAssistant.Application;
@@ -13,6 +14,9 @@ public static class DependencyInjection
         ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("en");
 
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
+
+        services.AddScoped<AuthService>();
+        services.AddScoped<AdminBootstrapper>();
 
         return services;
     }
