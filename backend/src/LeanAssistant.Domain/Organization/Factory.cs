@@ -3,7 +3,7 @@ using LeanAssistant.Domain.SharedKernel;
 namespace LeanAssistant.Domain.Organization;
 
 /// <summary>A plant (fabrika): the top of the organization tree.</summary>
-public sealed class Factory : Entity, IFactoryRoot
+public sealed class Factory : Entity, IFactoryRoot, IAudited
 {
     public const int NameMaxLength = 128;
     public const int CodeMaxLength = 16;

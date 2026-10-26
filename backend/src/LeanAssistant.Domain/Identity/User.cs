@@ -6,7 +6,7 @@ namespace LeanAssistant.Domain.Identity;
 /// A person who can sign in to the app.
 /// The password itself is never stored, only its hash.
 /// </summary>
-public sealed class User : Entity, IFactoryScoped
+public sealed class User : Entity, IFactoryScoped, IAudited
 {
     public const int UserNameMaxLength = 64;
     public const int FullNameMaxLength = 128;

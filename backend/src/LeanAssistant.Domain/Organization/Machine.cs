@@ -5,7 +5,7 @@ using LeanAssistant.Domain.SharedKernel;
 namespace LeanAssistant.Domain.Organization;
 
 /// <summary>A machine or station on a line. Downtime is always reported against a machine.</summary>
-public sealed class Machine : Entity, IFactoryScoped
+public sealed class Machine : Entity, IFactoryScoped, IAudited
 {
     public const int NameMaxLength = 128;
     public const int CodeMaxLength = 32;

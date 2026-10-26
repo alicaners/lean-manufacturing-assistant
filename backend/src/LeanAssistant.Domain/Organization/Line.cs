@@ -3,7 +3,7 @@ using LeanAssistant.Domain.SharedKernel;
 namespace LeanAssistant.Domain.Organization;
 
 /// <summary>A production line (hat) inside a department.</summary>
-public sealed class Line : Entity, IFactoryScoped
+public sealed class Line : Entity, IFactoryScoped, IAudited
 {
     public const int NameMaxLength = 128;
 

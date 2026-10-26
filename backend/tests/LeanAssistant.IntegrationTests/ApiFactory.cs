@@ -1,10 +1,10 @@
+using LeanAssistant.Application.Abstractions;
+using LeanAssistant.Domain.Identity;
 using LeanAssistant.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Testcontainers.PostgreSql;
-using LeanAssistant.Application.Abstractions;
-using LeanAssistant.Domain.Identity;
 
 namespace LeanAssistant.IntegrationTests;
 
@@ -26,10 +26,7 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
 
         // The schema must exist before the app starts, because startup
         // already queries the Users table (bootstrap admin).
-        var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseNpgsql(_database.GetConnectionString())
-            .Options;
-                await using (var dbContext = new AppDbContext(options, new NoCurrentUser()))
+        await using (var dbContext = CreateDbContext())
         {
             await dbContext.Database.MigrateAsync();
         }
@@ -42,6 +39,19 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
         SetSetting("Bootstrap__AdminUserName", AdminUserName);
         SetSetting("Bootstrap__AdminPassword", AdminPassword);
         SetSetting("RateLimiting__LoginPermitLimit", "1000");
+    }
+
+    /// <summary>
+    /// Opens the test database directly, outside any request and without a user,
+    /// for checks the API does not expose (e.g. audit entries).
+    /// </summary>
+    public AppDbContext CreateDbContext()
+    {
+        var options = new DbContextOptionsBuilder<AppDbContext>()
+            .UseNpgsql(_database.GetConnectionString())
+            .Options;
+
+        return new AppDbContext(options, new NoCurrentUser());
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -59,8 +69,7 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
     private static void SetSetting(string name, string value) =>
         Environment.SetEnvironmentVariable(name, value);
 
-        
-    /// <summary>Migrations run before the app starts, outside any request.</summary>
+    /// <summary>No signed-in user: the plant scope filter does not apply.</summary>
     private sealed class NoCurrentUser : ICurrentUser
     {
         public bool IsAuthenticated => false;

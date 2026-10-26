@@ -3,7 +3,7 @@ using LeanAssistant.Domain.SharedKernel;
 namespace LeanAssistant.Domain.Organization;
 
 /// <summary>A department (bölüm) of a plant, e.g. "Pres" or "Montaj".</summary>
-public sealed class Department : Entity, IFactoryScoped
+public sealed class Department : Entity, IFactoryScoped, IAudited
 {
     public const int NameMaxLength = 128;
 

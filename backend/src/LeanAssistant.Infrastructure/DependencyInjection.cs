@@ -17,7 +17,8 @@ public static class DependencyInjection
         string redisConnectionString)
     {
         services.AddSingleton(TimeProvider.System);
-        services.AddSingleton<AuditInterceptor>();
+                // Scoped, not singleton: it needs the signed-in user of the current request.
+        services.AddScoped<AuditInterceptor>();
 
         services.AddDbContext<AppDbContext>((serviceProvider, options) =>
             options

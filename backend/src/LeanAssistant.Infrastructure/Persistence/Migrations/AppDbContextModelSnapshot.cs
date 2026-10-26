@@ -22,6 +22,47 @@ namespace LeanAssistant.Infrastructure.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("LeanAssistant.Domain.Auditing.AuditEntry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)");
+
+                    b.Property<string>("Changes")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.Property<Guid>("EntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("EntityType")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<Guid?>("FactoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("OccurredAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FactoryId");
+
+                    b.HasIndex("EntityType", "EntityId");
+
+                    b.ToTable("AuditEntries", (string)null);
+                });
+
             modelBuilder.Entity("LeanAssistant.Domain.Identity.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
