@@ -52,7 +52,8 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options, ICurren
 
     /// <summary>
     /// e => !e.IsDeleted
-    ///      && (for plant-scoped entities) (!ScopeApplies || (ScopeFactoryId != null && e.FactoryId == ScopeFactoryId))
+    ///      && (plant-scoped) (!ScopeApplies || (ScopeFactoryId != null && e.FactoryId == ScopeFactoryId))
+    ///      && (the plant itself) (!ScopeApplies || (ScopeFactoryId != null && e.Id == ScopeFactoryId))
     /// </summary>
     private LambdaExpression BuildQueryFilter(Type entityType)
     {
@@ -63,13 +64,18 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options, ICurren
 
         if (typeof(IFactoryScoped).IsAssignableFrom(entityType))
         {
-            filter = Expression.AndAlso(filter, BuildFactoryScope(entity));
+            filter = Expression.AndAlso(filter, BuildFactoryScope(entity, nameof(IFactoryScoped.FactoryId)));
+        }
+        else if (typeof(IFactoryRoot).IsAssignableFrom(entityType))
+        {
+            filter = Expression.AndAlso(filter, BuildFactoryScope(entity, nameof(Entity.Id)));
         }
 
         return Expression.Lambda(filter, entity);
     }
 
-    private Expression BuildFactoryScope(ParameterExpression entity)
+    /// <param name="factoryIdProperty">The property that holds the plant id of a row.</param>
+    private Expression BuildFactoryScope(ParameterExpression entity, string factoryIdProperty)
     {
         // "this" is replaced by EF Core with the DbContext running the query,
         // so the values are read from the current request's user every time.
@@ -77,7 +83,7 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options, ICurren
         var scopeApplies = Expression.Property(context, ScopeAppliesProperty);
         var scopeFactoryId = Expression.Property(context, ScopeFactoryIdProperty);
 
-        Expression entityFactoryId = Expression.Property(entity, nameof(IFactoryScoped.FactoryId));
+        Expression entityFactoryId = Expression.Property(entity, factoryIdProperty);
         if (entityFactoryId.Type != typeof(Guid?))
         {
             entityFactoryId = Expression.Convert(entityFactoryId, typeof(Guid?));

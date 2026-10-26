@@ -43,6 +43,12 @@ Her işlem iki kontrolden geçer ve **ikisi de backend'de** yapılır:
 **Kapsam dışı kayıt:** Kullanıcı kendi fabrikası dışındaki bir kaydın kimliğiyle istek
 yaparsa sunucu **404 Not Found** döner. Kaydın var olduğu bile belli edilmez.
 
+
+**Hat kapsamı:** Fabrika kapsamı her sorguya otomatik uygulanır. Hat kapsamı ise otomatik
+bir filtre değildir: yalnızca tabloda "kendi hattı" yazan işlemlerde (duruş açma, öneri)
+o işlemin içinde kontrol edilir. Sebep: Şef 5S denetimini, Bakım Teknisyeni duruş çözmeyi
+fabrika genelinde yapar; otomatik bir hat filtresi bu işleri engellerdi.
+
 ---
 
 ## 3. Andon (duruş bildirimi)
