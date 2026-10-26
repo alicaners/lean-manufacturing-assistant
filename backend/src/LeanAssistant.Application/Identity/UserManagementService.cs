@@ -18,13 +18,30 @@ public sealed class UserManagementService(
     IUnitOfWork unitOfWork,
     IPasswordHasher passwordHasher,
     ICurrentUser currentUser,
+    IOrganizationDirectory organizationDirectory,
     TimeProvider timeProvider,
     ILogger<UserManagementService> logger)
 {
-    public async Task<IReadOnlyList<UserResponse>> ListAsync(CancellationToken cancellationToken)
+    public async Task<CursorPage<UserResponse>> ListAsync(
+        UserListQuery query, CancellationToken cancellationToken)
     {
-        var visibleUsers = await users.ListAsync(cancellationToken);
-        return visibleUsers.Select(UserResponse.From).ToList();
+        // The validator has already rejected damaged cursors; no cursor means the first page.
+        Cursor.TryDecode<UserListPosition>(query.Cursor, out var after);
+
+        // One row more than asked: if it exists, there is a next page.
+        var found = await users.ListAsync(
+            new UserFilter(query.Search, query.Role, query.IsActive),
+            after?.UserName,
+            query.Limit + 1,
+            cancellationToken);
+
+        var items = found.Take(query.Limit).Select(UserResponse.From).ToArray();
+
+        var nextCursor = found.Count > query.Limit
+            ? Cursor.Encode(new UserListPosition(items[^1].UserName))
+            : null;
+
+        return new CursorPage<UserResponse>(items, nextCursor);
     }
 
     public async Task<UserResponse?> GetAsync(Guid id, CancellationToken cancellationToken)
@@ -41,6 +58,11 @@ public sealed class UserManagementService(
             return UserManagementResult.Failure(UserManagementError.OutsideScope);
         }
 
+        if (!await IsKnownScopeAsync(request.FactoryId, request.LineId, cancellationToken))
+        {
+            return UserManagementResult.Failure(UserManagementError.UnknownScope);
+        }
+
         var userName = User.NormalizeUserName(request.UserName);
         if (await users.IsUserNameTakenAsync(userName, cancellationToken))
         {
@@ -48,8 +70,8 @@ public sealed class UserManagementService(
         }
 
         var user = User.Create(userName, request.FullName, passwordHasher.Hash(request.Password), request.Role);
-        user.AssignScope(request.FactoryId, request.LineId); 
-        
+        user.AssignScope(request.FactoryId, request.LineId);
+
         // The admin knows this password, so the user must replace it at first sign-in.
         user.RequirePasswordChange();
 
@@ -77,6 +99,11 @@ public sealed class UserManagementService(
         if (!CanAssignPlant(request.FactoryId))
         {
             return UserManagementResult.Failure(UserManagementError.OutsideScope);
+        }
+
+        if (!await IsKnownScopeAsync(request.FactoryId, request.LineId, cancellationToken))
+        {
+            return UserManagementResult.Failure(UserManagementError.UnknownScope);
         }
 
         var changed = user.Role != request.Role
@@ -153,7 +180,7 @@ public sealed class UserManagementService(
             return UserManagementResult.Failure(UserManagementError.NotFound);
         }
 
-        user.ReplacePasswordHash(passwordHasher.Hash(request.NewPassword)); 
+        user.ReplacePasswordHash(passwordHasher.Hash(request.NewPassword));
         user.RequirePasswordChange();
 
         // Anyone who knew the old password may still hold a session.
@@ -179,6 +206,12 @@ public sealed class UserManagementService(
     /// <summary>A system admin (no plant) may use any plant; a plant admin only their own.</summary>
     private bool CanAssignPlant(Guid? factoryId) =>
         currentUser.FactoryId is null || factoryId == currentUser.FactoryId;
+
+    /// <summary>A system admin has no plant, so there is nothing to check.</summary>
+    private async Task<bool> IsKnownScopeAsync(
+        Guid? factoryId, Guid? lineId, CancellationToken cancellationToken) =>
+        factoryId is not { } plantId
+        || await organizationDirectory.IsValidScopeAsync(plantId, lineId, cancellationToken);
 
     private bool IsSelf(Guid id) => currentUser.UserId == id;
 }

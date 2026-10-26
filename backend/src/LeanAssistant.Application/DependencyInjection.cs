@@ -2,6 +2,8 @@ using System.Globalization;
 using FluentValidation;
 using LeanAssistant.Application.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using LeanAssistant.Application.Organization;
+using LeanAssistant.Application.Seeding;
 
 namespace LeanAssistant.Application;
 
@@ -18,7 +20,9 @@ public static class DependencyInjection
         services.AddScoped<AuthService>();
         services.AddScoped<AdminBootstrapper>();
         services.AddScoped<UserManagementService>();
-
+        services.AddScoped<OrganizationService>();
+        services.AddScoped<DemoDataSeeder>();
+        
         return services;
     }
 }

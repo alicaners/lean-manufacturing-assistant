@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 using Serilog.Events;
 using System.Text.Json.Serialization;
+using LeanAssistant.Api.Seeding;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +51,7 @@ builder.Services.AddOpenApi(options => options.AddDocumentTransformer<BearerSecu
 var app = builder.Build();
 
 await app.EnsureBootstrapAdminAsync();
+await app.SeedDemoDataAsync();
 
 app.UseMiddleware<CorrelationIdMiddleware>();
 app.UseSerilogRequestLogging(options =>

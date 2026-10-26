@@ -264,8 +264,10 @@ public class AuthServiceTests
         public Task<bool> AnyAsync(CancellationToken cancellationToken) =>
             Task.FromResult(Items.Count > 0);
 
-        public Task<IReadOnlyList<User>> ListAsync(CancellationToken cancellationToken) =>
-            Task.FromResult<IReadOnlyList<User>>(Items.OrderBy(user => user.UserName).ToList());
+                // AuthService never lists users, so filters and paging are not simulated here.
+        public Task<IReadOnlyList<User>> ListAsync(
+            UserFilter filter, string? afterUserName, int take, CancellationToken cancellationToken) =>
+            Task.FromResult<IReadOnlyList<User>>(Items.OrderBy(user => user.UserName).Take(take).ToList());
 
         public Task<bool> IsUserNameTakenAsync(string userName, CancellationToken cancellationToken) =>
             Task.FromResult(Items.Any(user => user.UserName == userName));

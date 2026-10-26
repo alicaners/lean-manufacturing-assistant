@@ -4,6 +4,8 @@ using LeanAssistant.Infrastructure.Identity;
 using LeanAssistant.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using LeanAssistant.Application.Organization;
+using LeanAssistant.Infrastructure.Organization;
 
 namespace LeanAssistant.Infrastructure;
 
@@ -15,7 +17,8 @@ public static class DependencyInjection
         string redisConnectionString)
     {
         services.AddSingleton(TimeProvider.System);
-        services.AddSingleton<AuditInterceptor>();
+                // Scoped, not singleton: it needs the signed-in user of the current request.
+        services.AddScoped<AuditInterceptor>();
 
         services.AddDbContext<AppDbContext>((serviceProvider, options) =>
             options
@@ -38,6 +41,18 @@ public static class DependencyInjection
         // Identity: data access, one instance per request like the DbContext.
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        
+        // Organization: data access, one instance per request like the DbContext.
+        services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+        services.AddScoped<IOrganizationDirectory, OrganizationDirectory>(); 
+        
+        // Organization: the tree cache lives in Redis, shared by every API instance.
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = redisConnectionString;
+            options.InstanceName = "lean:";
+        });
+        services.AddSingleton<IOrganizationTreeCache, RedisOrganizationTreeCache>();
 
         return services;
     }

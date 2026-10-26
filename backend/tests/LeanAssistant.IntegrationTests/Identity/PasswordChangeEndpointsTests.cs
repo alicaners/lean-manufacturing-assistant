@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using LeanAssistant.Api.Identity;
 using LeanAssistant.Domain.Identity;
+using LeanAssistant.IntegrationTests.Organization;
 
 namespace LeanAssistant.IntegrationTests.Identity;
 
@@ -15,8 +16,9 @@ public sealed class PasswordChangeEndpointsTests(ApiFactory factory)
     public async Task Temporary_password_only_opens_the_identity_endpoints()
     {
         var admin = await _api.LoginAsAdminAsync();
+        var plant = await _api.CreatePlantAsync(admin);
         // An admin role passes the ManageUsers check, so a 403 can only come from the lock.
-        var plantAdmin = await _api.CreateUserAsync(admin, Role.Admin, Guid.CreateVersion7());
+        var plantAdmin = await _api.CreateUserAsync(admin, Role.Admin, plant.Id);
         var tokens = await _api.LoginAsync(plantAdmin.UserName, IdentityTestClient.InitialPassword);
 
         var me = await _api.SendAsync(HttpMethod.Get, "/api/auth/me", tokens);
@@ -35,7 +37,8 @@ public sealed class PasswordChangeEndpointsTests(ApiFactory factory)
     public async Task Changing_the_password_unlocks_the_api_and_closes_other_sessions()
     {
         var admin = await _api.LoginAsAdminAsync();
-        var user = await _api.CreateUserAsync(admin, Role.Admin, Guid.CreateVersion7());
+        var plant = await _api.CreatePlantAsync(admin);
+        var user = await _api.CreateUserAsync(admin, Role.Admin, plant.Id);
         var phone = await _api.LoginAsync(user.UserName, IdentityTestClient.InitialPassword);
         var tablet = await _api.LoginAsync(user.UserName, IdentityTestClient.InitialPassword);
 
@@ -57,7 +60,8 @@ public sealed class PasswordChangeEndpointsTests(ApiFactory factory)
     public async Task Wrong_current_password_is_rejected()
     {
         var admin = await _api.LoginAsAdminAsync();
-        var user = await _api.CreateUserAsync(admin, Role.Operator, Guid.CreateVersion7());
+        var plant = await _api.CreatePlantAsync(admin);
+        var user = await _api.CreateUserAsync(admin, Role.Operator, plant.Id);
         var tokens = await _api.LoginAsync(user.UserName, IdentityTestClient.InitialPassword);
 
         var response = await _api.TryChangePasswordAsync(
@@ -70,7 +74,8 @@ public sealed class PasswordChangeEndpointsTests(ApiFactory factory)
     public async Task New_password_must_differ_from_the_current_one()
     {
         var admin = await _api.LoginAsAdminAsync();
-        var user = await _api.CreateUserAsync(admin, Role.Operator, Guid.CreateVersion7());
+        var plant = await _api.CreatePlantAsync(admin);
+        var user = await _api.CreateUserAsync(admin, Role.Operator, plant.Id);
         var tokens = await _api.LoginAsync(user.UserName, IdentityTestClient.InitialPassword);
 
         var response = await _api.TryChangePasswordAsync(

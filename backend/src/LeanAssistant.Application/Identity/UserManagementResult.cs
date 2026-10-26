@@ -13,7 +13,10 @@ public enum UserManagementError
     OutsideScope,
 
     /// <summary>Admins cannot lock themselves out by changing their own access.</summary>
-    SelfChange
+    SelfChange,
+    
+    /// <summary>The plant does not exist, or the line is not part of that plant.</summary>
+    UnknownScope
 }
 
 public sealed record UserManagementResult(UserManagementError? Error, UserResponse? Value)
