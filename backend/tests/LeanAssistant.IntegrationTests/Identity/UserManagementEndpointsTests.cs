@@ -2,6 +2,7 @@ using System.Net;
 using LeanAssistant.Application.Identity;
 using LeanAssistant.Domain.Identity;
 using LeanAssistant.IntegrationTests.Organization;
+using LeanAssistant.Application.Abstractions;
 
 namespace LeanAssistant.IntegrationTests.Identity;
 
@@ -125,7 +126,7 @@ public sealed class UserManagementEndpointsTests(ApiFactory factory)
         Assert.Equal(HttpStatusCode.NotFound, get.StatusCode);
         Assert.Equal(HttpStatusCode.NotFound, deactivate.StatusCode);
 
-        var visible = await IdentityTestClient.ReadAsync<List<UserResponse>>(list);
+        var visible = (await IdentityTestClient.ReadAsync<CursorPage<UserResponse>>(list)).Items;
         Assert.DoesNotContain(visible, user => user.Id == stranger.Id);
         Assert.All(visible, user => Assert.Equal(plant.Id, user.FactoryId));
     }

@@ -2,6 +2,7 @@ using System.Diagnostics;
 using LeanAssistant.Application.Identity;
 using LeanAssistant.Domain.Identity;
 using Microsoft.AspNetCore.Mvc;
+using LeanAssistant.Application.Abstractions;
 
 namespace LeanAssistant.Api.Identity;
 
@@ -14,10 +15,16 @@ namespace LeanAssistant.Api.Identity;
 [RequirePermission(Permission.ManageUsers)]
 public sealed class UsersController(UserManagementService userManagement) : ControllerBase
 {
+        /// <summary>
+    /// One page of users. Filter with search, role and isActive; send the returned
+    /// nextCursor back as cursor to get the next page.
+    /// </summary>
     [HttpGet]
-    [ProducesResponseType<IReadOnlyList<UserResponse>>(StatusCodes.Status200OK)]
-    public async Task<ActionResult<IReadOnlyList<UserResponse>>> List(CancellationToken cancellationToken) =>
-        Ok(await userManagement.ListAsync(cancellationToken));
+    [ProducesResponseType<CursorPage<UserResponse>>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<CursorPage<UserResponse>>> List(
+        [FromQuery] UserListQuery query, CancellationToken cancellationToken) =>
+        Ok(await userManagement.ListAsync(query, cancellationToken));
 
     [HttpGet("{id:guid}")]
     [ProducesResponseType<UserResponse>(StatusCodes.Status200OK)]

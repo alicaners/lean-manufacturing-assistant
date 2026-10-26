@@ -22,10 +22,26 @@ public sealed class UserManagementService(
     TimeProvider timeProvider,
     ILogger<UserManagementService> logger)
 {
-    public async Task<IReadOnlyList<UserResponse>> ListAsync(CancellationToken cancellationToken)
+    public async Task<CursorPage<UserResponse>> ListAsync(
+        UserListQuery query, CancellationToken cancellationToken)
     {
-        var visibleUsers = await users.ListAsync(cancellationToken);
-        return visibleUsers.Select(UserResponse.From).ToList();
+        // The validator has already rejected damaged cursors; no cursor means the first page.
+        Cursor.TryDecode<UserListPosition>(query.Cursor, out var after);
+
+        // One row more than asked: if it exists, there is a next page.
+        var found = await users.ListAsync(
+            new UserFilter(query.Search, query.Role, query.IsActive),
+            after?.UserName,
+            query.Limit + 1,
+            cancellationToken);
+
+        var items = found.Take(query.Limit).Select(UserResponse.From).ToArray();
+
+        var nextCursor = found.Count > query.Limit
+            ? Cursor.Encode(new UserListPosition(items[^1].UserName))
+            : null;
+
+        return new CursorPage<UserResponse>(items, nextCursor);
     }
 
     public async Task<UserResponse?> GetAsync(Guid id, CancellationToken cancellationToken)
