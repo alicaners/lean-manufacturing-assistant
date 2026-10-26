@@ -29,6 +29,14 @@ public sealed class OrganizationController(OrganizationService organization) : C
     public async Task<ActionResult<FactoryResponse>> GetFactory(Guid id, CancellationToken cancellationToken) =>
         ToResponse(await organization.GetFactoryAsync(id, cancellationToken));
 
+    /// <summary>The whole plant in one response, served from the cache when possible.</summary>
+    [HttpGet("factories/{id:guid}/tree")]
+    [ProducesResponseType<FactoryTreeResponse>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<FactoryTreeResponse>> GetFactoryTree(
+        Guid id, CancellationToken cancellationToken) =>
+        ToResponse(await organization.GetTreeAsync(id, cancellationToken));
+
     [HttpPost("factories")]
     [RequirePermission(Permission.ManageOrganization)]
     [ProducesResponseType<FactoryResponse>(StatusCodes.Status201Created)]

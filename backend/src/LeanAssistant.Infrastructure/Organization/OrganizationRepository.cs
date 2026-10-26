@@ -52,6 +52,15 @@ public sealed class OrganizationRepository(AppDbContext dbContext) : IOrganizati
             .OrderBy(line => line.Name)
             .ToListAsync(cancellationToken);
 
+            
+    public async Task<IReadOnlyList<Line>> ListLinesOfFactoryAsync(
+        Guid factoryId, CancellationToken cancellationToken) =>
+        await dbContext.Set<Line>()
+            .AsNoTracking()
+            .Where(line => line.FactoryId == factoryId)
+            .OrderBy(line => line.Name)
+            .ToListAsync(cancellationToken);
+
     public Task<Line?> FindLineAsync(Guid id, CancellationToken cancellationToken) =>
         dbContext.Set<Line>()
             .SingleOrDefaultAsync(line => line.Id == id, cancellationToken);
@@ -66,6 +75,15 @@ public sealed class OrganizationRepository(AppDbContext dbContext) : IOrganizati
         await dbContext.Set<Machine>()
             .AsNoTracking()
             .Where(machine => machine.LineId == lineId)
+            .OrderBy(machine => machine.Code)
+            .ToListAsync(cancellationToken);
+
+            
+    public async Task<IReadOnlyList<Machine>> ListMachinesOfFactoryAsync(
+        Guid factoryId, CancellationToken cancellationToken) =>
+        await dbContext.Set<Machine>()
+            .AsNoTracking()
+            .Where(machine => machine.FactoryId == factoryId)
             .OrderBy(machine => machine.Code)
             .ToListAsync(cancellationToken);
 

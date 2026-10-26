@@ -9,9 +9,11 @@ namespace LeanAssistant.Application.Organization;
 /// Records outside the caller's plant are hidden by the query filter, so looking one up
 /// finds nothing and the API answers 404. A child is always created under a parent that
 /// was looked up first, so it can only be added inside the caller's own plant.
+/// Every change that shows in the plant's tree also clears the cached tree.
 /// </summary>
 public sealed class OrganizationService(
     IOrganizationRepository organization,
+    IOrganizationTreeCache treeCache,
     IUnitOfWork unitOfWork,
     ICurrentUser currentUser,
     ILogger<OrganizationService> logger)
@@ -34,6 +36,33 @@ public sealed class OrganizationService(
         }
 
         return FactoryResponse.From(factory);
+    }
+
+    /// <summary>The whole plant in one response, from the cache when possible.</summary>
+    public async Task<OrganizationResult<FactoryTreeResponse>> GetTreeAsync(
+        Guid factoryId, CancellationToken cancellationToken)
+    {
+        // Always looked up first, even when the tree is cached:
+        // the scope filter, not the cache, decides who may see the plant.
+        var factory = await organization.FindFactoryAsync(factoryId, cancellationToken);
+        if (factory is null)
+        {
+            return OrganizationError.NotFound;
+        }
+
+        if (await treeCache.GetAsync(factoryId, cancellationToken) is { } cached)
+        {
+            return cached;
+        }
+
+        var departments = await organization.ListDepartmentsAsync(factoryId, cancellationToken);
+        var lines = await organization.ListLinesOfFactoryAsync(factoryId, cancellationToken);
+        var machines = await organization.ListMachinesOfFactoryAsync(factoryId, cancellationToken);
+
+        var tree = FactoryTreeResponse.Build(factory, departments, lines, machines);
+        await treeCache.SetAsync(tree, cancellationToken);
+
+        return tree;
     }
 
     public async Task<OrganizationResult<FactoryResponse>> CreateFactoryAsync(
@@ -70,6 +99,7 @@ public sealed class OrganizationService(
 
         factory.Rename(request.Name);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+        await ForgetTreeAsync(factory.Id);
 
         return FactoryResponse.From(factory);
     }
@@ -119,6 +149,7 @@ public sealed class OrganizationService(
         var department = Department.Create(factory, name);
         organization.Add(department);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+        await ForgetTreeAsync(department.FactoryId);
 
         return DepartmentResponse.From(department);
     }
@@ -141,6 +172,7 @@ public sealed class OrganizationService(
 
         department.Rename(name);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+        await ForgetTreeAsync(department.FactoryId);
 
         return DepartmentResponse.From(department);
     }
@@ -189,6 +221,7 @@ public sealed class OrganizationService(
         var line = Line.Create(department, name);
         organization.Add(line);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+        await ForgetTreeAsync(line.FactoryId);
 
         return LineResponse.From(line);
     }
@@ -211,6 +244,7 @@ public sealed class OrganizationService(
 
         line.Rename(name);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+        await ForgetTreeAsync(line.FactoryId);
 
         return LineResponse.From(line);
     }
@@ -272,6 +306,7 @@ public sealed class OrganizationService(
         var machine = Machine.Create(line, request.Name, code);
         organization.Add(machine);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+        await ForgetTreeAsync(machine.FactoryId);
 
         logger.LogInformation("Machine {MachineId} was created by {UserId}", machine.Id, currentUser.UserId);
         return MachineResponse.From(machine);
@@ -288,10 +323,12 @@ public sealed class OrganizationService(
 
         machine.Rename(request.Name);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+        await ForgetTreeAsync(machine.FactoryId);
 
         return MachineResponse.From(machine);
     }
 
+    /// <remarks>The tree does not show QR codes, so the cached tree stays valid.</remarks>
     public async Task<OrganizationResult<MachineResponse>> RegenerateQrCodeAsync(
         Guid id, CancellationToken cancellationToken)
     {
@@ -308,4 +345,9 @@ public sealed class OrganizationService(
             "QR code of machine {MachineId} was replaced by {UserId}", machine.Id, currentUser.UserId);
         return MachineResponse.From(machine);
     }
+
+    // Runs after the change is saved. Not cancellable: if the caller gives up now,
+    // the change is already in the database and the old tree must still go.
+    private Task ForgetTreeAsync(Guid factoryId) =>
+        treeCache.InvalidateAsync(factoryId, CancellationToken.None);
 }

@@ -44,7 +44,15 @@ public static class DependencyInjection
         
         // Organization: data access, one instance per request like the DbContext.
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
-        services.AddScoped<IOrganizationDirectory, OrganizationDirectory>();
+        services.AddScoped<IOrganizationDirectory, OrganizationDirectory>(); 
+        
+        // Organization: the tree cache lives in Redis, shared by every API instance.
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = redisConnectionString;
+            options.InstanceName = "lean:";
+        });
+        services.AddSingleton<IOrganizationTreeCache, RedisOrganizationTreeCache>();
 
         return services;
     }

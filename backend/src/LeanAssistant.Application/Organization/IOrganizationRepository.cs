@@ -26,6 +26,9 @@ public interface IOrganizationRepository
     void Add(Department department);
 
     Task<IReadOnlyList<Line>> ListLinesAsync(Guid departmentId, CancellationToken cancellationToken);
+    
+    /// <summary>Every line of the plant, for building its tree.</summary>
+    Task<IReadOnlyList<Line>> ListLinesOfFactoryAsync(Guid factoryId, CancellationToken cancellationToken);
 
     Task<Line?> FindLineAsync(Guid id, CancellationToken cancellationToken);
 
@@ -34,6 +37,10 @@ public interface IOrganizationRepository
     void Add(Line line);
 
     Task<IReadOnlyList<Machine>> ListMachinesAsync(Guid lineId, CancellationToken cancellationToken);
+
+    
+    /// <summary>Every machine of the plant, for building its tree.</summary>
+    Task<IReadOnlyList<Machine>> ListMachinesOfFactoryAsync(Guid factoryId, CancellationToken cancellationToken);
 
     Task<Machine?> FindMachineAsync(Guid id, CancellationToken cancellationToken);
 

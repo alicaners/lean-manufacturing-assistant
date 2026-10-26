@@ -5,11 +5,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Testcontainers.PostgreSql;
+using Testcontainers.Redis;
 
 namespace LeanAssistant.IntegrationTests;
 
 /// <summary>
-/// Runs the real API in memory against a throw-away PostgreSQL container.
+/// Runs the real API in memory against throw-away PostgreSQL and Redis containers.
 /// One instance is shared by every test in the <see cref="ApiCollection"/>.
 /// </summary>
 public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
@@ -20,9 +21,13 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
     private readonly PostgreSqlContainer _database =
         new PostgreSqlBuilder("postgres:17-alpine").Build();
 
+    private readonly RedisContainer _cache =
+        new RedisBuilder("redis:7-alpine").Build();
+
     public async Task InitializeAsync()
     {
-        await _database.StartAsync();
+        // Both containers start at the same time.
+        await Task.WhenAll(_database.StartAsync(), _cache.StartAsync());
 
         // The schema must exist before the app starts, because startup
         // already queries the Users table (bootstrap admin).
@@ -34,7 +39,7 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
         // Program.cs reads these while it builds the app, so they are given as
         // environment variables, which override every other configuration source.
         SetSetting("ConnectionStrings__Database", _database.GetConnectionString());
-        SetSetting("ConnectionStrings__Redis", "localhost:6399,abortConnect=false");
+        SetSetting("ConnectionStrings__Redis", _cache.GetConnectionString());
         SetSetting("Auth__SigningKey", "integration-test-signing-key-that-is-long-enough");
         SetSetting("Bootstrap__AdminUserName", AdminUserName);
         SetSetting("Bootstrap__AdminPassword", AdminPassword);
@@ -63,7 +68,7 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
     async Task IAsyncLifetime.DisposeAsync()
     {
         await base.DisposeAsync();
-        await _database.DisposeAsync();
+        await Task.WhenAll(_database.DisposeAsync().AsTask(), _cache.DisposeAsync().AsTask());
     }
 
     private static void SetSetting(string name, string value) =>
