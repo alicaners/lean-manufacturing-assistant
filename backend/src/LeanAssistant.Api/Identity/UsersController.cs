@@ -111,6 +111,9 @@ public sealed class UsersController(UserManagementService userManagement) : Cont
         UserManagementError.SelfChange => Problem(
             statusCode: StatusCodes.Status400BadRequest,
             title: "You cannot change your own access or deactivate yourself."),
+        UserManagementError.UnknownScope => Problem(
+            statusCode: StatusCodes.Status400BadRequest,
+            title: "The plant does not exist, or the line is not part of it."),
         _ => throw new UnreachableException()
     };
 }

@@ -1,7 +1,7 @@
 using System.Net;
-using System.Net.Http.Json;
 using LeanAssistant.Application.Identity;
 using LeanAssistant.Domain.Identity;
+using LeanAssistant.IntegrationTests.Organization;
 
 namespace LeanAssistant.IntegrationTests.Identity;
 
@@ -22,8 +22,9 @@ public sealed class UserManagementEndpointsTests(ApiFactory factory)
     public async Task Operator_cannot_manage_users()
     {
         var admin = await _api.LoginAsAdminAsync();
+        var plant = await _api.CreatePlantAsync(admin);
         // Signed in with a chosen password, so a 403 here comes from the role, not the lock.
-        var operatorUser = await _api.CreateSignedInUserAsync(admin, Role.Operator, Guid.CreateVersion7());
+        var operatorUser = await _api.CreateSignedInUserAsync(admin, Role.Operator, plant.Id);
 
         var response = await _api.SendAsync(HttpMethod.Get, "/api/users", operatorUser.Tokens);
 
@@ -34,12 +35,12 @@ public sealed class UserManagementEndpointsTests(ApiFactory factory)
     public async Task Admin_creates_a_user_who_can_sign_in()
     {
         var admin = await _api.LoginAsAdminAsync();
-        var plantId = Guid.CreateVersion7();
+        var plant = await _api.CreatePlantAsync(admin);
 
-        var user = await _api.CreateUserAsync(admin, Role.Operator, plantId);
+        var user = await _api.CreateUserAsync(admin, Role.Operator, plant.Id);
 
         Assert.Equal(Role.Operator, user.Role);
-        Assert.Equal(plantId, user.FactoryId);
+        Assert.Equal(plant.Id, user.FactoryId);
         Assert.True(user.IsActive);
         Assert.True(user.MustChangePassword);
 
@@ -61,16 +62,47 @@ public sealed class UserManagementEndpointsTests(ApiFactory factory)
     }
 
     [Fact]
+    public async Task Unknown_plant_is_rejected()
+    {
+        var admin = await _api.LoginAsAdminAsync();
+        var request = new CreateUserRequest(
+            IdentityTestClient.NewUserName(), "Test User", IdentityTestClient.InitialPassword,
+            Role.Operator, Guid.CreateVersion7(), null);
+
+        var response = await _api.SendAsync(HttpMethod.Post, "/api/users", admin, request);
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Line_must_belong_to_the_plant()
+    {
+        var admin = await _api.LoginAsAdminAsync();
+        var plant = await _api.CreatePlantAsync(admin);
+        var otherPlant = await _api.CreatePlantAsync(admin);
+        var foreignMachine = await _api.CreateMachineAsync(admin, otherPlant.Id);
+
+        var request = new CreateUserRequest(
+            IdentityTestClient.NewUserName(), "Test User", IdentityTestClient.InitialPassword,
+            Role.Operator, plant.Id, foreignMachine.LineId);
+        var response = await _api.SendAsync(HttpMethod.Post, "/api/users", admin, request);
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
     public async Task User_names_are_unique_across_plants()
     {
         var admin = await _api.LoginAsAdminAsync();
-        var existing = await _api.CreateUserAsync(admin, Role.Operator, Guid.CreateVersion7());
-        var otherPlantAdmin = await _api.CreateSignedInUserAsync(admin, Role.Admin, Guid.CreateVersion7());
+        var plant = await _api.CreatePlantAsync(admin);
+        var otherPlant = await _api.CreatePlantAsync(admin);
+        var existing = await _api.CreateUserAsync(admin, Role.Operator, plant.Id);
+        var otherPlantAdmin = await _api.CreateSignedInUserAsync(admin, Role.Admin, otherPlant.Id);
 
         // The existing user is hidden from this plant admin, yet the name must still be refused.
         var request = new CreateUserRequest(
             existing.UserName.ToUpperInvariant(), "Copy", IdentityTestClient.InitialPassword,
-            Role.Operator, otherPlantAdmin.User.FactoryId, null);
+            Role.Operator, otherPlant.Id, null);
         var response = await _api.SendAsync(HttpMethod.Post, "/api/users", otherPlantAdmin.Tokens, request);
 
         Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
@@ -80,8 +112,10 @@ public sealed class UserManagementEndpointsTests(ApiFactory factory)
     public async Task Plant_admin_cannot_see_or_change_users_of_another_plant()
     {
         var admin = await _api.LoginAsAdminAsync();
-        var plantAdmin = await _api.CreateSignedInUserAsync(admin, Role.Admin, Guid.CreateVersion7());
-        var stranger = await _api.CreateUserAsync(admin, Role.Operator, Guid.CreateVersion7());
+        var plant = await _api.CreatePlantAsync(admin);
+        var otherPlant = await _api.CreatePlantAsync(admin);
+        var plantAdmin = await _api.CreateSignedInUserAsync(admin, Role.Admin, plant.Id);
+        var stranger = await _api.CreateUserAsync(admin, Role.Operator, otherPlant.Id);
 
         var get = await _api.SendAsync(HttpMethod.Get, $"/api/users/{stranger.Id}", plantAdmin.Tokens);
         var deactivate = await _api.SendAsync(
@@ -93,18 +127,20 @@ public sealed class UserManagementEndpointsTests(ApiFactory factory)
 
         var visible = await IdentityTestClient.ReadAsync<List<UserResponse>>(list);
         Assert.DoesNotContain(visible, user => user.Id == stranger.Id);
-        Assert.All(visible, user => Assert.Equal(plantAdmin.User.FactoryId, user.FactoryId));
+        Assert.All(visible, user => Assert.Equal(plant.Id, user.FactoryId));
     }
 
     [Fact]
     public async Task Plant_admin_cannot_create_users_in_another_plant()
     {
         var admin = await _api.LoginAsAdminAsync();
-        var plantAdmin = await _api.CreateSignedInUserAsync(admin, Role.Admin, Guid.CreateVersion7());
+        var plant = await _api.CreatePlantAsync(admin);
+        var otherPlant = await _api.CreatePlantAsync(admin);
+        var plantAdmin = await _api.CreateSignedInUserAsync(admin, Role.Admin, plant.Id);
+
         var request = new CreateUserRequest(
             IdentityTestClient.NewUserName(), "Test User", IdentityTestClient.InitialPassword,
-            Role.Operator, Guid.CreateVersion7(), null);
-
+            Role.Operator, otherPlant.Id, null);
         var response = await _api.SendAsync(HttpMethod.Post, "/api/users", plantAdmin.Tokens, request);
 
         Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
@@ -114,13 +150,13 @@ public sealed class UserManagementEndpointsTests(ApiFactory factory)
     public async Task Changing_access_signs_the_user_out()
     {
         var admin = await _api.LoginAsAdminAsync();
-        var plantId = Guid.CreateVersion7();
-        var user = await _api.CreateUserAsync(admin, Role.Operator, plantId);
+        var plant = await _api.CreatePlantAsync(admin);
+        var user = await _api.CreateUserAsync(admin, Role.Operator, plant.Id);
         var userTokens = await _api.LoginAsync(user.UserName, IdentityTestClient.InitialPassword);
 
         var update = await _api.SendAsync(
             HttpMethod.Put, $"/api/users/{user.Id}/access", admin,
-            new UpdateUserAccessRequest(Role.Supervisor, plantId, null));
+            new UpdateUserAccessRequest(Role.Supervisor, plant.Id, null));
 
         Assert.Equal(HttpStatusCode.OK, update.StatusCode);
         var updated = await IdentityTestClient.ReadAsync<UserResponse>(update);
@@ -134,7 +170,8 @@ public sealed class UserManagementEndpointsTests(ApiFactory factory)
     public async Task Deactivated_user_cannot_sign_in_until_activated()
     {
         var admin = await _api.LoginAsAdminAsync();
-        var user = await _api.CreateUserAsync(admin, Role.Technician, Guid.CreateVersion7());
+        var plant = await _api.CreatePlantAsync(admin);
+        var user = await _api.CreateUserAsync(admin, Role.Technician, plant.Id);
 
         var deactivate = await _api.SendAsync(HttpMethod.Post, $"/api/users/{user.Id}/deactivate", admin);
         Assert.Equal(HttpStatusCode.NoContent, deactivate.StatusCode);
@@ -152,7 +189,8 @@ public sealed class UserManagementEndpointsTests(ApiFactory factory)
     {
         const string temporaryPassword = "Temporary-Password-2026";
         var admin = await _api.LoginAsAdminAsync();
-        var user = await _api.CreateSignedInUserAsync(admin, Role.Manager, Guid.CreateVersion7());
+        var plant = await _api.CreatePlantAsync(admin);
+        var user = await _api.CreateSignedInUserAsync(admin, Role.Manager, plant.Id);
 
         var reset = await _api.SendAsync(
             HttpMethod.Post, $"/api/users/{user.User.Id}/reset-password", admin,
@@ -173,7 +211,8 @@ public sealed class UserManagementEndpointsTests(ApiFactory factory)
     public async Task Admin_cannot_deactivate_themselves()
     {
         var admin = await _api.LoginAsAdminAsync();
-        var plantAdmin = await _api.CreateSignedInUserAsync(admin, Role.Admin, Guid.CreateVersion7());
+        var plant = await _api.CreatePlantAsync(admin);
+        var plantAdmin = await _api.CreateSignedInUserAsync(admin, Role.Admin, plant.Id);
 
         var response = await _api.SendAsync(
             HttpMethod.Post, $"/api/users/{plantAdmin.User.Id}/deactivate", plantAdmin.Tokens);

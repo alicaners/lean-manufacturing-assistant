@@ -43,6 +43,7 @@ public static class DependencyInjection
         
         // Organization: data access, one instance per request like the DbContext.
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+        services.AddScoped<IOrganizationDirectory, OrganizationDirectory>();
 
         return services;
     }
