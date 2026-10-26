@@ -4,6 +4,8 @@ using LeanAssistant.Infrastructure.Identity;
 using LeanAssistant.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using LeanAssistant.Application.Organization;
+using LeanAssistant.Infrastructure.Organization;
 
 namespace LeanAssistant.Infrastructure;
 
@@ -38,6 +40,9 @@ public static class DependencyInjection
         // Identity: data access, one instance per request like the DbContext.
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        
+        // Organization: data access, one instance per request like the DbContext.
+        services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 
         return services;
     }
