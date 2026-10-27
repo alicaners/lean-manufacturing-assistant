@@ -147,4 +147,41 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get changePasswordWrongCurrent => 'The current password is incorrect.';
+
+  @override
+  String get forbiddenTitle => 'You cannot open this page';
+
+  @override
+  String get forbiddenMessage =>
+      'This page is not available for your role. Contact your administrator if you need it.';
+
+  @override
+  String homeRole(String role) {
+    return 'Your role: $role';
+  }
+
+  @override
+  String get homeManageUsers => 'Manage users';
+
+  @override
+  String get roleOperator => 'Operator';
+
+  @override
+  String get roleSupervisor => 'Supervisor';
+
+  @override
+  String get roleTechnician => 'Maintenance technician';
+
+  @override
+  String get roleManager => 'Manager';
+
+  @override
+  String get roleAdmin => 'Admin';
+
+  @override
+  String get usersTitle => 'Users';
+
+  @override
+  String get usersComingSoon =>
+      'User management will appear here in the next step.';
 }

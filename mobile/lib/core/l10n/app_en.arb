@@ -41,5 +41,16 @@
   "changePasswordTooShort": "The password must be at least {min} characters.",
   "changePasswordSameAsCurrent": "The new password must differ from the current one.",
   "changePasswordMismatch": "The passwords do not match.",
-  "changePasswordWrongCurrent": "The current password is incorrect."
+  "changePasswordWrongCurrent": "The current password is incorrect.",
+  "forbiddenTitle": "You cannot open this page",
+  "forbiddenMessage": "This page is not available for your role. Contact your administrator if you need it.",
+  "homeRole": "Your role: {role}",
+  "homeManageUsers": "Manage users",
+  "roleOperator": "Operator",
+  "roleSupervisor": "Supervisor",
+  "roleTechnician": "Maintenance technician",
+  "roleManager": "Manager",
+  "roleAdmin": "Admin",
+  "usersTitle": "Users",
+  "usersComingSoon": "User management will appear here in the next step."
 }

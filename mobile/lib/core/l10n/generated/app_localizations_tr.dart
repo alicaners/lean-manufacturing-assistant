@@ -145,4 +145,41 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get changePasswordWrongCurrent => 'Mevcut şifre hatalı.';
+
+  @override
+  String get forbiddenTitle => 'Bu sayfaya erişiminiz yok';
+
+  @override
+  String get forbiddenMessage =>
+      'Bu sayfa rolünüz için açık değil. Gerekli olduğunu düşünüyorsanız yöneticinize başvurun.';
+
+  @override
+  String homeRole(String role) {
+    return 'Rolünüz: $role';
+  }
+
+  @override
+  String get homeManageUsers => 'Kullanıcıları yönet';
+
+  @override
+  String get roleOperator => 'Operatör';
+
+  @override
+  String get roleSupervisor => 'Şef';
+
+  @override
+  String get roleTechnician => 'Bakım Teknisyeni';
+
+  @override
+  String get roleManager => 'Yönetici';
+
+  @override
+  String get roleAdmin => 'Admin';
+
+  @override
+  String get usersTitle => 'Kullanıcılar';
+
+  @override
+  String get usersComingSoon =>
+      'Kullanıcı yönetimi bir sonraki adımda burada olacak.';
 }

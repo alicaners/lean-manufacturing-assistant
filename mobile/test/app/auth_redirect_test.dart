@@ -53,4 +53,16 @@ void main() {
       expect(authRedirect(signedIn, AppRoutes.changePassword), AppRoutes.home);
     },
   );
+
+  test('sends a user without the permission to the forbidden page', () {
+    const admin = AuthSignedIn(testAdmin);
+
+    expect(authRedirect(signedIn, AppRoutes.users), AppRoutes.forbidden);
+    expect(
+      authRedirect(signedIn, '${AppRoutes.users}/42'),
+      AppRoutes.forbidden,
+    );
+    expect(authRedirect(admin, AppRoutes.users), isNull);
+    expect(authRedirect(signedIn, AppRoutes.forbidden), isNull);
+  });
 }

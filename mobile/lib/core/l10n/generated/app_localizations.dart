@@ -349,6 +349,72 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Mevcut şifre hatalı.'**
   String get changePasswordWrongCurrent;
+
+  /// Title shown when the user's role may not open a page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu sayfaya erişiminiz yok'**
+  String get forbiddenTitle;
+
+  /// Message shown when the user's role may not open a page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu sayfa rolünüz için açık değil. Gerekli olduğunu düşünüyorsanız yöneticinize başvurun.'**
+  String get forbiddenMessage;
+
+  /// Shows the signed-in user's role on the home page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Rolünüz: {role}'**
+  String homeRole(String role);
+
+  /// Home page button that opens user management (admins only).
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcıları yönet'**
+  String get homeManageUsers;
+
+  /// Role name. Same names as docs/business-rules.md.
+  ///
+  /// In tr, this message translates to:
+  /// **'Operatör'**
+  String get roleOperator;
+
+  /// Role name.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şef'**
+  String get roleSupervisor;
+
+  /// Role name.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bakım Teknisyeni'**
+  String get roleTechnician;
+
+  /// Role name.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yönetici'**
+  String get roleManager;
+
+  /// Role name.
+  ///
+  /// In tr, this message translates to:
+  /// **'Admin'**
+  String get roleAdmin;
+
+  /// App bar title of the user management page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcılar'**
+  String get usersTitle;
+
+  /// Placeholder until the user management screen is built.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı yönetimi bir sonraki adımda burada olacak.'**
+  String get usersComingSoon;
 }
 
 class _AppLocalizationsDelegate

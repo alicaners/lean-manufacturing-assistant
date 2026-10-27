@@ -218,8 +218,69 @@
     "description": "Shown when the repeated new password differs."
   },
 
-  "changePasswordWrongCurrent": "Mevcut şifre hatalı.",
+    "changePasswordWrongCurrent": "Mevcut şifre hatalı.",
   "@changePasswordWrongCurrent": {
     "description": "Shown when the server rejects the current password."
+  },
+
+  "forbiddenTitle": "Bu sayfaya erişiminiz yok",
+  "@forbiddenTitle": {
+    "description": "Title shown when the user's role may not open a page."
+  },
+
+  "forbiddenMessage": "Bu sayfa rolünüz için açık değil. Gerekli olduğunu düşünüyorsanız yöneticinize başvurun.",
+  "@forbiddenMessage": {
+    "description": "Message shown when the user's role may not open a page."
+  },
+
+  "homeRole": "Rolünüz: {role}",
+  "@homeRole": {
+    "description": "Shows the signed-in user's role on the home page.",
+    "placeholders": {
+      "role": {
+        "type": "String",
+        "example": "Operatör"
+      }
+    }
+  },
+
+  "homeManageUsers": "Kullanıcıları yönet",
+  "@homeManageUsers": {
+    "description": "Home page button that opens user management (admins only)."
+  },
+
+  "roleOperator": "Operatör",
+  "@roleOperator": {
+    "description": "Role name. Same names as docs/business-rules.md."
+  },
+
+  "roleSupervisor": "Şef",
+  "@roleSupervisor": {
+    "description": "Role name."
+  },
+
+  "roleTechnician": "Bakım Teknisyeni",
+  "@roleTechnician": {
+    "description": "Role name."
+  },
+
+  "roleManager": "Yönetici",
+  "@roleManager": {
+    "description": "Role name."
+  },
+
+  "roleAdmin": "Admin",
+  "@roleAdmin": {
+    "description": "Role name."
+  },
+
+  "usersTitle": "Kullanıcılar",
+  "@usersTitle": {
+    "description": "App bar title of the user management page."
+  },
+
+  "usersComingSoon": "Kullanıcı yönetimi bir sonraki adımda burada olacak.",
+  "@usersComingSoon": {
+    "description": "Placeholder until the user management screen is built."
   }
 }
