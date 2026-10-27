@@ -80,6 +80,24 @@ void main() {
     });
   });
 
+  test('changePassword keeps the new session from the server', () async {
+    final server = _FakeServer(200, renewedSessionBody);
+    final store = FakeSessionStore(expiredSession());
+
+    final result = await _repository(server, store).changePassword(
+      currentPassword: 'Temporary-Password-1',
+      newPassword: 'My-Own-Password-2',
+    );
+
+    expect(result, isA<Ok<AuthSession>>());
+    expect(store.session?.accessToken, validAccessToken);
+    expect(server.requests.single.path, '/api/auth/change-password');
+    expect(server.requests.single.data, {
+      'currentPassword': 'Temporary-Password-1',
+      'newPassword': 'My-Own-Password-2',
+    });
+  });
+
   test('signOut forgets the session even when the server fails', () async {
     final server = _FakeServer(503);
     final store = FakeSessionStore(expiredSession());

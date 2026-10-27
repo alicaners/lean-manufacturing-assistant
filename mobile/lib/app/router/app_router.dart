@@ -3,6 +3,7 @@ import 'package:lean_assistant/app/router/not_found_page.dart';
 import 'package:lean_assistant/app/router/stream_listenable.dart';
 import 'package:lean_assistant/features/auth/presentation/auth_bloc.dart';
 import 'package:lean_assistant/features/auth/presentation/auth_state.dart';
+import 'package:lean_assistant/features/auth/presentation/change_password_page.dart';
 import 'package:lean_assistant/features/auth/presentation/login_page.dart';
 import 'package:lean_assistant/features/auth/presentation/splash_page.dart';
 import 'package:lean_assistant/features/dashboard/presentation/home_page.dart';
@@ -12,6 +13,7 @@ abstract final class AppRoutes {
   static const String splash = '/splash';
   static const String home = '/';
   static const String login = '/login';
+  static const String changePassword = '/change-password';
 }
 
 /// Builds the app's router. Every navigation, and every change of the
@@ -34,24 +36,35 @@ GoRouter createRouter(AuthBloc authBloc) {
         path: AppRoutes.login,
         builder: (context, state) => const LoginPage(),
       ),
+      GoRoute(
+        path: AppRoutes.changePassword,
+        builder: (context, state) => const ChangePasswordPage(),
+      ),
     ],
     errorBuilder: (context, state) => const NotFoundPage(),
   );
 }
 
+/// Pages a signed-in user has no reason to see.
+const Set<String> _entryPages = {
+  AppRoutes.splash,
+  AppRoutes.login,
+  AppRoutes.changePassword,
+};
+
 /// Where the user should be instead of [location], or null to stay there.
 ///
 /// While the session is being checked (or cannot be checked), only the
 /// splash page is shown; signed-out users only see the sign-in page;
-/// signed-in users never see the splash or sign-in page again.
+/// a user with a temporary password only sees the change-password page;
+/// everyone else never sees those entry pages again.
 String? authRedirect(AuthState auth, String location) {
   return switch (auth) {
     AuthUnknown() ||
     AuthUnavailable() => location == AppRoutes.splash ? null : AppRoutes.splash,
     AuthSignedOut() => location == AppRoutes.login ? null : AppRoutes.login,
-    AuthSignedIn() =>
-      location == AppRoutes.splash || location == AppRoutes.login
-          ? AppRoutes.home
-          : null,
+    AuthSignedIn(:final user) when user.mustChangePassword =>
+      location == AppRoutes.changePassword ? null : AppRoutes.changePassword,
+    AuthSignedIn() => _entryPages.contains(location) ? AppRoutes.home : null,
   };
 }

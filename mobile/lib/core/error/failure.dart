@@ -41,6 +41,11 @@ final class ValidationFailure extends Failure {
   final Map<String, List<String>> fieldErrors;
 }
 
+/// 429: too many attempts in a short time (e.g. sign-in).
+final class RateLimitedFailure extends Failure {
+  const RateLimitedFailure({super.correlationId});
+}
+
 /// 5xx: an unexpected error on the server.
 final class ServerFailure extends Failure {
   const ServerFailure({super.correlationId});

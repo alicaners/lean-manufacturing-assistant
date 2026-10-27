@@ -20,6 +20,13 @@ abstract interface class AuthRepository {
   /// The signed-in user's profile.
   Future<Result<CurrentUser>> me();
 
+  /// Replaces the signed-in user's password. The server closes every other
+  /// session and returns a new one for this device, which is kept.
+  Future<Result<AuthSession>> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  });
+
   /// Forgets the session on the device and revokes it on the server.
   /// Works offline too: the device forgets the session first.
   Future<void> signOut();

@@ -14,6 +14,15 @@ const testUser = CurrentUser(
   mustChangePassword: false,
 );
 
+/// A user whose password an admin has just set.
+const testUserWithTemporaryPassword = CurrentUser(
+  id: '01a177de-2504-7c0a-a458-d380e5314fbb',
+  userName: 'new.operator',
+  fullName: 'Yeni Operatör',
+  role: UserRole.operator,
+  mustChangePassword: true,
+);
+
 /// An AuthBloc that stays in [state].
 MockAuthBloc authBlocIn(AuthState state) {
   final bloc = MockAuthBloc();

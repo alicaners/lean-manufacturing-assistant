@@ -35,4 +35,22 @@ void main() {
     expect(authRedirect(signedIn, AppRoutes.home), isNull);
     expect(authRedirect(signedIn, '/does-not-exist'), isNull);
   });
+
+  test(
+    'keeps a user with a temporary password on the change-password page',
+    () {
+      const mustChange = AuthSignedIn(testUserWithTemporaryPassword);
+
+      expect(
+        authRedirect(mustChange, AppRoutes.home),
+        AppRoutes.changePassword,
+      );
+      expect(
+        authRedirect(mustChange, AppRoutes.login),
+        AppRoutes.changePassword,
+      );
+      expect(authRedirect(mustChange, AppRoutes.changePassword), isNull);
+      expect(authRedirect(signedIn, AppRoutes.changePassword), AppRoutes.home);
+    },
+  );
 }

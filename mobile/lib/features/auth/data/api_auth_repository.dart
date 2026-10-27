@@ -51,6 +51,25 @@ class ApiAuthRepository implements AuthRepository {
   }
 
   @override
+  Future<Result<AuthSession>> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    final result = await _api.post(
+      '/api/auth/change-password',
+      body: {'currentPassword': currentPassword, 'newPassword': newPassword},
+      parse: AuthSession.fromJson,
+    );
+
+    // The old session is closed on the server; only the new one works now.
+    if (result case Ok(:final value)) {
+      await _store.write(value);
+    }
+
+    return result;
+  }
+
+  @override
   Future<void> signOut() async {
     final session = await _store.read();
 

@@ -18,7 +18,7 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:lean_assistant/app/di/app_module.dart' as _i637;
 import 'package:lean_assistant/core/config/app_config.dart' as _i345;
 import 'package:lean_assistant/core/network/api_client.dart' as _i150;
-import 'package:lean_assistant/core/network/network_module.dart' as _i49;
+import 'package:lean_assistant/core/network/network_module.dart' as _i50;
 import 'package:lean_assistant/core/storage/storage_module.dart' as _i743;
 import 'package:lean_assistant/features/auth/data/api_auth_repository.dart'
     as _i223;
@@ -31,6 +31,10 @@ import 'package:lean_assistant/features/auth/domain/auth_repository.dart'
     as _i924;
 import 'package:lean_assistant/features/auth/presentation/auth_bloc.dart'
     as _i348;
+import 'package:lean_assistant/features/auth/presentation/change_password_cubit.dart'
+    as _i501;
+import 'package:lean_assistant/features/auth/presentation/login_cubit.dart'
+    as _i49;
 import 'package:lean_assistant/features/dashboard/data/api_health_repository.dart'
     as _i663;
 import 'package:lean_assistant/features/dashboard/domain/health_repository.dart'
@@ -95,12 +99,21 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i583.GoRouter>(
       () => appModule.router(gh<_i348.AuthBloc>()),
     );
+    gh.factory<_i501.ChangePasswordCubit>(
+      () => _i501.ChangePasswordCubit(
+        gh<_i924.AuthRepository>(),
+        gh<_i348.AuthBloc>(),
+      ),
+    );
+    gh.factory<_i49.LoginCubit>(
+      () => _i49.LoginCubit(gh<_i924.AuthRepository>(), gh<_i348.AuthBloc>()),
+    );
     return this;
   }
 }
 
 class _$StorageModule extends _i743.StorageModule {}
 
-class _$NetworkModule extends _i49.NetworkModule {}
+class _$NetworkModule extends _i50.NetworkModule {}
 
 class _$AppModule extends _i637.AppModule {}
