@@ -22,6 +22,10 @@ import 'package:lean_assistant/core/network/network_module.dart' as _i49;
 import 'package:lean_assistant/core/storage/storage_module.dart' as _i743;
 import 'package:lean_assistant/features/auth/data/api_auth_repository.dart'
     as _i223;
+import 'package:lean_assistant/features/auth/data/auth_interceptor.dart'
+    as _i636;
+import 'package:lean_assistant/features/auth/data/session_refresher.dart'
+    as _i387;
 import 'package:lean_assistant/features/auth/data/session_store.dart' as _i274;
 import 'package:lean_assistant/features/auth/domain/auth_repository.dart'
     as _i924;
@@ -49,12 +53,33 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i274.SessionStore>(
       () => _i274.SecureSessionStore(gh<_i558.FlutterSecureStorage>()),
     );
-    gh.lazySingleton<_i361.Dio>(() => networkModule.dio(gh<_i345.AppConfig>()));
+    gh.lazySingleton<_i361.Dio>(
+      () => networkModule.refreshDio(gh<_i345.AppConfig>()),
+      instanceName: 'refreshDio',
+    );
+    gh.lazySingleton<_i387.SessionRefresher>(
+      () => _i387.SessionRefresher(
+        gh<_i361.Dio>(instanceName: 'refreshDio'),
+        gh<_i274.SessionStore>(),
+      ),
+    );
+    gh.lazySingleton<_i636.AuthInterceptor>(
+      () => _i636.AuthInterceptor(
+        gh<_i274.SessionStore>(),
+        gh<_i387.SessionRefresher>(),
+        gh<_i361.Dio>(instanceName: 'refreshDio'),
+      ),
+    );
+    gh.lazySingleton<_i361.Dio>(
+      () =>
+          networkModule.dio(gh<_i345.AppConfig>(), gh<_i636.AuthInterceptor>()),
+    );
     gh.lazySingleton<_i150.ApiClient>(() => _i150.ApiClient(gh<_i361.Dio>()));
     gh.lazySingleton<_i924.AuthRepository>(
       () => _i223.ApiAuthRepository(
         gh<_i150.ApiClient>(),
         gh<_i274.SessionStore>(),
+        gh<_i387.SessionRefresher>(),
       ),
     );
     gh.lazySingleton<_i327.HealthRepository>(

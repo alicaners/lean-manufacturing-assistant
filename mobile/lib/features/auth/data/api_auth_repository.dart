@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
-import 'package:lean_assistant/core/error/failure.dart';
 import 'package:lean_assistant/core/error/result.dart';
 import 'package:lean_assistant/core/network/api_client.dart';
+import 'package:lean_assistant/features/auth/data/session_refresher.dart';
 import 'package:lean_assistant/features/auth/data/session_store.dart';
 import 'package:lean_assistant/features/auth/domain/auth_repository.dart';
 import 'package:lean_assistant/features/auth/domain/auth_session.dart';
@@ -10,10 +10,11 @@ import 'package:lean_assistant/features/auth/domain/current_user.dart';
 /// [AuthRepository] backed by the API's `/api/auth` endpoints.
 @LazySingleton(as: AuthRepository)
 class ApiAuthRepository implements AuthRepository {
-  ApiAuthRepository(this._api, this._store);
+  ApiAuthRepository(this._api, this._store, this._refresher);
 
   final ApiClient _api;
   final SessionStore _store;
+  final SessionRefresher _refresher;
 
   @override
   Future<Result<AuthSession>> signIn({
@@ -36,30 +37,10 @@ class ApiAuthRepository implements AuthRepository {
   @override
   Future<AuthSession?> currentSession() => _store.read();
 
+  /// Shares the refresher with the interceptor, so an explicit refresh
+  /// and an automatic one can never run at the same time.
   @override
-  Future<Result<AuthSession>> refresh() async {
-    final session = await _store.read();
-    if (session == null) {
-      return const Err(UnauthorizedFailure());
-    }
-
-    final result = await _api.post(
-      '/api/auth/refresh',
-      body: {'refreshToken': session.refreshToken},
-      parse: AuthSession.fromJson,
-    );
-
-    if (result case Ok(:final value)) {
-      await _store.write(value);
-    } else if (result case Err(failure: UnauthorizedFailure())) {
-      // The server ended this session (expired, revoked or reused): forget it.
-      await _store.clear();
-    }
-
-    // Any other failure (no network, server error) keeps the session:
-    // a later refresh can still succeed.
-    return result;
-  }
+  Future<Result<AuthSession>> refresh() => _refresher.refresh();
 
   @override
   Future<Result<CurrentUser>> me() {

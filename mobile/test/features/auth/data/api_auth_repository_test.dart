@@ -6,8 +6,10 @@ import 'package:lean_assistant/core/error/failure.dart';
 import 'package:lean_assistant/core/error/result.dart';
 import 'package:lean_assistant/core/network/api_client.dart';
 import 'package:lean_assistant/features/auth/data/api_auth_repository.dart';
+import 'package:lean_assistant/features/auth/data/session_refresher.dart';
 import 'package:lean_assistant/features/auth/domain/auth_session.dart';
 
+import '../../../helpers/fake_auth_server.dart';
 import '../../../helpers/fake_session_store.dart';
 
 /// Answers every request with the status and body chosen by the test.
@@ -38,33 +40,16 @@ class _FakeServer implements HttpClientAdapter {
   void close({bool force = false}) {}
 }
 
-const _newSessionBody =
-    '{'
-    '"accessToken":"access-2",'
-    '"accessTokenExpiresAt":"2026-10-27T09:30:00+00:00",'
-    '"refreshToken":"refresh-2",'
-    '"refreshTokenExpiresAt":"2026-11-03T09:15:00+00:00",'
-    '"mustChangePassword":false'
-    '}';
-
-AuthSession _storedSession() => AuthSession(
-  accessToken: 'access-1',
-  accessTokenExpiresAt: DateTime.utc(2026, 10, 27, 9, 15),
-  refreshToken: 'refresh-1',
-  refreshTokenExpiresAt: DateTime.utc(2026, 11, 3, 9),
-  mustChangePassword: false,
-);
-
 ApiAuthRepository _repository(_FakeServer server, FakeSessionStore store) {
   final dio = Dio(BaseOptions(baseUrl: 'http://test'))
     ..httpClientAdapter = server;
-  return ApiAuthRepository(ApiClient(dio), store);
+  return ApiAuthRepository(ApiClient(dio), store, SessionRefresher(dio, store));
 }
 
 void main() {
   group('signIn', () {
     test('stores the session and sends the credentials', () async {
-      final server = _FakeServer(200, _newSessionBody);
+      final server = _FakeServer(200, renewedSessionBody);
       final store = FakeSessionStore();
 
       final result = await _repository(
@@ -73,7 +58,7 @@ void main() {
       ).signIn(userName: 'demo.operator', password: 'Demo-Password-1');
 
       expect(result, isA<Ok<AuthSession>>());
-      expect(store.session?.refreshToken, 'refresh-2');
+      expect(store.session?.accessToken, validAccessToken);
       expect(server.requests.single.path, '/api/auth/login');
       expect(server.requests.single.data, {
         'userName': 'demo.operator',
@@ -95,50 +80,9 @@ void main() {
     });
   });
 
-  group('refresh', () {
-    test('sends the stored refresh token and keeps the new session', () async {
-      final server = _FakeServer(200, _newSessionBody);
-      final store = FakeSessionStore(_storedSession());
-
-      final result = await _repository(server, store).refresh();
-
-      expect(result, isA<Ok<AuthSession>>());
-      expect(server.requests.single.data, {'refreshToken': 'refresh-1'});
-      expect(store.session?.refreshToken, 'refresh-2');
-    });
-
-    test('forgets the session when the server refuses it', () async {
-      final server = _FakeServer(401);
-      final store = FakeSessionStore(_storedSession());
-
-      await _repository(server, store).refresh();
-
-      expect(store.session, isNull);
-    });
-
-    test('keeps the session when the server is unavailable', () async {
-      final server = _FakeServer(503);
-      final store = FakeSessionStore(_storedSession());
-
-      final result = await _repository(server, store).refresh();
-
-      expect((result as Err<AuthSession>).failure, isA<ServerFailure>());
-      expect(store.session?.refreshToken, 'refresh-1');
-    });
-
-    test('does not call the server without a stored session', () async {
-      final server = _FakeServer(200, _newSessionBody);
-
-      final result = await _repository(server, FakeSessionStore()).refresh();
-
-      expect((result as Err<AuthSession>).failure, isA<UnauthorizedFailure>());
-      expect(server.requests, isEmpty);
-    });
-  });
-
   test('signOut forgets the session even when the server fails', () async {
     final server = _FakeServer(503);
-    final store = FakeSessionStore(_storedSession());
+    final store = FakeSessionStore(expiredSession());
 
     await _repository(server, store).signOut();
 
