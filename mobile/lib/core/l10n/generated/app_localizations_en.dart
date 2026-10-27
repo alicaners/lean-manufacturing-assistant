@@ -32,9 +32,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeEmptyMessage => 'Screens will appear here soon.';
 
   @override
-  String get homeGoToLogin => 'Open sign-in screen';
-
-  @override
   String get loginTitle => 'Sign in';
 
   @override
@@ -85,4 +82,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get serverStatusRefresh => 'Check again';
+
+  @override
+  String get splashChecking => 'Checking your session…';
+
+  @override
+  String homeWelcome(String name) {
+    return 'Welcome, $name';
+  }
+
+  @override
+  String get homeSignOut => 'Sign out';
 }

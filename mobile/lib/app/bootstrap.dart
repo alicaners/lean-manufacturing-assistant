@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:lean_assistant/app/app.dart';
 import 'package:lean_assistant/app/di/injection.dart';
 import 'package:lean_assistant/core/config/app_config.dart';
+import 'package:lean_assistant/features/auth/presentation/auth_bloc.dart';
+import 'package:lean_assistant/features/auth/presentation/auth_event.dart';
 
 /// Shared startup for every flavor.
 Future<void> bootstrap(
@@ -20,7 +22,13 @@ Future<void> bootstrap(
 
   configureDependencies(config);
 
-  final Widget app = LeanAssistantApp(router: getIt<GoRouter>());
+  // Start checking the stored session right away; the splash page waits for it.
+  final authBloc = getIt<AuthBloc>()..add(const AuthCheckRequested());
+
+  final Widget app = LeanAssistantApp(
+    router: getIt<GoRouter>(),
+    authBloc: authBloc,
+  );
 
   runApp(
     config.isProduction

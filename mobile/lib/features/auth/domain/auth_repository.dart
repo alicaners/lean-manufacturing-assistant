@@ -23,4 +23,8 @@ abstract interface class AuthRepository {
   /// Forgets the session on the device and revokes it on the server.
   /// Works offline too: the device forgets the session first.
   Future<void> signOut();
+
+  /// Fires when the server stops accepting the session while the app is in
+  /// use (expired, revoked by an admin, reused): the user must sign in again.
+  Stream<void> get sessionExpired;
 }

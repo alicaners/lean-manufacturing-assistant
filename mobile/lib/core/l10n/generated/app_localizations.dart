@@ -140,12 +140,6 @@ abstract class AppLocalizations {
   /// **'Ekranlar yakında burada olacak.'**
   String get homeEmptyMessage;
 
-  /// Temporary button on the home page that opens the sign-in screen.
-  ///
-  /// In tr, this message translates to:
-  /// **'Giriş ekranını aç'**
-  String get homeGoToLogin;
-
   /// App bar title of the sign-in screen.
   ///
   /// In tr, this message translates to:
@@ -241,6 +235,24 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Yeniden kontrol et'**
   String get serverStatusRefresh;
+
+  /// Shown on the start-up screen while the stored session is checked.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oturum kontrol ediliyor…'**
+  String get splashChecking;
+
+  /// Greeting on the home page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hoş geldin, {name}'**
+  String homeWelcome(String name);
+
+  /// Tooltip of the sign-out button on the home page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çıkış yap'**
+  String get homeSignOut;
 }
 
 class _AppLocalizationsDelegate

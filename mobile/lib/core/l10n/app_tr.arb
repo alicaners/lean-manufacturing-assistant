@@ -36,11 +36,6 @@
     "description": "Temporary message on the home page until features are added."
   },
 
-  "homeGoToLogin": "Giriş ekranını aç",
-  "@homeGoToLogin": {
-    "description": "Temporary button on the home page that opens the sign-in screen."
-  },
-
   "loginTitle": "Giriş",
   "@loginTitle": {
     "description": "App bar title of the sign-in screen."
@@ -116,8 +111,29 @@
     "description": "Shown when the backend answered Degraded."
   },
 
-  "serverStatusRefresh": "Yeniden kontrol et",
+    "serverStatusRefresh": "Yeniden kontrol et",
   "@serverStatusRefresh": {
     "description": "Tooltip of the button that checks the backend again."
+  },
+
+  "splashChecking": "Oturum kontrol ediliyor…",
+  "@splashChecking": {
+    "description": "Shown on the start-up screen while the stored session is checked."
+  },
+
+  "homeWelcome": "Hoş geldin, {name}",
+  "@homeWelcome": {
+    "description": "Greeting on the home page.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Ali Caner Sezer"
+      }
+    }
+  },
+
+  "homeSignOut": "Çıkış yap",
+  "@homeSignOut": {
+    "description": "Tooltip of the sign-out button on the home page."
   }
 }

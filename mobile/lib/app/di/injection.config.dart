@@ -29,6 +29,8 @@ import 'package:lean_assistant/features/auth/data/session_refresher.dart'
 import 'package:lean_assistant/features/auth/data/session_store.dart' as _i274;
 import 'package:lean_assistant/features/auth/domain/auth_repository.dart'
     as _i924;
+import 'package:lean_assistant/features/auth/presentation/auth_bloc.dart'
+    as _i348;
 import 'package:lean_assistant/features/dashboard/data/api_health_repository.dart'
     as _i663;
 import 'package:lean_assistant/features/dashboard/domain/health_repository.dart'
@@ -43,10 +45,9 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    final appModule = _$AppModule();
     final storageModule = _$StorageModule();
     final networkModule = _$NetworkModule();
-    gh.lazySingleton<_i583.GoRouter>(() => appModule.router);
+    final appModule = _$AppModule();
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => storageModule.secureStorage,
     );
@@ -85,15 +86,21 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i327.HealthRepository>(
       () => _i663.ApiHealthRepository(gh<_i150.ApiClient>()),
     );
+    gh.lazySingleton<_i348.AuthBloc>(
+      () => _i348.AuthBloc(gh<_i924.AuthRepository>()),
+    );
     gh.factory<_i168.ServerStatusCubit>(
       () => _i168.ServerStatusCubit(gh<_i327.HealthRepository>()),
+    );
+    gh.lazySingleton<_i583.GoRouter>(
+      () => appModule.router(gh<_i348.AuthBloc>()),
     );
     return this;
   }
 }
 
-class _$AppModule extends _i637.AppModule {}
-
 class _$StorageModule extends _i743.StorageModule {}
 
 class _$NetworkModule extends _i49.NetworkModule {}
+
+class _$AppModule extends _i637.AppModule {}

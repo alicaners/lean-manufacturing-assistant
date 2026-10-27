@@ -43,6 +43,9 @@ class ApiAuthRepository implements AuthRepository {
   Future<Result<AuthSession>> refresh() => _refresher.refresh();
 
   @override
+  Stream<void> get sessionExpired => _refresher.sessionExpired;
+
+  @override
   Future<Result<CurrentUser>> me() {
     return _api.get('/api/auth/me', parse: CurrentUser.fromJson);
   }

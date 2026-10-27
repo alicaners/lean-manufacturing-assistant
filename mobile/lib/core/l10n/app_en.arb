@@ -7,7 +7,6 @@
   "errorGenericMessage": "The operation could not be completed. Please try again later.",
   "emptyGenericMessage": "Nothing here yet.",
    "homeEmptyMessage": "Screens will appear here soon.",
-  "homeGoToLogin": "Open sign-in screen",
   "loginTitle": "Sign in",
   "loginComingSoon": "The sign-in screen will appear here soon.",
   "notFoundTitle": "Page not found",
@@ -23,5 +22,8 @@
   "serverStatusChecking": "Checking…",
   "serverStatusOnline": "Connected",
   "serverStatusDegraded": "Connected, some services are running slowly",
-  "serverStatusRefresh": "Check again"
+  "serverStatusRefresh": "Check again",
+  "splashChecking": "Checking your session…",
+  "homeWelcome": "Welcome, {name}",
+  "homeSignOut": "Sign out"
 }

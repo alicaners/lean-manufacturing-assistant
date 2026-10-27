@@ -32,9 +32,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get homeEmptyMessage => 'Ekranlar yakında burada olacak.';
 
   @override
-  String get homeGoToLogin => 'Giriş ekranını aç';
-
-  @override
   String get loginTitle => 'Giriş';
 
   @override
@@ -84,4 +81,15 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get serverStatusRefresh => 'Yeniden kontrol et';
+
+  @override
+  String get splashChecking => 'Oturum kontrol ediliyor…';
+
+  @override
+  String homeWelcome(String name) {
+    return 'Hoş geldin, $name';
+  }
+
+  @override
+  String get homeSignOut => 'Çıkış yap';
 }
