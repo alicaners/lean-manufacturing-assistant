@@ -140,23 +140,11 @@ abstract class AppLocalizations {
   /// **'Ekranlar yakında burada olacak.'**
   String get homeEmptyMessage;
 
-  /// Temporary button on the home page that opens the sign-in screen.
-  ///
-  /// In tr, this message translates to:
-  /// **'Giriş ekranını aç'**
-  String get homeGoToLogin;
-
   /// App bar title of the sign-in screen.
   ///
   /// In tr, this message translates to:
   /// **'Giriş'**
   String get loginTitle;
-
-  /// Placeholder text until the real sign-in form is built.
-  ///
-  /// In tr, this message translates to:
-  /// **'Giriş ekranı yakında burada olacak.'**
-  String get loginComingSoon;
 
   /// Title shown when the user opens an unknown route.
   ///
@@ -241,6 +229,192 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Yeniden kontrol et'**
   String get serverStatusRefresh;
+
+  /// Shown on the start-up screen while the stored session is checked.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oturum kontrol ediliyor…'**
+  String get splashChecking;
+
+  /// Greeting on the home page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hoş geldin, {name}'**
+  String homeWelcome(String name);
+
+  /// Tooltip of the sign-out button on the home page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çıkış yap'**
+  String get homeSignOut;
+
+  /// Short line under the app name on the sign-in screen.
+  ///
+  /// In tr, this message translates to:
+  /// **'Devam etmek için hesabınızla giriş yapın.'**
+  String get loginSubtitle;
+
+  /// Label of the user name field on the sign-in screen.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı adı'**
+  String get loginUserName;
+
+  /// Label of the password field on the sign-in screen.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifre'**
+  String get loginPassword;
+
+  /// Button that signs the user in.
+  ///
+  /// In tr, this message translates to:
+  /// **'Giriş yap'**
+  String get loginSubmit;
+
+  /// Shown when the server rejects the user name or password. Does not say which one was wrong.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı adı veya şifre hatalı.'**
+  String get loginInvalidCredentials;
+
+  /// Shown under a form field that was left empty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu alan zorunludur.'**
+  String get fieldRequired;
+
+  /// Shown on HTTP 429 (too many attempts).
+  ///
+  /// In tr, this message translates to:
+  /// **'Çok fazla deneme yapıldı. Lütfen bir dakika sonra tekrar deneyin.'**
+  String get errorRateLimited;
+
+  /// App bar title of the change-password screen.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifrenizi değiştirin'**
+  String get changePasswordTitle;
+
+  /// Explains why a user with a temporary password must change it.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabınızın şifresini bir yönetici belirledi. Devam etmek için kendi şifrenizi belirleyin.'**
+  String get changePasswordRequiredInfo;
+
+  /// Label of the current password field.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mevcut şifre'**
+  String get changePasswordCurrent;
+
+  /// Label of the new password field.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni şifre'**
+  String get changePasswordNew;
+
+  /// Label of the field that repeats the new password.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni şifre (tekrar)'**
+  String get changePasswordConfirm;
+
+  /// Button that changes the password.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifreyi değiştir'**
+  String get changePasswordSubmit;
+
+  /// Shown when the new password is too short.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifre en az {min} karakter olmalı.'**
+  String changePasswordTooShort(int min);
+
+  /// Shown when the new password equals the current one.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni şifre mevcut şifreden farklı olmalı.'**
+  String get changePasswordSameAsCurrent;
+
+  /// Shown when the repeated new password differs.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifreler eşleşmiyor.'**
+  String get changePasswordMismatch;
+
+  /// Shown when the server rejects the current password.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mevcut şifre hatalı.'**
+  String get changePasswordWrongCurrent;
+
+  /// Title shown when the user's role may not open a page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu sayfaya erişiminiz yok'**
+  String get forbiddenTitle;
+
+  /// Message shown when the user's role may not open a page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu sayfa rolünüz için açık değil. Gerekli olduğunu düşünüyorsanız yöneticinize başvurun.'**
+  String get forbiddenMessage;
+
+  /// Shows the signed-in user's role on the home page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Rolünüz: {role}'**
+  String homeRole(String role);
+
+  /// Home page button that opens user management (admins only).
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcıları yönet'**
+  String get homeManageUsers;
+
+  /// Role name. Same names as docs/business-rules.md.
+  ///
+  /// In tr, this message translates to:
+  /// **'Operatör'**
+  String get roleOperator;
+
+  /// Role name.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şef'**
+  String get roleSupervisor;
+
+  /// Role name.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bakım Teknisyeni'**
+  String get roleTechnician;
+
+  /// Role name.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yönetici'**
+  String get roleManager;
+
+  /// Role name.
+  ///
+  /// In tr, this message translates to:
+  /// **'Admin'**
+  String get roleAdmin;
+
+  /// App bar title of the user management page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcılar'**
+  String get usersTitle;
+
+  /// Placeholder until the user management screen is built.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı yönetimi bir sonraki adımda burada olacak.'**
+  String get usersComingSoon;
 }
 
 class _AppLocalizationsDelegate

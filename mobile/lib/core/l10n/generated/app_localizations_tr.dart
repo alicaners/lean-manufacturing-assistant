@@ -32,13 +32,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get homeEmptyMessage => 'Ekranlar yakında burada olacak.';
 
   @override
-  String get homeGoToLogin => 'Giriş ekranını aç';
-
-  @override
   String get loginTitle => 'Giriş';
-
-  @override
-  String get loginComingSoon => 'Giriş ekranı yakında burada olacak.';
 
   @override
   String get notFoundTitle => 'Sayfa bulunamadı';
@@ -84,4 +78,108 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get serverStatusRefresh => 'Yeniden kontrol et';
+
+  @override
+  String get splashChecking => 'Oturum kontrol ediliyor…';
+
+  @override
+  String homeWelcome(String name) {
+    return 'Hoş geldin, $name';
+  }
+
+  @override
+  String get homeSignOut => 'Çıkış yap';
+
+  @override
+  String get loginSubtitle => 'Devam etmek için hesabınızla giriş yapın.';
+
+  @override
+  String get loginUserName => 'Kullanıcı adı';
+
+  @override
+  String get loginPassword => 'Şifre';
+
+  @override
+  String get loginSubmit => 'Giriş yap';
+
+  @override
+  String get loginInvalidCredentials => 'Kullanıcı adı veya şifre hatalı.';
+
+  @override
+  String get fieldRequired => 'Bu alan zorunludur.';
+
+  @override
+  String get errorRateLimited =>
+      'Çok fazla deneme yapıldı. Lütfen bir dakika sonra tekrar deneyin.';
+
+  @override
+  String get changePasswordTitle => 'Şifrenizi değiştirin';
+
+  @override
+  String get changePasswordRequiredInfo =>
+      'Hesabınızın şifresini bir yönetici belirledi. Devam etmek için kendi şifrenizi belirleyin.';
+
+  @override
+  String get changePasswordCurrent => 'Mevcut şifre';
+
+  @override
+  String get changePasswordNew => 'Yeni şifre';
+
+  @override
+  String get changePasswordConfirm => 'Yeni şifre (tekrar)';
+
+  @override
+  String get changePasswordSubmit => 'Şifreyi değiştir';
+
+  @override
+  String changePasswordTooShort(int min) {
+    return 'Şifre en az $min karakter olmalı.';
+  }
+
+  @override
+  String get changePasswordSameAsCurrent =>
+      'Yeni şifre mevcut şifreden farklı olmalı.';
+
+  @override
+  String get changePasswordMismatch => 'Şifreler eşleşmiyor.';
+
+  @override
+  String get changePasswordWrongCurrent => 'Mevcut şifre hatalı.';
+
+  @override
+  String get forbiddenTitle => 'Bu sayfaya erişiminiz yok';
+
+  @override
+  String get forbiddenMessage =>
+      'Bu sayfa rolünüz için açık değil. Gerekli olduğunu düşünüyorsanız yöneticinize başvurun.';
+
+  @override
+  String homeRole(String role) {
+    return 'Rolünüz: $role';
+  }
+
+  @override
+  String get homeManageUsers => 'Kullanıcıları yönet';
+
+  @override
+  String get roleOperator => 'Operatör';
+
+  @override
+  String get roleSupervisor => 'Şef';
+
+  @override
+  String get roleTechnician => 'Bakım Teknisyeni';
+
+  @override
+  String get roleManager => 'Yönetici';
+
+  @override
+  String get roleAdmin => 'Admin';
+
+  @override
+  String get usersTitle => 'Kullanıcılar';
+
+  @override
+  String get usersComingSoon =>
+      'Kullanıcı yönetimi bir sonraki adımda burada olacak.';
 }

@@ -37,6 +37,7 @@ Failure _fromResponse(Response<Object?>? response) {
     403 => ForbiddenFailure(correlationId: correlationId),
     404 => NotFoundFailure(correlationId: correlationId),
     409 => ConflictFailure(correlationId: correlationId),
+    429 => RateLimitedFailure(correlationId: correlationId),
     final int code when code >= 500 => ServerFailure(
       correlationId: correlationId,
     ),

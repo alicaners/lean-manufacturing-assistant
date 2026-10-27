@@ -10,6 +10,9 @@ class AppTextField extends StatelessWidget {
     this.keyboardType,
     this.textInputAction,
     this.obscureText = false,
+    this.autofillHints,
+    this.errorText,
+    this.onFieldSubmitted,
   });
 
   final String label;
@@ -19,6 +22,15 @@ class AppTextField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final bool obscureText;
 
+  /// Lets password managers fill the field, e.g. [AutofillHints.username].
+  final Iterable<String>? autofillHints;
+
+  /// An error from the server, shown even when [validator] passes.
+  final String? errorText;
+
+  /// Called when the user presses the keyboard's action button.
+  final ValueChanged<String>? onFieldSubmitted;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -27,6 +39,9 @@ class AppTextField extends StatelessWidget {
       keyboardType: keyboardType,
       textInputAction: textInputAction,
       obscureText: obscureText,
+      autofillHints: autofillHints,
+      forceErrorText: errorText,
+      onFieldSubmitted: onFieldSubmitted,
       decoration: InputDecoration(labelText: label),
     );
   }

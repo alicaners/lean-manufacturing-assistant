@@ -11,6 +11,7 @@ extension FailureMessage on Failure {
       NotFoundFailure() => l10n.errorNotFound,
       ConflictFailure() => l10n.errorConflict,
       ValidationFailure() => l10n.errorValidation,
+      RateLimitedFailure() => l10n.errorRateLimited,
       ServerFailure() || UnknownFailure() => l10n.errorGenericMessage,
     };
   }

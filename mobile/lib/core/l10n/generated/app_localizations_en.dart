@@ -32,13 +32,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeEmptyMessage => 'Screens will appear here soon.';
 
   @override
-  String get homeGoToLogin => 'Open sign-in screen';
-
-  @override
   String get loginTitle => 'Sign in';
-
-  @override
-  String get loginComingSoon => 'The sign-in screen will appear here soon.';
 
   @override
   String get notFoundTitle => 'Page not found';
@@ -85,4 +79,109 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get serverStatusRefresh => 'Check again';
+
+  @override
+  String get splashChecking => 'Checking your session…';
+
+  @override
+  String homeWelcome(String name) {
+    return 'Welcome, $name';
+  }
+
+  @override
+  String get homeSignOut => 'Sign out';
+
+  @override
+  String get loginSubtitle => 'Sign in with your account to continue.';
+
+  @override
+  String get loginUserName => 'User name';
+
+  @override
+  String get loginPassword => 'Password';
+
+  @override
+  String get loginSubmit => 'Sign in';
+
+  @override
+  String get loginInvalidCredentials =>
+      'The user name or password is incorrect.';
+
+  @override
+  String get fieldRequired => 'This field is required.';
+
+  @override
+  String get errorRateLimited =>
+      'Too many attempts. Please try again in a minute.';
+
+  @override
+  String get changePasswordTitle => 'Change your password';
+
+  @override
+  String get changePasswordRequiredInfo =>
+      'An administrator set your password. Choose your own password to continue.';
+
+  @override
+  String get changePasswordCurrent => 'Current password';
+
+  @override
+  String get changePasswordNew => 'New password';
+
+  @override
+  String get changePasswordConfirm => 'New password (again)';
+
+  @override
+  String get changePasswordSubmit => 'Change password';
+
+  @override
+  String changePasswordTooShort(int min) {
+    return 'The password must be at least $min characters.';
+  }
+
+  @override
+  String get changePasswordSameAsCurrent =>
+      'The new password must differ from the current one.';
+
+  @override
+  String get changePasswordMismatch => 'The passwords do not match.';
+
+  @override
+  String get changePasswordWrongCurrent => 'The current password is incorrect.';
+
+  @override
+  String get forbiddenTitle => 'You cannot open this page';
+
+  @override
+  String get forbiddenMessage =>
+      'This page is not available for your role. Contact your administrator if you need it.';
+
+  @override
+  String homeRole(String role) {
+    return 'Your role: $role';
+  }
+
+  @override
+  String get homeManageUsers => 'Manage users';
+
+  @override
+  String get roleOperator => 'Operator';
+
+  @override
+  String get roleSupervisor => 'Supervisor';
+
+  @override
+  String get roleTechnician => 'Maintenance technician';
+
+  @override
+  String get roleManager => 'Manager';
+
+  @override
+  String get roleAdmin => 'Admin';
+
+  @override
+  String get usersTitle => 'Users';
+
+  @override
+  String get usersComingSoon =>
+      'User management will appear here in the next step.';
 }

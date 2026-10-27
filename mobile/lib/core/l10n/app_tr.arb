@@ -36,19 +36,9 @@
     "description": "Temporary message on the home page until features are added."
   },
 
-  "homeGoToLogin": "Giriş ekranını aç",
-  "@homeGoToLogin": {
-    "description": "Temporary button on the home page that opens the sign-in screen."
-  },
-
   "loginTitle": "Giriş",
   "@loginTitle": {
     "description": "App bar title of the sign-in screen."
-  },
-
-  "loginComingSoon": "Giriş ekranı yakında burada olacak.",
-  "@loginComingSoon": {
-    "description": "Placeholder text until the real sign-in form is built."
   },
 
   "notFoundTitle": "Sayfa bulunamadı",
@@ -116,8 +106,181 @@
     "description": "Shown when the backend answered Degraded."
   },
 
-  "serverStatusRefresh": "Yeniden kontrol et",
+    "serverStatusRefresh": "Yeniden kontrol et",
   "@serverStatusRefresh": {
     "description": "Tooltip of the button that checks the backend again."
+  },
+
+  "splashChecking": "Oturum kontrol ediliyor…",
+  "@splashChecking": {
+    "description": "Shown on the start-up screen while the stored session is checked."
+  },
+
+  "homeWelcome": "Hoş geldin, {name}",
+  "@homeWelcome": {
+    "description": "Greeting on the home page.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Ali Caner Sezer"
+      }
+    }
+  },
+
+    "homeSignOut": "Çıkış yap",
+  "@homeSignOut": {
+    "description": "Tooltip of the sign-out button on the home page."
+  },
+
+  "loginSubtitle": "Devam etmek için hesabınızla giriş yapın.",
+  "@loginSubtitle": {
+    "description": "Short line under the app name on the sign-in screen."
+  },
+
+  "loginUserName": "Kullanıcı adı",
+  "@loginUserName": {
+    "description": "Label of the user name field on the sign-in screen."
+  },
+
+  "loginPassword": "Şifre",
+  "@loginPassword": {
+    "description": "Label of the password field on the sign-in screen."
+  },
+
+  "loginSubmit": "Giriş yap",
+  "@loginSubmit": {
+    "description": "Button that signs the user in."
+  },
+
+  "loginInvalidCredentials": "Kullanıcı adı veya şifre hatalı.",
+  "@loginInvalidCredentials": {
+    "description": "Shown when the server rejects the user name or password. Does not say which one was wrong."
+  },
+
+  "fieldRequired": "Bu alan zorunludur.",
+  "@fieldRequired": {
+    "description": "Shown under a form field that was left empty."
+  },
+
+  "errorRateLimited": "Çok fazla deneme yapıldı. Lütfen bir dakika sonra tekrar deneyin.",
+  "@errorRateLimited": {
+    "description": "Shown on HTTP 429 (too many attempts)."
+  },
+
+  "changePasswordTitle": "Şifrenizi değiştirin",
+  "@changePasswordTitle": {
+    "description": "App bar title of the change-password screen."
+  },
+
+  "changePasswordRequiredInfo": "Hesabınızın şifresini bir yönetici belirledi. Devam etmek için kendi şifrenizi belirleyin.",
+  "@changePasswordRequiredInfo": {
+    "description": "Explains why a user with a temporary password must change it."
+  },
+
+  "changePasswordCurrent": "Mevcut şifre",
+  "@changePasswordCurrent": {
+    "description": "Label of the current password field."
+  },
+
+  "changePasswordNew": "Yeni şifre",
+  "@changePasswordNew": {
+    "description": "Label of the new password field."
+  },
+
+  "changePasswordConfirm": "Yeni şifre (tekrar)",
+  "@changePasswordConfirm": {
+    "description": "Label of the field that repeats the new password."
+  },
+
+  "changePasswordSubmit": "Şifreyi değiştir",
+  "@changePasswordSubmit": {
+    "description": "Button that changes the password."
+  },
+
+  "changePasswordTooShort": "Şifre en az {min} karakter olmalı.",
+  "@changePasswordTooShort": {
+    "description": "Shown when the new password is too short.",
+    "placeholders": {
+      "min": {
+        "type": "int",
+        "example": "12"
+      }
+    }
+  },
+
+  "changePasswordSameAsCurrent": "Yeni şifre mevcut şifreden farklı olmalı.",
+  "@changePasswordSameAsCurrent": {
+    "description": "Shown when the new password equals the current one."
+  },
+
+  "changePasswordMismatch": "Şifreler eşleşmiyor.",
+  "@changePasswordMismatch": {
+    "description": "Shown when the repeated new password differs."
+  },
+
+    "changePasswordWrongCurrent": "Mevcut şifre hatalı.",
+  "@changePasswordWrongCurrent": {
+    "description": "Shown when the server rejects the current password."
+  },
+
+  "forbiddenTitle": "Bu sayfaya erişiminiz yok",
+  "@forbiddenTitle": {
+    "description": "Title shown when the user's role may not open a page."
+  },
+
+  "forbiddenMessage": "Bu sayfa rolünüz için açık değil. Gerekli olduğunu düşünüyorsanız yöneticinize başvurun.",
+  "@forbiddenMessage": {
+    "description": "Message shown when the user's role may not open a page."
+  },
+
+  "homeRole": "Rolünüz: {role}",
+  "@homeRole": {
+    "description": "Shows the signed-in user's role on the home page.",
+    "placeholders": {
+      "role": {
+        "type": "String",
+        "example": "Operatör"
+      }
+    }
+  },
+
+  "homeManageUsers": "Kullanıcıları yönet",
+  "@homeManageUsers": {
+    "description": "Home page button that opens user management (admins only)."
+  },
+
+  "roleOperator": "Operatör",
+  "@roleOperator": {
+    "description": "Role name. Same names as docs/business-rules.md."
+  },
+
+  "roleSupervisor": "Şef",
+  "@roleSupervisor": {
+    "description": "Role name."
+  },
+
+  "roleTechnician": "Bakım Teknisyeni",
+  "@roleTechnician": {
+    "description": "Role name."
+  },
+
+  "roleManager": "Yönetici",
+  "@roleManager": {
+    "description": "Role name."
+  },
+
+  "roleAdmin": "Admin",
+  "@roleAdmin": {
+    "description": "Role name."
+  },
+
+  "usersTitle": "Kullanıcılar",
+  "@usersTitle": {
+    "description": "App bar title of the user management page."
+  },
+
+  "usersComingSoon": "Kullanıcı yönetimi bir sonraki adımda burada olacak.",
+  "@usersComingSoon": {
+    "description": "Placeholder until the user management screen is built."
   }
 }

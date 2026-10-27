@@ -38,6 +38,10 @@ void main() {
     expect(mapDioException(_badResponse(409)), isA<ConflictFailure>());
   });
 
+  test('429 becomes RateLimitedFailure', () {
+    expect(mapDioException(_badResponse(429)), isA<RateLimitedFailure>());
+  });
+
   test('5xx becomes ServerFailure', () {
     expect(mapDioException(_badResponse(503)), isA<ServerFailure>());
   });
