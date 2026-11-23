@@ -91,5 +91,12 @@
   "userDetailResetPasswordSubmit": "Set password",
   "userDetailActivated": "User activated.",
   "userDetailDeactivated": "User deactivated.",
-  "userDetailPasswordReset": "Temporary password set. Share it with the user in a safe way."
+   "userDetailPasswordReset": "Temporary password set. Share it with the user in a safe way.",
+  "userFormPlantsFailed": "The plants could not be loaded.",
+  "userDetailAccessSection": "Access",
+  "userDetailAccessInfo": "Role: {role}. Changing the role, plant or line closes the user's sessions.",
+  "userDetailEditAccess": "Change access",
+  "userDetailAccessChanged": "Access updated.",
+  "editAccessInfo": "Saving closes the user's sessions on every device; they must sign in again with their new access.",
+  "editAccessSave": "Save"
 }

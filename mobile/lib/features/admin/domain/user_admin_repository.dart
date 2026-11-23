@@ -2,6 +2,7 @@ import 'package:lean_assistant/core/error/result.dart';
 import 'package:lean_assistant/core/network/cursor_page.dart';
 import 'package:lean_assistant/features/admin/domain/managed_user.dart';
 import 'package:lean_assistant/features/admin/domain/new_user.dart';
+import 'package:lean_assistant/features/admin/domain/user_access.dart';
 import 'package:lean_assistant/features/admin/domain/user_filter.dart';
 
 /// User management for admins.
@@ -25,4 +26,7 @@ abstract interface class UserAdminRepository {
 
   /// Gives the user a new temporary password and closes their sessions.
   Future<Result<void>> resetPassword(String id, String temporaryPassword);
+
+  /// Changes role, plant and line together. Closes the user's sessions.
+  Future<Result<ManagedUser>> updateAccess(String id, UserAccess access);
 }

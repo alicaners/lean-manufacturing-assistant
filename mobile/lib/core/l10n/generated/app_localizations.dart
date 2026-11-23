@@ -649,6 +649,48 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Geçici şifre verildi. Kullanıcıya güvenli bir yoldan iletin.'**
   String get userDetailPasswordReset;
+
+  /// Shown when the plant list could not be loaded.
+  ///
+  /// In tr, this message translates to:
+  /// **'Fabrikalar yüklenemedi.'**
+  String get userFormPlantsFailed;
+
+  /// Title of the card with the edit-access action.
+  ///
+  /// In tr, this message translates to:
+  /// **'Erişim'**
+  String get userDetailAccessSection;
+
+  /// Shows the role and explains what changing access does.
+  ///
+  /// In tr, this message translates to:
+  /// **'Rol: {role}. Rol, fabrika veya hat değişince kullanıcının tüm oturumları kapanır.'**
+  String userDetailAccessInfo(String role);
+
+  /// Button and page title for changing role, plant and line.
+  ///
+  /// In tr, this message translates to:
+  /// **'Erişimi değiştir'**
+  String get userDetailEditAccess;
+
+  /// Snackbar after the access was changed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Erişim güncellendi.'**
+  String get userDetailAccessChanged;
+
+  /// Explains the effect of saving on the edit-access page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydettiğinizde kullanıcının tüm cihazlardaki oturumları kapanır; yeni yetkileriyle tekrar giriş yapması gerekir.'**
+  String get editAccessInfo;
+
+  /// Button that saves the new access.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydet'**
+  String get editAccessSave;
 }
 
 class _AppLocalizationsDelegate

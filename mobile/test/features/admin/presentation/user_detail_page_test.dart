@@ -47,7 +47,13 @@ void main() {
     await openPageOf(tester, operatorUser);
 
     expect(find.text('Demo Operatör'), findsOneWidget);
+    expect(find.text('Erişimi değiştir'), findsOneWidget);
+
+    // The cards below the first ones appear only after scrolling, as on a phone.
+    await tester.scrollUntilVisible(find.text('Pasif yap'), 200);
     expect(find.text('Pasif yap'), findsOneWidget);
+
+    await tester.scrollUntilVisible(find.text('Geçici şifre ver'), 200);
     expect(find.text('Geçici şifre ver'), findsOneWidget);
   });
 

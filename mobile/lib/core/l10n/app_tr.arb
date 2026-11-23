@@ -480,8 +480,49 @@
     "description": "Snackbar after deactivating a user."
   },
 
-  "userDetailPasswordReset": "Geçici şifre verildi. Kullanıcıya güvenli bir yoldan iletin.",
+    "userDetailPasswordReset": "Geçici şifre verildi. Kullanıcıya güvenli bir yoldan iletin.",
   "@userDetailPasswordReset": {
     "description": "Snackbar after giving a temporary password."
+  },
+
+  "userFormPlantsFailed": "Fabrikalar yüklenemedi.",
+  "@userFormPlantsFailed": {
+    "description": "Shown when the plant list could not be loaded."
+  },
+
+  "userDetailAccessSection": "Erişim",
+  "@userDetailAccessSection": {
+    "description": "Title of the card with the edit-access action."
+  },
+
+  "userDetailAccessInfo": "Rol: {role}. Rol, fabrika veya hat değişince kullanıcının tüm oturumları kapanır.",
+  "@userDetailAccessInfo": {
+    "description": "Shows the role and explains what changing access does.",
+    "placeholders": {
+      "role": {
+        "type": "String",
+        "example": "Operatör"
+      }
+    }
+  },
+
+  "userDetailEditAccess": "Erişimi değiştir",
+  "@userDetailEditAccess": {
+    "description": "Button and page title for changing role, plant and line."
+  },
+
+  "userDetailAccessChanged": "Erişim güncellendi.",
+  "@userDetailAccessChanged": {
+    "description": "Snackbar after the access was changed."
+  },
+
+  "editAccessInfo": "Kaydettiğinizde kullanıcının tüm cihazlardaki oturumları kapanır; yeni yetkileriyle tekrar giriş yapması gerekir.",
+  "@editAccessInfo": {
+    "description": "Explains the effect of saving on the edit-access page."
+  },
+
+  "editAccessSave": "Kaydet",
+  "@editAccessSave": {
+    "description": "Button that saves the new access."
   }
 }

@@ -4,6 +4,7 @@ import 'package:lean_assistant/core/network/api_client.dart';
 import 'package:lean_assistant/core/network/cursor_page.dart';
 import 'package:lean_assistant/features/admin/domain/managed_user.dart';
 import 'package:lean_assistant/features/admin/domain/new_user.dart';
+import 'package:lean_assistant/features/admin/domain/user_access.dart';
 import 'package:lean_assistant/features/admin/domain/user_admin_repository.dart';
 import 'package:lean_assistant/features/admin/domain/user_filter.dart';
 
@@ -70,6 +71,19 @@ class ApiUserAdminRepository implements UserAdminRepository {
       '/api/users/$id/reset-password',
       body: {'newPassword': temporaryPassword},
       parse: _noContent,
+    );
+  }
+
+  @override
+  Future<Result<ManagedUser>> updateAccess(String id, UserAccess access) {
+    return _api.put(
+      '/api/users/$id/access',
+      body: {
+        'role': access.role.apiName,
+        'factoryId': access.plantId,
+        'lineId': access.lineId,
+      },
+      parse: ManagedUser.fromJson,
     );
   }
 

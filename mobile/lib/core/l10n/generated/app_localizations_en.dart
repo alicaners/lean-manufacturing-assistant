@@ -311,4 +311,28 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get userDetailPasswordReset =>
       'Temporary password set. Share it with the user in a safe way.';
+
+  @override
+  String get userFormPlantsFailed => 'The plants could not be loaded.';
+
+  @override
+  String get userDetailAccessSection => 'Access';
+
+  @override
+  String userDetailAccessInfo(String role) {
+    return 'Role: $role. Changing the role, plant or line closes the user\'s sessions.';
+  }
+
+  @override
+  String get userDetailEditAccess => 'Change access';
+
+  @override
+  String get userDetailAccessChanged => 'Access updated.';
+
+  @override
+  String get editAccessInfo =>
+      'Saving closes the user\'s sessions on every device; they must sign in again with their new access.';
+
+  @override
+  String get editAccessSave => 'Save';
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lean_assistant/app/di/injection.dart';
+import 'package:lean_assistant/app/router/app_router.dart';
 import 'package:lean_assistant/core/error/failure_message.dart';
 import 'package:lean_assistant/core/forms/submit_state.dart';
 import 'package:lean_assistant/core/forms/validators.dart';
@@ -94,6 +96,22 @@ class _UserDetails extends StatelessWidget {
   /// An action is on its way; buttons wait until it finishes.
   final bool busy;
 
+  Future<void> _editAccess(BuildContext context) async {
+    // Read everything that needs the context before waiting.
+    final cubit = context.read<UserDetailCubit>();
+    final messenger = ScaffoldMessenger.of(context);
+    final changedMessage = context.l10n.userDetailAccessChanged;
+
+    final changed = await context.push<bool>(
+      AppRoutes.editAccessOf(user.id),
+      extra: user,
+    );
+    if (changed != true) return;
+
+    messenger.showSnackBar(SnackBar(content: Text(changedMessage)));
+    await cubit.load(user.id);
+  }
+
   Future<void> _confirmDeactivate(BuildContext context) async {
     final cubit = context.read<UserDetailCubit>();
     final l10n = context.l10n;
@@ -136,7 +154,7 @@ class _UserDetails extends StatelessWidget {
     final theme = Theme.of(context);
     final cubit = context.read<UserDetailCubit>();
 
-    // An admin may not deactivate or reset themselves here.
+    // An admin may not change, deactivate or reset themselves here.
     final myId = switch (context.watch<AuthBloc>().state) {
       AuthSignedIn(user: final me) => me.id,
       _ => null,
@@ -182,6 +200,16 @@ class _UserDetails extends StatelessWidget {
         if (isSelf)
           Text(l10n.userDetailSelfInfo, textAlign: TextAlign.center)
         else ...[
+          _Section(
+            title: l10n.userDetailAccessSection,
+            info: l10n.userDetailAccessInfo(user.role.label(l10n)),
+            action: OutlinedButton.icon(
+              onPressed: busy ? null : () => _editAccess(context),
+              icon: const Icon(Icons.badge_outlined),
+              label: Text(l10n.userDetailEditAccess),
+            ),
+          ),
+          const SizedBox(height: 16),
           _Section(
             title: l10n.userDetailAccountSection,
             info: user.isActive

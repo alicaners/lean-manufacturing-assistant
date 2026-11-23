@@ -309,4 +309,28 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get userDetailPasswordReset =>
       'Geçici şifre verildi. Kullanıcıya güvenli bir yoldan iletin.';
+
+  @override
+  String get userFormPlantsFailed => 'Fabrikalar yüklenemedi.';
+
+  @override
+  String get userDetailAccessSection => 'Erişim';
+
+  @override
+  String userDetailAccessInfo(String role) {
+    return 'Rol: $role. Rol, fabrika veya hat değişince kullanıcının tüm oturumları kapanır.';
+  }
+
+  @override
+  String get userDetailEditAccess => 'Erişimi değiştir';
+
+  @override
+  String get userDetailAccessChanged => 'Erişim güncellendi.';
+
+  @override
+  String get editAccessInfo =>
+      'Kaydettiğinizde kullanıcının tüm cihazlardaki oturumları kapanır; yeni yetkileriyle tekrar giriş yapması gerekir.';
+
+  @override
+  String get editAccessSave => 'Kaydet';
 }

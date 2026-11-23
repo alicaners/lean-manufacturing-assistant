@@ -1,4 +1,5 @@
 import 'package:lean_assistant/features/auth/domain/current_user.dart';
+import 'package:lean_assistant/features/admin/domain/user_access.dart';
 
 /// A user as an admin sees it in user management (`/api/users`).
 class ManagedUser {
@@ -52,5 +53,10 @@ class ManagedUser {
   final String? factoryId;
 
   /// The line the user works on; only operators and supervisors have one.
+  /// The line the user works on; only operators and supervisors have one.
   final String? lineId;
+
+  /// The user's role, plant and line; where the edit form starts from.
+  UserAccess get access =>
+      UserAccess(role: role, plantId: factoryId, lineId: lineId);
 }

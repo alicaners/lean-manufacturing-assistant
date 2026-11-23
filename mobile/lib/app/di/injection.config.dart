@@ -28,8 +28,12 @@ import 'package:lean_assistant/features/admin/domain/organization_repository.dar
     as _i188;
 import 'package:lean_assistant/features/admin/domain/user_admin_repository.dart'
     as _i90;
+import 'package:lean_assistant/features/admin/presentation/access_options_cubit.dart'
+    as _i210;
 import 'package:lean_assistant/features/admin/presentation/create_user_cubit.dart'
     as _i705;
+import 'package:lean_assistant/features/admin/presentation/edit_access_cubit.dart'
+    as _i571;
 import 'package:lean_assistant/features/admin/presentation/user_detail_cubit.dart'
     as _i503;
 import 'package:lean_assistant/features/admin/presentation/user_list_cubit.dart'
@@ -107,6 +111,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i327.HealthRepository>(
       () => _i663.ApiHealthRepository(gh<_i150.ApiClient>()),
     );
+    gh.factory<_i210.AccessOptionsCubit>(
+      () => _i210.AccessOptionsCubit(gh<_i188.OrganizationRepository>()),
+    );
     gh.lazySingleton<_i90.UserAdminRepository>(
       () => _i449.ApiUserAdminRepository(gh<_i150.ApiClient>()),
     );
@@ -129,10 +136,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i49.LoginCubit(gh<_i924.AuthRepository>(), gh<_i348.AuthBloc>()),
     );
     gh.factory<_i705.CreateUserCubit>(
-      () => _i705.CreateUserCubit(
-        gh<_i90.UserAdminRepository>(),
-        gh<_i188.OrganizationRepository>(),
-      ),
+      () => _i705.CreateUserCubit(gh<_i90.UserAdminRepository>()),
+    );
+    gh.factory<_i571.EditAccessCubit>(
+      () => _i571.EditAccessCubit(gh<_i90.UserAdminRepository>()),
     );
     gh.factory<_i503.UserDetailCubit>(
       () => _i503.UserDetailCubit(gh<_i90.UserAdminRepository>()),

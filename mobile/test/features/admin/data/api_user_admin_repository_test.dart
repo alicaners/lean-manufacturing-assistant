@@ -5,6 +5,7 @@ import 'package:lean_assistant/core/network/cursor_page.dart';
 import 'package:lean_assistant/features/admin/data/api_user_admin_repository.dart';
 import 'package:lean_assistant/features/admin/domain/managed_user.dart';
 import 'package:lean_assistant/features/admin/domain/new_user.dart';
+import 'package:lean_assistant/features/admin/domain/user_access.dart';
 import 'package:lean_assistant/features/admin/domain/user_filter.dart';
 import 'package:lean_assistant/features/auth/domain/current_user.dart';
 
@@ -116,5 +117,28 @@ void main() {
       'newPassword': 'New-Temporary-Password',
     });
     expect(result, isA<Ok<void>>());
+  });
+
+  test('changes a user\'s access', () async {
+    final server = FakeJsonServer(200, operatorUserJson);
+
+    final result = await ApiUserAdminRepository(ApiClient(dioFor(server)))
+        .updateAccess(
+          'u-1',
+          const UserAccess(
+            role: UserRole.supervisor,
+            plantId: 'p-1',
+            lineId: 'l-1',
+          ),
+        );
+
+    expect(server.requests.single.method, 'PUT');
+    expect(server.requests.single.path, '/api/users/u-1/access');
+    expect(server.requests.single.data, {
+      'role': 'Supervisor',
+      'factoryId': 'p-1',
+      'lineId': 'l-1',
+    });
+    expect(result, isA<Ok<ManagedUser>>());
   });
 }

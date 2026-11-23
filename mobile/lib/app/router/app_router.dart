@@ -2,7 +2,9 @@ import 'package:go_router/go_router.dart';
 import 'package:lean_assistant/app/router/forbidden_page.dart';
 import 'package:lean_assistant/app/router/not_found_page.dart';
 import 'package:lean_assistant/app/router/stream_listenable.dart';
+import 'package:lean_assistant/features/admin/domain/managed_user.dart';
 import 'package:lean_assistant/features/admin/presentation/create_user_page.dart';
+import 'package:lean_assistant/features/admin/presentation/edit_access_page.dart';
 import 'package:lean_assistant/features/admin/presentation/user_detail_page.dart';
 import 'package:lean_assistant/features/admin/presentation/users_page.dart';
 import 'package:lean_assistant/features/auth/domain/current_user.dart';
@@ -24,9 +26,13 @@ abstract final class AppRoutes {
   static const String users = '/users';
   static const String newUser = '/users/new';
   static const String userDetail = '/users/:id';
+  static const String editAccess = '/users/:id/access';
 
   /// The address of one user's detail page.
   static String userDetailOf(String id) => '/users/$id';
+
+  /// The address of the page that changes one user's access.
+  static String editAccessOf(String id) => '/users/$id/access';
 }
 
 /// Builds the app's router. Every navigation, and every change of the
@@ -70,6 +76,14 @@ GoRouter createRouter(AuthBloc authBloc) {
         path: AppRoutes.userDetail,
         builder: (context, state) =>
             UserDetailPage(userId: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: AppRoutes.editAccess,
+        // Opened from the detail page, which hands over the user it shows.
+        builder: (context, state) => switch (state.extra) {
+          final ManagedUser user => EditAccessPage(user: user),
+          _ => const NotFoundPage(),
+        },
       ),
     ],
     errorBuilder: (context, state) => const NotFoundPage(),

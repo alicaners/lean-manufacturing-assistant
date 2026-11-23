@@ -25,13 +25,3 @@ class NewUser {
   /// Only for roles that work on a line.
   final String? lineId;
 }
-
-/// Which plant and line a role needs (docs/business-rules.md).
-extension UserRoleScope on UserRole {
-  /// Every role except Admin sees only its own plant, so it must have one.
-  bool get needsPlant => this != UserRole.admin;
-
-  /// Operators and supervisors act on "their own line".
-  bool get worksOnLine =>
-      this == UserRole.operator || this == UserRole.supervisor;
-}
