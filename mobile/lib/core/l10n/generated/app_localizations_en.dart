@@ -182,6 +182,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get usersTitle => 'Users';
 
   @override
-  String get usersComingSoon =>
-      'User management will appear here in the next step.';
+  String get usersSearchHint => 'Search by name or user name';
+
+  @override
+  String get usersAll => 'All';
+
+  @override
+  String get usersActive => 'Active';
+
+  @override
+  String get usersInactive => 'Inactive';
+
+  @override
+  String get usersAllRoles => 'All roles';
+
+  @override
+  String get usersEmpty => 'No users match these filters.';
+
+  @override
+  String get usersTemporaryPassword =>
+      'Temporary password: changed at first sign-in';
 }

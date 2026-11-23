@@ -180,6 +180,24 @@ class AppLocalizationsTr extends AppLocalizations {
   String get usersTitle => 'Kullanıcılar';
 
   @override
-  String get usersComingSoon =>
-      'Kullanıcı yönetimi bir sonraki adımda burada olacak.';
+  String get usersSearchHint => 'Ad veya kullanıcı adıyla ara';
+
+  @override
+  String get usersAll => 'Tümü';
+
+  @override
+  String get usersActive => 'Aktif';
+
+  @override
+  String get usersInactive => 'Pasif';
+
+  @override
+  String get usersAllRoles => 'Tüm roller';
+
+  @override
+  String get usersEmpty => 'Bu filtrelere uyan kullanıcı yok.';
+
+  @override
+  String get usersTemporaryPassword =>
+      'Geçici şifre: ilk girişte değiştirilecek';
 }

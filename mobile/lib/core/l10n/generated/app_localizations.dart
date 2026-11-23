@@ -410,11 +410,47 @@ abstract class AppLocalizations {
   /// **'Kullanıcılar'**
   String get usersTitle;
 
-  /// Placeholder until the user management screen is built.
+  /// Hint of the search field on the user list.
   ///
   /// In tr, this message translates to:
-  /// **'Kullanıcı yönetimi bir sonraki adımda burada olacak.'**
-  String get usersComingSoon;
+  /// **'Ad veya kullanıcı adıyla ara'**
+  String get usersSearchHint;
+
+  /// Filter chip: active and deactivated users.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tümü'**
+  String get usersAll;
+
+  /// Filter chip for active users.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktif'**
+  String get usersActive;
+
+  /// Filter chip for deactivated users, and the label next to such a user.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pasif'**
+  String get usersInactive;
+
+  /// Filter chip: users of every role.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tüm roller'**
+  String get usersAllRoles;
+
+  /// Shown when no user matches the search and filters.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu filtrelere uyan kullanıcı yok.'**
+  String get usersEmpty;
+
+  /// Tooltip of the key icon next to a user with a temporary password.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçici şifre: ilk girişte değiştirilecek'**
+  String get usersTemporaryPassword;
 }
 
 class _AppLocalizationsDelegate

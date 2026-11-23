@@ -279,8 +279,38 @@
     "description": "App bar title of the user management page."
   },
 
-  "usersComingSoon": "Kullanıcı yönetimi bir sonraki adımda burada olacak.",
-  "@usersComingSoon": {
-    "description": "Placeholder until the user management screen is built."
+    "usersSearchHint": "Ad veya kullanıcı adıyla ara",
+  "@usersSearchHint": {
+    "description": "Hint of the search field on the user list."
+  },
+
+  "usersAll": "Tümü",
+  "@usersAll": {
+    "description": "Filter chip: active and deactivated users."
+  },
+
+  "usersActive": "Aktif",
+  "@usersActive": {
+    "description": "Filter chip for active users."
+  },
+
+  "usersInactive": "Pasif",
+  "@usersInactive": {
+    "description": "Filter chip for deactivated users, and the label next to such a user."
+  },
+
+  "usersAllRoles": "Tüm roller",
+  "@usersAllRoles": {
+    "description": "Filter chip: users of every role."
+  },
+
+  "usersEmpty": "Bu filtrelere uyan kullanıcı yok.",
+  "@usersEmpty": {
+    "description": "Shown when no user matches the search and filters."
+  },
+
+  "usersTemporaryPassword": "Geçici şifre: ilk girişte değiştirilecek",
+  "@usersTemporaryPassword": {
+    "description": "Tooltip of the key icon next to a user with a temporary password."
   }
 }

@@ -51,6 +51,12 @@
   "roleTechnician": "Maintenance technician",
   "roleManager": "Manager",
   "roleAdmin": "Admin",
-  "usersTitle": "Users",
-  "usersComingSoon": "User management will appear here in the next step."
+    "usersTitle": "Users",
+  "usersSearchHint": "Search by name or user name",
+  "usersAll": "All",
+  "usersActive": "Active",
+  "usersInactive": "Inactive",
+  "usersAllRoles": "All roles",
+  "usersEmpty": "No users match these filters.",
+  "usersTemporaryPassword": "Temporary password: changed at first sign-in"
 }
