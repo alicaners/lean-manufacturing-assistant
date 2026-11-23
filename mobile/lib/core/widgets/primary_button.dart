@@ -15,14 +15,17 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FilledButton(
-      onPressed: isLoading ? null : onPressed,
-      child: isLoading
-          ? const SizedBox.square(
-              dimension: 24,
-              child: CircularProgressIndicator(strokeWidth: 2.5),
-            )
-          : Text(label),
+    return SizedBox(
+      width: double.infinity,
+      child: FilledButton(
+        onPressed: isLoading ? null : onPressed,
+        child: isLoading
+            ? const SizedBox.square(
+                dimension: 24,
+                child: CircularProgressIndicator(strokeWidth: 2.5),
+              )
+            : Text(label),
+      ),
     );
   }
 }

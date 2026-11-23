@@ -180,6 +180,257 @@ class AppLocalizationsTr extends AppLocalizations {
   String get usersTitle => 'Kullanıcılar';
 
   @override
-  String get usersComingSoon =>
-      'Kullanıcı yönetimi bir sonraki adımda burada olacak.';
+  String get usersSearchHint => 'Ad veya kullanıcı adıyla ara';
+
+  @override
+  String get usersAll => 'Tümü';
+
+  @override
+  String get usersActive => 'Aktif';
+
+  @override
+  String get usersInactive => 'Pasif';
+
+  @override
+  String get usersAllRoles => 'Tüm roller';
+
+  @override
+  String get usersEmpty => 'Bu filtrelere uyan kullanıcı yok.';
+
+  @override
+  String get usersTemporaryPassword =>
+      'Geçici şifre: ilk girişte değiştirilecek';
+
+  @override
+  String get usersNew => 'Yeni kullanıcı';
+
+  @override
+  String get usersCreated => 'Kullanıcı oluşturuldu.';
+
+  @override
+  String get userFormFullName => 'Ad soyad';
+
+  @override
+  String get userFormTemporaryPassword => 'Geçici şifre';
+
+  @override
+  String get userFormPasswordInfo =>
+      'Kullanıcı ilk girişte bu şifreyi kendi şifresiyle değiştirecek. Şifreyi kendisine güvenli bir yoldan iletin.';
+
+  @override
+  String get userFormRole => 'Rol';
+
+  @override
+  String get userFormPlant => 'Fabrika';
+
+  @override
+  String get userFormAllPlants => 'Tüm fabrikalar (sistem yöneticisi)';
+
+  @override
+  String get userFormLine => 'Hat';
+
+  @override
+  String get userFormLinesFailed => 'Hatlar yüklenemedi.';
+
+  @override
+  String get userFormUserNameInvalid =>
+      'Yalnızca harf, rakam, nokta, alt çizgi ve tire kullanılabilir.';
+
+  @override
+  String get userFormUserNameTaken => 'Bu kullanıcı adı zaten kullanılıyor.';
+
+  @override
+  String get userFormOutsideScope =>
+      'Yalnızca kendi fabrikanızın kullanıcılarını yönetebilirsiniz.';
+
+  @override
+  String get userFormSubmit => 'Kullanıcıyı oluştur';
+
+  @override
+  String get commonCancel => 'Vazgeç';
+
+  @override
+  String get userDetailTitle => 'Kullanıcı';
+
+  @override
+  String get userDetailTemporaryPassword => 'Geçici şifre';
+
+  @override
+  String get userDetailSelfInfo =>
+      'Bu sizin hesabınız. Kendi hesabınızı buradan pasif yapamaz, şifrenizi buradan sıfırlayamazsınız.';
+
+  @override
+  String get userDetailAccountSection => 'Hesap durumu';
+
+  @override
+  String get userDetailActiveInfo =>
+      'Hesap aktif. Pasif yapılırsa kullanıcı giriş yapamaz ve açık oturumları kapanır.';
+
+  @override
+  String get userDetailInactiveInfo =>
+      'Hesap pasif. Kullanıcı giriş yapamıyor.';
+
+  @override
+  String get userDetailDeactivate => 'Pasif yap';
+
+  @override
+  String get userDetailActivate => 'Aktif yap';
+
+  @override
+  String get userDetailDeactivateTitle => 'Kullanıcı pasif yapılsın mı?';
+
+  @override
+  String userDetailDeactivateMessage(String name) {
+    return '$name artık giriş yapamayacak ve tüm cihazlardaki oturumları kapanacak.';
+  }
+
+  @override
+  String get userDetailPasswordSection => 'Şifre';
+
+  @override
+  String get userDetailPasswordInfo =>
+      'Kullanıcı şifresini unuttuysa yeni bir geçici şifre verin. Tüm cihazlardaki oturumları kapanır ve ilk girişte şifresini değiştirmesi istenir.';
+
+  @override
+  String get userDetailResetPassword => 'Geçici şifre ver';
+
+  @override
+  String get userDetailResetPasswordTitle => 'Yeni geçici şifre';
+
+  @override
+  String get userDetailResetPasswordSubmit => 'Şifreyi ver';
+
+  @override
+  String get userDetailActivated => 'Kullanıcı aktif yapıldı.';
+
+  @override
+  String get userDetailDeactivated => 'Kullanıcı pasif yapıldı.';
+
+  @override
+  String get userDetailPasswordReset =>
+      'Geçici şifre verildi. Kullanıcıya güvenli bir yoldan iletin.';
+
+  @override
+  String get userFormPlantsFailed => 'Fabrikalar yüklenemedi.';
+
+  @override
+  String get userDetailAccessSection => 'Erişim';
+
+  @override
+  String userDetailAccessInfo(String role) {
+    return 'Rol: $role. Rol, fabrika veya hat değişince kullanıcının tüm oturumları kapanır.';
+  }
+
+  @override
+  String get userDetailEditAccess => 'Erişimi değiştir';
+
+  @override
+  String get userDetailAccessChanged => 'Erişim güncellendi.';
+
+  @override
+  String get editAccessInfo =>
+      'Kaydettiğinizde kullanıcının tüm cihazlardaki oturumları kapanır; yeni yetkileriyle tekrar giriş yapması gerekir.';
+
+  @override
+  String get editAccessSave => 'Kaydet';
+
+  @override
+  String get profileTitle => 'Profil';
+
+  @override
+  String get profilePasswordSection => 'Şifre';
+
+  @override
+  String get profilePasswordInfo =>
+      'Şifrenizi değiştirdiğinizde diğer cihazlardaki oturumlarınız kapanır; bu cihazda oturumunuz açık kalır.';
+
+  @override
+  String get profileChangePassword => 'Şifremi değiştir';
+
+  @override
+  String get profilePasswordChanged => 'Şifreniz değiştirildi.';
+
+  @override
+  String get homeManageOrganization => 'Organizasyonu yönet';
+
+  @override
+  String get organizationTitle => 'Organizasyon';
+
+  @override
+  String get organizationAddDepartment => 'Bölüm ekle';
+
+  @override
+  String get organizationAddLine => 'Hat ekle';
+
+  @override
+  String get organizationAddMachine => 'Makine ekle';
+
+  @override
+  String get organizationRename => 'Yeniden adlandır';
+
+  @override
+  String get organizationName => 'Ad';
+
+  @override
+  String get organizationMachineCode => 'Makine kodu';
+
+  @override
+  String get organizationCodeInvalid =>
+      'Yalnızca harf, rakam ve tire kullanılabilir.';
+
+  @override
+  String organizationLineCount(int count) {
+    return '$count hat';
+  }
+
+  @override
+  String organizationMachineCount(int count) {
+    return '$count makine';
+  }
+
+  @override
+  String get organizationNoPlants => 'Henüz fabrika yok.';
+
+  @override
+  String get organizationNoDepartments => 'Bu fabrikada henüz bölüm yok.';
+
+  @override
+  String get organizationNoLines => 'Henüz hat yok.';
+
+  @override
+  String get organizationNoMachines => 'Henüz makine yok.';
+
+  @override
+  String get organizationSaved => 'Kaydedildi.';
+
+  @override
+  String get organizationConflict =>
+      'Bu ad veya kod burada zaten kullanılıyor.';
+
+  @override
+  String get machineTitle => 'Makine';
+
+  @override
+  String get machineLabelInfo =>
+      'Bu QR kodu makinenin üzerine yapıştırılır. Operatör duruş bildirirken kodu okutarak makineyi seçer.';
+
+  @override
+  String get machineShareLabel => 'Etiketi paylaş';
+
+  @override
+  String get machineShareFailed => 'Etiket paylaşılamadı.';
+
+  @override
+  String get machineRegenerate => 'Yeni QR üret';
+
+  @override
+  String get machineRegenerateTitle => 'Yeni QR kodu üretilsin mi?';
+
+  @override
+  String get machineRegenerateMessage =>
+      'Eski etiket hemen çalışmaz hâle gelir. Yeni etiketi yazdırıp makinedeki etiketin yerine yapıştırmanız gerekir.';
+
+  @override
+  String get machineRegenerated =>
+      'Yeni QR kodu üretildi. Etiketi yenilemeyi unutmayın.';
 }

@@ -1,5 +1,10 @@
 import 'package:lean_assistant/app/di/injection.dart';
 import 'package:lean_assistant/core/error/result.dart';
+import 'package:lean_assistant/core/network/cursor_page.dart';
+import 'package:lean_assistant/features/admin/domain/managed_user.dart';
+import 'package:lean_assistant/features/admin/domain/user_admin_repository.dart';
+import 'package:lean_assistant/features/admin/domain/user_filter.dart';
+import 'package:lean_assistant/features/admin/presentation/user_list_cubit.dart';
 import 'package:lean_assistant/features/auth/domain/auth_repository.dart';
 import 'package:lean_assistant/features/auth/presentation/change_password_cubit.dart';
 import 'package:lean_assistant/features/auth/presentation/login_cubit.dart';
@@ -13,6 +18,21 @@ import 'fake_auth.dart';
 class FakeHealthRepository implements HealthRepository {
   @override
   Future<Result<ServerHealth>> check() async => const Ok(ServerHealth.healthy);
+}
+
+/// A user list with nobody in it, without any network.
+/// A user list with nobody in it, without any network.
+class _EmptyUserAdminRepository implements UserAdminRepository {
+  @override
+  Future<Result<CursorPage<ManagedUser>>> list(
+    UserFilter filter, {
+    String? cursor,
+  }) async => const Ok(CursorPage(items: []));
+
+  // Pages under test never change users.
+  @override
+  dynamic noSuchMethod(Invocation invocation) =>
+      throw UnimplementedError('Not expected in this test.');
 }
 
 /// Pages under test only render; any real sign-in call would be a mistake.
@@ -34,5 +54,8 @@ void registerTestDependencies() {
     )
     ..registerFactory<ChangePasswordCubit>(
       () => ChangePasswordCubit(_UnusedAuthRepository(), MockAuthBloc()),
+    )
+    ..registerFactory<UserListCubit>(
+      () => UserListCubit(_EmptyUserAdminRepository()),
     );
 }

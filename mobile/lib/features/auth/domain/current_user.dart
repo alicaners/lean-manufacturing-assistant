@@ -15,6 +15,15 @@ enum UserRole {
     'Admin' => UserRole.admin,
     _ => throw FormatException('Unknown role: $value'),
   };
+
+  /// How the API writes the role; the opposite of [parse].
+  String get apiName => switch (this) {
+    UserRole.operator => 'Operator',
+    UserRole.supervisor => 'Supervisor',
+    UserRole.technician => 'Technician',
+    UserRole.manager => 'Manager',
+    UserRole.admin => 'Admin',
+  };
 }
 
 /// The signed-in user, as `GET /api/auth/me` returns it.

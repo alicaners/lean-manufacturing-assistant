@@ -182,6 +182,269 @@ class AppLocalizationsEn extends AppLocalizations {
   String get usersTitle => 'Users';
 
   @override
-  String get usersComingSoon =>
-      'User management will appear here in the next step.';
+  String get usersSearchHint => 'Search by name or user name';
+
+  @override
+  String get usersAll => 'All';
+
+  @override
+  String get usersActive => 'Active';
+
+  @override
+  String get usersInactive => 'Inactive';
+
+  @override
+  String get usersAllRoles => 'All roles';
+
+  @override
+  String get usersEmpty => 'No users match these filters.';
+
+  @override
+  String get usersTemporaryPassword =>
+      'Temporary password: changed at first sign-in';
+
+  @override
+  String get usersNew => 'New user';
+
+  @override
+  String get usersCreated => 'User created.';
+
+  @override
+  String get userFormFullName => 'Full name';
+
+  @override
+  String get userFormTemporaryPassword => 'Temporary password';
+
+  @override
+  String get userFormPasswordInfo =>
+      'The user replaces this password with their own at first sign-in. Share it with them in a safe way.';
+
+  @override
+  String get userFormRole => 'Role';
+
+  @override
+  String get userFormPlant => 'Plant';
+
+  @override
+  String get userFormAllPlants => 'All plants (system admin)';
+
+  @override
+  String get userFormLine => 'Line';
+
+  @override
+  String get userFormLinesFailed => 'The lines could not be loaded.';
+
+  @override
+  String get userFormUserNameInvalid =>
+      'Only letters, digits, dots, underscores and hyphens are allowed.';
+
+  @override
+  String get userFormUserNameTaken => 'This user name is already in use.';
+
+  @override
+  String get userFormOutsideScope =>
+      'You can only manage users of your own plant.';
+
+  @override
+  String get userFormSubmit => 'Create user';
+
+  @override
+  String get commonCancel => 'Cancel';
+
+  @override
+  String get userDetailTitle => 'User';
+
+  @override
+  String get userDetailTemporaryPassword => 'Temporary password';
+
+  @override
+  String get userDetailSelfInfo =>
+      'This is your own account. You cannot deactivate it or reset its password here.';
+
+  @override
+  String get userDetailAccountSection => 'Account status';
+
+  @override
+  String get userDetailActiveInfo =>
+      'The account is active. Deactivating it blocks sign-in and closes open sessions.';
+
+  @override
+  String get userDetailInactiveInfo =>
+      'The account is inactive. The user cannot sign in.';
+
+  @override
+  String get userDetailDeactivate => 'Deactivate';
+
+  @override
+  String get userDetailActivate => 'Activate';
+
+  @override
+  String get userDetailDeactivateTitle => 'Deactivate this user?';
+
+  @override
+  String userDetailDeactivateMessage(String name) {
+    return '$name will no longer be able to sign in, and their sessions on every device will be closed.';
+  }
+
+  @override
+  String get userDetailPasswordSection => 'Password';
+
+  @override
+  String get userDetailPasswordInfo =>
+      'If the user forgot their password, give them a new temporary one. Their sessions on every device are closed and they must change it at first sign-in.';
+
+  @override
+  String get userDetailResetPassword => 'Give temporary password';
+
+  @override
+  String get userDetailResetPasswordTitle => 'New temporary password';
+
+  @override
+  String get userDetailResetPasswordSubmit => 'Set password';
+
+  @override
+  String get userDetailActivated => 'User activated.';
+
+  @override
+  String get userDetailDeactivated => 'User deactivated.';
+
+  @override
+  String get userDetailPasswordReset =>
+      'Temporary password set. Share it with the user in a safe way.';
+
+  @override
+  String get userFormPlantsFailed => 'The plants could not be loaded.';
+
+  @override
+  String get userDetailAccessSection => 'Access';
+
+  @override
+  String userDetailAccessInfo(String role) {
+    return 'Role: $role. Changing the role, plant or line closes the user\'s sessions.';
+  }
+
+  @override
+  String get userDetailEditAccess => 'Change access';
+
+  @override
+  String get userDetailAccessChanged => 'Access updated.';
+
+  @override
+  String get editAccessInfo =>
+      'Saving closes the user\'s sessions on every device; they must sign in again with their new access.';
+
+  @override
+  String get editAccessSave => 'Save';
+
+  @override
+  String get profileTitle => 'Profile';
+
+  @override
+  String get profilePasswordSection => 'Password';
+
+  @override
+  String get profilePasswordInfo =>
+      'Changing your password closes your sessions on other devices; you stay signed in on this one.';
+
+  @override
+  String get profileChangePassword => 'Change my password';
+
+  @override
+  String get profilePasswordChanged => 'Your password was changed.';
+
+  @override
+  String get homeManageOrganization => 'Manage organization';
+
+  @override
+  String get organizationTitle => 'Organization';
+
+  @override
+  String get organizationAddDepartment => 'Add department';
+
+  @override
+  String get organizationAddLine => 'Add line';
+
+  @override
+  String get organizationAddMachine => 'Add machine';
+
+  @override
+  String get organizationRename => 'Rename';
+
+  @override
+  String get organizationName => 'Name';
+
+  @override
+  String get organizationMachineCode => 'Machine code';
+
+  @override
+  String get organizationCodeInvalid =>
+      'Only letters, digits and hyphens are allowed.';
+
+  @override
+  String organizationLineCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count lines',
+      one: '1 line',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String organizationMachineCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count machines',
+      one: '1 machine',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get organizationNoPlants => 'There are no plants yet.';
+
+  @override
+  String get organizationNoDepartments => 'This plant has no departments yet.';
+
+  @override
+  String get organizationNoLines => 'No lines yet.';
+
+  @override
+  String get organizationNoMachines => 'No machines yet.';
+
+  @override
+  String get organizationSaved => 'Saved.';
+
+  @override
+  String get organizationConflict =>
+      'This name or code is already in use here.';
+
+  @override
+  String get machineTitle => 'Machine';
+
+  @override
+  String get machineLabelInfo =>
+      'This QR code goes on the machine. Operators scan it to choose the machine when they report a stop.';
+
+  @override
+  String get machineShareLabel => 'Share label';
+
+  @override
+  String get machineShareFailed => 'The label could not be shared.';
+
+  @override
+  String get machineRegenerate => 'New QR code';
+
+  @override
+  String get machineRegenerateTitle => 'Make a new QR code?';
+
+  @override
+  String get machineRegenerateMessage =>
+      'The old label stops working at once. Print the new label and put it on the machine in place of the old one.';
+
+  @override
+  String get machineRegenerated =>
+      'New QR code made. Remember to replace the label.';
 }

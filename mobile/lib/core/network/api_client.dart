@@ -32,6 +32,14 @@ class ApiClient {
     return _send(() => _dio.post<Object?>(path, data: body), parse);
   }
 
+  Future<Result<T>> put<T>(
+    String path, {
+    required JsonParser<T> parse,
+    Object? body,
+  }) {
+    return _send(() => _dio.put<Object?>(path, data: body), parse);
+  }
+
   Future<Result<T>> _send<T>(
     Future<Response<Object?>> Function() request,
     JsonParser<T> parse,

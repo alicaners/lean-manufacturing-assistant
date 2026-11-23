@@ -7,4 +7,20 @@ abstract final class Validators {
     return (value) =>
         value == null || value.trim().isEmpty ? l10n.fieldRequired : null;
   }
+
+  /// A password of at least [minLength] characters.
+  static FormFieldValidator<String> password(
+    AppLocalizations l10n, {
+    required int minLength,
+  }) {
+    return (value) {
+      final password = value ?? '';
+
+      if (password.isEmpty) return l10n.fieldRequired;
+      if (password.length < minLength) {
+        return l10n.changePasswordTooShort(minLength);
+      }
+      return null;
+    };
+  }
 }

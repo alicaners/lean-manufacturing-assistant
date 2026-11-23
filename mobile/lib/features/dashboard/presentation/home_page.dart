@@ -7,7 +7,6 @@ import 'package:lean_assistant/core/l10n/l10n.dart';
 import 'package:lean_assistant/core/widgets/empty_view.dart';
 import 'package:lean_assistant/features/auth/domain/permission.dart';
 import 'package:lean_assistant/features/auth/presentation/auth_bloc.dart';
-import 'package:lean_assistant/features/auth/presentation/auth_event.dart';
 import 'package:lean_assistant/features/auth/presentation/auth_state.dart';
 import 'package:lean_assistant/features/auth/presentation/user_role_label.dart';
 import 'package:lean_assistant/features/dashboard/presentation/server_status_card.dart';
@@ -33,10 +32,9 @@ class HomePage extends StatelessWidget {
           title: Text(l10n.appTitle),
           actions: [
             IconButton(
-              tooltip: l10n.homeSignOut,
-              icon: const Icon(Icons.logout),
-              onPressed: () =>
-                  context.read<AuthBloc>().add(const AuthSignOutRequested()),
+              tooltip: l10n.profileTitle,
+              icon: const Icon(Icons.account_circle_outlined),
+              onPressed: () => context.push(AppRoutes.profile),
             ),
           ],
         ),
@@ -54,11 +52,20 @@ class HomePage extends StatelessWidget {
                 Text(l10n.homeRole(user.role.label(l10n))),
                 const SizedBox(height: 16),
                 // Only roles that may manage users see the way in.
+                // Only roles that may manage users see the way in.
                 if (user.role.can(Permission.manageUsers)) ...[
                   OutlinedButton.icon(
                     onPressed: () => context.push(AppRoutes.users),
                     icon: const Icon(Icons.manage_accounts_outlined),
                     label: Text(l10n.homeManageUsers),
+                  ),
+                  const SizedBox(height: 8),
+                ],
+                if (user.role.can(Permission.manageOrganization)) ...[
+                  OutlinedButton.icon(
+                    onPressed: () => context.push(AppRoutes.organization),
+                    icon: const Icon(Icons.account_tree_outlined),
+                    label: Text(l10n.homeManageOrganization),
                   ),
                   const SizedBox(height: 16),
                 ],

@@ -410,11 +410,467 @@ abstract class AppLocalizations {
   /// **'Kullanıcılar'**
   String get usersTitle;
 
-  /// Placeholder until the user management screen is built.
+  /// Hint of the search field on the user list.
   ///
   /// In tr, this message translates to:
-  /// **'Kullanıcı yönetimi bir sonraki adımda burada olacak.'**
-  String get usersComingSoon;
+  /// **'Ad veya kullanıcı adıyla ara'**
+  String get usersSearchHint;
+
+  /// Filter chip: active and deactivated users.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tümü'**
+  String get usersAll;
+
+  /// Filter chip for active users.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktif'**
+  String get usersActive;
+
+  /// Filter chip for deactivated users, and the label next to such a user.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pasif'**
+  String get usersInactive;
+
+  /// Filter chip: users of every role.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tüm roller'**
+  String get usersAllRoles;
+
+  /// Shown when no user matches the search and filters.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu filtrelere uyan kullanıcı yok.'**
+  String get usersEmpty;
+
+  /// Tooltip of the key icon next to a user with a temporary password.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçici şifre: ilk girişte değiştirilecek'**
+  String get usersTemporaryPassword;
+
+  /// Button and page title for creating a user.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni kullanıcı'**
+  String get usersNew;
+
+  /// Snackbar after a user was created.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı oluşturuldu.'**
+  String get usersCreated;
+
+  /// Label of the full name field.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ad soyad'**
+  String get userFormFullName;
+
+  /// Label of the password the admin gives a new user.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçici şifre'**
+  String get userFormTemporaryPassword;
+
+  /// Explains the temporary password under its field.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı ilk girişte bu şifreyi kendi şifresiyle değiştirecek. Şifreyi kendisine güvenli bir yoldan iletin.'**
+  String get userFormPasswordInfo;
+
+  /// Label of the role dropdown.
+  ///
+  /// In tr, this message translates to:
+  /// **'Rol'**
+  String get userFormRole;
+
+  /// Label of the plant dropdown.
+  ///
+  /// In tr, this message translates to:
+  /// **'Fabrika'**
+  String get userFormPlant;
+
+  /// Plant option for an admin who manages every plant.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tüm fabrikalar (sistem yöneticisi)'**
+  String get userFormAllPlants;
+
+  /// Label of the production line dropdown.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hat'**
+  String get userFormLine;
+
+  /// Shown when the lines of the chosen plant could not be loaded.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hatlar yüklenemedi.'**
+  String get userFormLinesFailed;
+
+  /// Shown when the user name has characters the server does not accept.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yalnızca harf, rakam, nokta, alt çizgi ve tire kullanılabilir.'**
+  String get userFormUserNameInvalid;
+
+  /// Shown under the user name field on HTTP 409.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu kullanıcı adı zaten kullanılıyor.'**
+  String get userFormUserNameTaken;
+
+  /// Shown on HTTP 403 when a plant admin picks another plant.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yalnızca kendi fabrikanızın kullanıcılarını yönetebilirsiniz.'**
+  String get userFormOutsideScope;
+
+  /// Button that creates the user.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcıyı oluştur'**
+  String get userFormSubmit;
+
+  /// Button that closes a dialog without doing anything.
+  ///
+  /// In tr, this message translates to:
+  /// **'Vazgeç'**
+  String get commonCancel;
+
+  /// App bar title of the user detail page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı'**
+  String get userDetailTitle;
+
+  /// Label shown when the user still has a temporary password.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçici şifre'**
+  String get userDetailTemporaryPassword;
+
+  /// Shown instead of the actions when an admin opens their own account.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu sizin hesabınız. Kendi hesabınızı buradan pasif yapamaz, şifrenizi buradan sıfırlayamazsınız.'**
+  String get userDetailSelfInfo;
+
+  /// Title of the card with the activate/deactivate action.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesap durumu'**
+  String get userDetailAccountSection;
+
+  /// Explains what deactivating does.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesap aktif. Pasif yapılırsa kullanıcı giriş yapamaz ve açık oturumları kapanır.'**
+  String get userDetailActiveInfo;
+
+  /// Shown for a deactivated user.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesap pasif. Kullanıcı giriş yapamıyor.'**
+  String get userDetailInactiveInfo;
+
+  /// Button that deactivates the user.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pasif yap'**
+  String get userDetailDeactivate;
+
+  /// Button that activates the user again.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktif yap'**
+  String get userDetailActivate;
+
+  /// Title of the dialog that confirms deactivation.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı pasif yapılsın mı?'**
+  String get userDetailDeactivateTitle;
+
+  /// Body of the dialog that confirms deactivation.
+  ///
+  /// In tr, this message translates to:
+  /// **'{name} artık giriş yapamayacak ve tüm cihazlardaki oturumları kapanacak.'**
+  String userDetailDeactivateMessage(String name);
+
+  /// Title of the card with the reset-password action.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifre'**
+  String get userDetailPasswordSection;
+
+  /// Explains what giving a temporary password does.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı şifresini unuttuysa yeni bir geçici şifre verin. Tüm cihazlardaki oturumları kapanır ve ilk girişte şifresini değiştirmesi istenir.'**
+  String get userDetailPasswordInfo;
+
+  /// Button that opens the reset-password dialog.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçici şifre ver'**
+  String get userDetailResetPassword;
+
+  /// Title of the reset-password dialog.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni geçici şifre'**
+  String get userDetailResetPasswordTitle;
+
+  /// Button that sets the new temporary password.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifreyi ver'**
+  String get userDetailResetPasswordSubmit;
+
+  /// Snackbar after activating a user.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı aktif yapıldı.'**
+  String get userDetailActivated;
+
+  /// Snackbar after deactivating a user.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı pasif yapıldı.'**
+  String get userDetailDeactivated;
+
+  /// Snackbar after giving a temporary password.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçici şifre verildi. Kullanıcıya güvenli bir yoldan iletin.'**
+  String get userDetailPasswordReset;
+
+  /// Shown when the plant list could not be loaded.
+  ///
+  /// In tr, this message translates to:
+  /// **'Fabrikalar yüklenemedi.'**
+  String get userFormPlantsFailed;
+
+  /// Title of the card with the edit-access action.
+  ///
+  /// In tr, this message translates to:
+  /// **'Erişim'**
+  String get userDetailAccessSection;
+
+  /// Shows the role and explains what changing access does.
+  ///
+  /// In tr, this message translates to:
+  /// **'Rol: {role}. Rol, fabrika veya hat değişince kullanıcının tüm oturumları kapanır.'**
+  String userDetailAccessInfo(String role);
+
+  /// Button and page title for changing role, plant and line.
+  ///
+  /// In tr, this message translates to:
+  /// **'Erişimi değiştir'**
+  String get userDetailEditAccess;
+
+  /// Snackbar after the access was changed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Erişim güncellendi.'**
+  String get userDetailAccessChanged;
+
+  /// Explains the effect of saving on the edit-access page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydettiğinizde kullanıcının tüm cihazlardaki oturumları kapanır; yeni yetkileriyle tekrar giriş yapması gerekir.'**
+  String get editAccessInfo;
+
+  /// Button that saves the new access.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydet'**
+  String get editAccessSave;
+
+  /// App bar title of the profile page and tooltip of its button.
+  ///
+  /// In tr, this message translates to:
+  /// **'Profil'**
+  String get profileTitle;
+
+  /// Title of the password card on the profile page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifre'**
+  String get profilePasswordSection;
+
+  /// Explains what changing the password does.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifrenizi değiştirdiğinizde diğer cihazlardaki oturumlarınız kapanır; bu cihazda oturumunuz açık kalır.'**
+  String get profilePasswordInfo;
+
+  /// Button on the profile page, and title of the page it opens.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifremi değiştir'**
+  String get profileChangePassword;
+
+  /// Snackbar after the user changed their own password.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifreniz değiştirildi.'**
+  String get profilePasswordChanged;
+
+  /// Home page button that opens organization management (admins only).
+  ///
+  /// In tr, this message translates to:
+  /// **'Organizasyonu yönet'**
+  String get homeManageOrganization;
+
+  /// App bar title of the organization page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Organizasyon'**
+  String get organizationTitle;
+
+  /// Button and dialog title for adding a department.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bölüm ekle'**
+  String get organizationAddDepartment;
+
+  /// Menu item and dialog title for adding a line to a department.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hat ekle'**
+  String get organizationAddLine;
+
+  /// Menu item and dialog title for adding a machine to a line.
+  ///
+  /// In tr, this message translates to:
+  /// **'Makine ekle'**
+  String get organizationAddMachine;
+
+  /// Menu item and dialog title for renaming a department, line or machine.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeniden adlandır'**
+  String get organizationRename;
+
+  /// Label of the name field in the add/rename dialog.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ad'**
+  String get organizationName;
+
+  /// Label of the machine code field, e.g. PR-04.
+  ///
+  /// In tr, this message translates to:
+  /// **'Makine kodu'**
+  String get organizationMachineCode;
+
+  /// Shown when a machine code has characters the server does not accept.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yalnızca harf, rakam ve tire kullanılabilir.'**
+  String get organizationCodeInvalid;
+
+  /// How many lines a department has.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} hat'**
+  String organizationLineCount(int count);
+
+  /// How many machines a line has.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} makine'**
+  String organizationMachineCount(int count);
+
+  /// Shown when the admin can see no plant.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz fabrika yok.'**
+  String get organizationNoPlants;
+
+  /// Shown when the plant has no departments.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu fabrikada henüz bölüm yok.'**
+  String get organizationNoDepartments;
+
+  /// Shown inside a department without lines.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz hat yok.'**
+  String get organizationNoLines;
+
+  /// Shown inside a line without machines.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz makine yok.'**
+  String get organizationNoMachines;
+
+  /// Snackbar after a change to the organization.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydedildi.'**
+  String get organizationSaved;
+
+  /// Shown on HTTP 409 when a name or machine code is taken.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu ad veya kod burada zaten kullanılıyor.'**
+  String get organizationConflict;
+
+  /// App bar title of the machine page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Makine'**
+  String get machineTitle;
+
+  /// Explains what the QR label is for.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu QR kodu makinenin üzerine yapıştırılır. Operatör duruş bildirirken kodu okutarak makineyi seçer.'**
+  String get machineLabelInfo;
+
+  /// Button that shares the QR label as an image.
+  ///
+  /// In tr, this message translates to:
+  /// **'Etiketi paylaş'**
+  String get machineShareLabel;
+
+  /// Shown when the label image could not be created or shared.
+  ///
+  /// In tr, this message translates to:
+  /// **'Etiket paylaşılamadı.'**
+  String get machineShareFailed;
+
+  /// Button that replaces the machine's QR code.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni QR üret'**
+  String get machineRegenerate;
+
+  /// Title of the dialog that confirms a new QR code.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni QR kodu üretilsin mi?'**
+  String get machineRegenerateTitle;
+
+  /// Body of the dialog that confirms a new QR code.
+  ///
+  /// In tr, this message translates to:
+  /// **'Eski etiket hemen çalışmaz hâle gelir. Yeni etiketi yazdırıp makinedeki etiketin yerine yapıştırmanız gerekir.'**
+  String get machineRegenerateMessage;
+
+  /// Snackbar after a new QR code was made.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni QR kodu üretildi. Etiketi yenilemeyi unutmayın.'**
+  String get machineRegenerated;
 }
 
 class _AppLocalizationsDelegate

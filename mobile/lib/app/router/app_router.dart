@@ -2,6 +2,12 @@ import 'package:go_router/go_router.dart';
 import 'package:lean_assistant/app/router/forbidden_page.dart';
 import 'package:lean_assistant/app/router/not_found_page.dart';
 import 'package:lean_assistant/app/router/stream_listenable.dart';
+import 'package:lean_assistant/features/admin/domain/managed_user.dart';
+import 'package:lean_assistant/features/admin/presentation/create_user_page.dart';
+import 'package:lean_assistant/features/admin/presentation/edit_access_page.dart';
+import 'package:lean_assistant/features/admin/presentation/machine_page.dart';
+import 'package:lean_assistant/features/admin/presentation/organization_page.dart';
+import 'package:lean_assistant/features/admin/presentation/user_detail_page.dart';
 import 'package:lean_assistant/features/admin/presentation/users_page.dart';
 import 'package:lean_assistant/features/auth/domain/current_user.dart';
 import 'package:lean_assistant/features/auth/domain/permission.dart';
@@ -9,6 +15,7 @@ import 'package:lean_assistant/features/auth/presentation/auth_bloc.dart';
 import 'package:lean_assistant/features/auth/presentation/auth_state.dart';
 import 'package:lean_assistant/features/auth/presentation/change_password_page.dart';
 import 'package:lean_assistant/features/auth/presentation/login_page.dart';
+import 'package:lean_assistant/features/auth/presentation/profile_page.dart';
 import 'package:lean_assistant/features/auth/presentation/splash_page.dart';
 import 'package:lean_assistant/features/dashboard/presentation/home_page.dart';
 
@@ -19,7 +26,23 @@ abstract final class AppRoutes {
   static const String login = '/login';
   static const String changePassword = '/change-password';
   static const String forbidden = '/forbidden';
+  static const String organization = '/organization';
+  static const String machine = '/organization/machines/:id';
+  static const String profile = '/profile';
+  static const String changeOwnPassword = '/profile/password';
   static const String users = '/users';
+  static const String newUser = '/users/new';
+  static const String userDetail = '/users/:id';
+  static const String editAccess = '/users/:id/access';
+
+  /// The address of one machine's page.
+  static String machineOf(String id) => '/organization/machines/$id';
+
+  /// The address of one user's detail page.
+  static String userDetailOf(String id) => '/users/$id';
+
+  /// The address of the page that changes one user's access.
+  static String editAccessOf(String id) => '/users/$id/access';
 }
 
 /// Builds the app's router. Every navigation, and every change of the
@@ -51,8 +74,44 @@ GoRouter createRouter(AuthBloc authBloc) {
         builder: (context, state) => const ForbiddenPage(),
       ),
       GoRoute(
+        path: AppRoutes.organization,
+        builder: (context, state) => const OrganizationPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.machine,
+        builder: (context, state) =>
+            MachinePage(machineId: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: AppRoutes.profile,
+        builder: (context, state) => const ProfilePage(),
+      ),
+      GoRoute(
+        path: AppRoutes.changeOwnPassword,
+        builder: (context, state) =>
+            const ChangePasswordPage(isRequired: false),
+      ),
+      GoRoute(
         path: AppRoutes.users,
         builder: (context, state) => const UsersPage(),
+      ),
+      // Before the detail route, so "new" is not read as a user id.
+      GoRoute(
+        path: AppRoutes.newUser,
+        builder: (context, state) => const CreateUserPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.userDetail,
+        builder: (context, state) =>
+            UserDetailPage(userId: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: AppRoutes.editAccess,
+        // Opened from the detail page, which hands over the user it shows.
+        builder: (context, state) => switch (state.extra) {
+          final ManagedUser user => EditAccessPage(user: user),
+          _ => const NotFoundPage(),
+        },
       ),
     ],
     errorBuilder: (context, state) => const NotFoundPage(),
@@ -71,6 +130,7 @@ const Set<String> _entryPages = {
 /// away from screens that would fail for them.
 const Map<String, Permission> _requiredPermissions = {
   AppRoutes.users: Permission.manageUsers,
+  AppRoutes.organization: Permission.manageOrganization,
 };
 
 /// Where the user should be instead of [location], or null to stay there.

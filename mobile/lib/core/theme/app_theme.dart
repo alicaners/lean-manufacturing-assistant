@@ -30,7 +30,9 @@ abstract final class AppTheme {
       colorScheme: colorScheme,
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          minimumSize: const Size.fromHeight(minTouchHeight),
+          // Tall enough for gloved hands; as wide as its label. Full-width
+          // buttons ask for it themselves (see PrimaryButton).
+          minimumSize: const Size(64, minTouchHeight),
           textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),

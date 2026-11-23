@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lean_assistant/app/di/injection.dart';
 import 'package:lean_assistant/core/error/failure.dart';
 import 'package:lean_assistant/core/error/failure_message.dart';
@@ -13,22 +14,28 @@ import 'package:lean_assistant/features/auth/presentation/auth_bloc.dart';
 import 'package:lean_assistant/features/auth/presentation/auth_event.dart';
 import 'package:lean_assistant/features/auth/presentation/change_password_cubit.dart';
 
-/// Shown to a user whose password was set by an admin.
-/// The router keeps the user here until the password is changed.
+/// Changes the signed-in user's password.
 class ChangePasswordPage extends StatelessWidget {
-  const ChangePasswordPage({super.key});
+  const ChangePasswordPage({super.key, this.isRequired = true});
+
+  /// True when an admin set the password: the router keeps the user here
+  /// until it is changed. False when the user opened it from their profile;
+  /// the page then closes itself with `true` once the password is changed.
+  final bool isRequired;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ChangePasswordCubit>(
       create: (_) => getIt<ChangePasswordCubit>(),
-      child: const _ChangePasswordForm(),
+      child: _ChangePasswordForm(isRequired: isRequired),
     );
   }
 }
 
 class _ChangePasswordForm extends StatefulWidget {
-  const _ChangePasswordForm();
+  const _ChangePasswordForm({required this.isRequired});
+
+  final bool isRequired;
 
   @override
   State<_ChangePasswordForm> createState() => _ChangePasswordFormState();
@@ -61,14 +68,13 @@ class _ChangePasswordFormState extends State<_ChangePasswordForm> {
   }
 
   String? _validateNew(String? value, AppLocalizations l10n) {
-    final password = value ?? '';
+    final lengthError = Validators.password(
+      l10n,
+      minLength: PasswordRules.minimumLength,
+    )(value);
+    if (lengthError != null) return lengthError;
 
-    if (password.isEmpty) return l10n.fieldRequired;
-    if (password.length < PasswordRules.minimumLength) {
-      return l10n.changePasswordTooShort(PasswordRules.minimumLength);
-    }
-    if (password == _current.text) return l10n.changePasswordSameAsCurrent;
-
+    if (value == _current.text) return l10n.changePasswordSameAsCurrent;
     return null;
   }
 
@@ -79,46 +85,61 @@ class _ChangePasswordFormState extends State<_ChangePasswordForm> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.changePasswordTitle),
-        actions: [
-          TextButton(
-            onPressed: () =>
-                context.read<AuthBloc>().add(const AuthSignOutRequested()),
-            child: Text(l10n.homeSignOut),
-          ),
-        ],
+        title: Text(
+          widget.isRequired
+              ? l10n.changePasswordTitle
+              : l10n.profileChangePassword,
+        ),
+        // A user who must change the password can still leave by signing out.
+        actions: widget.isRequired
+            ? [
+                TextButton(
+                  onPressed: () => context.read<AuthBloc>().add(
+                    const AuthSignOutRequested(),
+                  ),
+                  child: Text(l10n.homeSignOut),
+                ),
+              ]
+            : null,
       ),
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 400),
-              child: BlocBuilder<ChangePasswordCubit, SubmitState>(
-                builder: (context, state) {
-                  // "Wrong current password" belongs under that field;
-                  // any other failure is shown above the button.
-                  final currentPasswordError = switch (state) {
-                    SubmitFailed(failure: ValidationFailure(:final fieldErrors))
-                        when fieldErrors.containsKey(_currentPasswordField) =>
-                      l10n.changePasswordWrongCurrent,
-                    _ => null,
-                  };
-                  final generalError = switch (state) {
-                    SubmitFailed(:final failure)
-                        when currentPasswordError == null =>
-                      failure.message(l10n),
-                    _ => null,
-                  };
+      body: BlocConsumer<ChangePasswordCubit, SubmitState>(
+        listener: (context, state) {
+          // From the profile: close and let the profile say it worked.
+          if (!widget.isRequired && state is SubmitSucceeded) {
+            context.pop(true);
+          }
+        },
+        builder: (context, state) {
+          // "Wrong current password" belongs under that field;
+          // any other failure is shown above the button.
+          final currentPasswordError = switch (state) {
+            SubmitFailed(failure: ValidationFailure(:final fieldErrors))
+                when fieldErrors.containsKey(_currentPasswordField) =>
+              l10n.changePasswordWrongCurrent,
+            _ => null,
+          };
+          final generalError = switch (state) {
+            SubmitFailed(:final failure) when currentPasswordError == null =>
+              failure.message(l10n),
+            _ => null,
+          };
 
-                  return Form(
+          return SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(24),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 400),
+                  child: Form(
                     key: _formKey,
                     child: AutofillGroup(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Text(l10n.changePasswordRequiredInfo),
-                          const SizedBox(height: 24),
+                          if (widget.isRequired) ...[
+                            Text(l10n.changePasswordRequiredInfo),
+                            const SizedBox(height: 24),
+                          ],
                           AppTextField(
                             label: l10n.changePasswordCurrent,
                             controller: _current,
@@ -166,12 +187,12 @@ class _ChangePasswordFormState extends State<_ChangePasswordForm> {
                         ],
                       ),
                     ),
-                  );
-                },
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

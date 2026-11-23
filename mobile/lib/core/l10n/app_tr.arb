@@ -279,8 +279,410 @@
     "description": "App bar title of the user management page."
   },
 
-  "usersComingSoon": "Kullanıcı yönetimi bir sonraki adımda burada olacak.",
-  "@usersComingSoon": {
-    "description": "Placeholder until the user management screen is built."
+    "usersSearchHint": "Ad veya kullanıcı adıyla ara",
+  "@usersSearchHint": {
+    "description": "Hint of the search field on the user list."
+  },
+
+  "usersAll": "Tümü",
+  "@usersAll": {
+    "description": "Filter chip: active and deactivated users."
+  },
+
+  "usersActive": "Aktif",
+  "@usersActive": {
+    "description": "Filter chip for active users."
+  },
+
+  "usersInactive": "Pasif",
+  "@usersInactive": {
+    "description": "Filter chip for deactivated users, and the label next to such a user."
+  },
+
+  "usersAllRoles": "Tüm roller",
+  "@usersAllRoles": {
+    "description": "Filter chip: users of every role."
+  },
+
+  "usersEmpty": "Bu filtrelere uyan kullanıcı yok.",
+  "@usersEmpty": {
+    "description": "Shown when no user matches the search and filters."
+  },
+
+    "usersTemporaryPassword": "Geçici şifre: ilk girişte değiştirilecek",
+  "@usersTemporaryPassword": {
+    "description": "Tooltip of the key icon next to a user with a temporary password."
+  },
+
+  "usersNew": "Yeni kullanıcı",
+  "@usersNew": {
+    "description": "Button and page title for creating a user."
+  },
+
+  "usersCreated": "Kullanıcı oluşturuldu.",
+  "@usersCreated": {
+    "description": "Snackbar after a user was created."
+  },
+
+  "userFormFullName": "Ad soyad",
+  "@userFormFullName": {
+    "description": "Label of the full name field."
+  },
+
+  "userFormTemporaryPassword": "Geçici şifre",
+  "@userFormTemporaryPassword": {
+    "description": "Label of the password the admin gives a new user."
+  },
+
+  "userFormPasswordInfo": "Kullanıcı ilk girişte bu şifreyi kendi şifresiyle değiştirecek. Şifreyi kendisine güvenli bir yoldan iletin.",
+  "@userFormPasswordInfo": {
+    "description": "Explains the temporary password under its field."
+  },
+
+  "userFormRole": "Rol",
+  "@userFormRole": {
+    "description": "Label of the role dropdown."
+  },
+
+  "userFormPlant": "Fabrika",
+  "@userFormPlant": {
+    "description": "Label of the plant dropdown."
+  },
+
+  "userFormAllPlants": "Tüm fabrikalar (sistem yöneticisi)",
+  "@userFormAllPlants": {
+    "description": "Plant option for an admin who manages every plant."
+  },
+
+  "userFormLine": "Hat",
+  "@userFormLine": {
+    "description": "Label of the production line dropdown."
+  },
+
+  "userFormLinesFailed": "Hatlar yüklenemedi.",
+  "@userFormLinesFailed": {
+    "description": "Shown when the lines of the chosen plant could not be loaded."
+  },
+
+  "userFormUserNameInvalid": "Yalnızca harf, rakam, nokta, alt çizgi ve tire kullanılabilir.",
+  "@userFormUserNameInvalid": {
+    "description": "Shown when the user name has characters the server does not accept."
+  },
+
+  "userFormUserNameTaken": "Bu kullanıcı adı zaten kullanılıyor.",
+  "@userFormUserNameTaken": {
+    "description": "Shown under the user name field on HTTP 409."
+  },
+
+  "userFormOutsideScope": "Yalnızca kendi fabrikanızın kullanıcılarını yönetebilirsiniz.",
+  "@userFormOutsideScope": {
+    "description": "Shown on HTTP 403 when a plant admin picks another plant."
+  },
+
+    "userFormSubmit": "Kullanıcıyı oluştur",
+  "@userFormSubmit": {
+    "description": "Button that creates the user."
+  },
+
+  "commonCancel": "Vazgeç",
+  "@commonCancel": {
+    "description": "Button that closes a dialog without doing anything."
+  },
+
+  "userDetailTitle": "Kullanıcı",
+  "@userDetailTitle": {
+    "description": "App bar title of the user detail page."
+  },
+
+  "userDetailTemporaryPassword": "Geçici şifre",
+  "@userDetailTemporaryPassword": {
+    "description": "Label shown when the user still has a temporary password."
+  },
+
+  "userDetailSelfInfo": "Bu sizin hesabınız. Kendi hesabınızı buradan pasif yapamaz, şifrenizi buradan sıfırlayamazsınız.",
+  "@userDetailSelfInfo": {
+    "description": "Shown instead of the actions when an admin opens their own account."
+  },
+
+  "userDetailAccountSection": "Hesap durumu",
+  "@userDetailAccountSection": {
+    "description": "Title of the card with the activate/deactivate action."
+  },
+
+  "userDetailActiveInfo": "Hesap aktif. Pasif yapılırsa kullanıcı giriş yapamaz ve açık oturumları kapanır.",
+  "@userDetailActiveInfo": {
+    "description": "Explains what deactivating does."
+  },
+
+  "userDetailInactiveInfo": "Hesap pasif. Kullanıcı giriş yapamıyor.",
+  "@userDetailInactiveInfo": {
+    "description": "Shown for a deactivated user."
+  },
+
+  "userDetailDeactivate": "Pasif yap",
+  "@userDetailDeactivate": {
+    "description": "Button that deactivates the user."
+  },
+
+  "userDetailActivate": "Aktif yap",
+  "@userDetailActivate": {
+    "description": "Button that activates the user again."
+  },
+
+  "userDetailDeactivateTitle": "Kullanıcı pasif yapılsın mı?",
+  "@userDetailDeactivateTitle": {
+    "description": "Title of the dialog that confirms deactivation."
+  },
+
+  "userDetailDeactivateMessage": "{name} artık giriş yapamayacak ve tüm cihazlardaki oturumları kapanacak.",
+  "@userDetailDeactivateMessage": {
+    "description": "Body of the dialog that confirms deactivation.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Demo Operatör"
+      }
+    }
+  },
+
+  "userDetailPasswordSection": "Şifre",
+  "@userDetailPasswordSection": {
+    "description": "Title of the card with the reset-password action."
+  },
+
+  "userDetailPasswordInfo": "Kullanıcı şifresini unuttuysa yeni bir geçici şifre verin. Tüm cihazlardaki oturumları kapanır ve ilk girişte şifresini değiştirmesi istenir.",
+  "@userDetailPasswordInfo": {
+    "description": "Explains what giving a temporary password does."
+  },
+
+  "userDetailResetPassword": "Geçici şifre ver",
+  "@userDetailResetPassword": {
+    "description": "Button that opens the reset-password dialog."
+  },
+
+  "userDetailResetPasswordTitle": "Yeni geçici şifre",
+  "@userDetailResetPasswordTitle": {
+    "description": "Title of the reset-password dialog."
+  },
+
+  "userDetailResetPasswordSubmit": "Şifreyi ver",
+  "@userDetailResetPasswordSubmit": {
+    "description": "Button that sets the new temporary password."
+  },
+
+  "userDetailActivated": "Kullanıcı aktif yapıldı.",
+  "@userDetailActivated": {
+    "description": "Snackbar after activating a user."
+  },
+
+  "userDetailDeactivated": "Kullanıcı pasif yapıldı.",
+  "@userDetailDeactivated": {
+    "description": "Snackbar after deactivating a user."
+  },
+
+    "userDetailPasswordReset": "Geçici şifre verildi. Kullanıcıya güvenli bir yoldan iletin.",
+  "@userDetailPasswordReset": {
+    "description": "Snackbar after giving a temporary password."
+  },
+
+  "userFormPlantsFailed": "Fabrikalar yüklenemedi.",
+  "@userFormPlantsFailed": {
+    "description": "Shown when the plant list could not be loaded."
+  },
+
+  "userDetailAccessSection": "Erişim",
+  "@userDetailAccessSection": {
+    "description": "Title of the card with the edit-access action."
+  },
+
+  "userDetailAccessInfo": "Rol: {role}. Rol, fabrika veya hat değişince kullanıcının tüm oturumları kapanır.",
+  "@userDetailAccessInfo": {
+    "description": "Shows the role and explains what changing access does.",
+    "placeholders": {
+      "role": {
+        "type": "String",
+        "example": "Operatör"
+      }
+    }
+  },
+
+  "userDetailEditAccess": "Erişimi değiştir",
+  "@userDetailEditAccess": {
+    "description": "Button and page title for changing role, plant and line."
+  },
+
+  "userDetailAccessChanged": "Erişim güncellendi.",
+  "@userDetailAccessChanged": {
+    "description": "Snackbar after the access was changed."
+  },
+
+  "editAccessInfo": "Kaydettiğinizde kullanıcının tüm cihazlardaki oturumları kapanır; yeni yetkileriyle tekrar giriş yapması gerekir.",
+  "@editAccessInfo": {
+    "description": "Explains the effect of saving on the edit-access page."
+  },
+
+    "editAccessSave": "Kaydet",
+  "@editAccessSave": {
+    "description": "Button that saves the new access."
+  },
+
+  "profileTitle": "Profil",
+  "@profileTitle": {
+    "description": "App bar title of the profile page and tooltip of its button."
+  },
+
+  "profilePasswordSection": "Şifre",
+  "@profilePasswordSection": {
+    "description": "Title of the password card on the profile page."
+  },
+
+  "profilePasswordInfo": "Şifrenizi değiştirdiğinizde diğer cihazlardaki oturumlarınız kapanır; bu cihazda oturumunuz açık kalır.",
+  "@profilePasswordInfo": {
+    "description": "Explains what changing the password does."
+  },
+
+  "profileChangePassword": "Şifremi değiştir",
+  "@profileChangePassword": {
+    "description": "Button on the profile page, and title of the page it opens."
+  },
+
+   "profilePasswordChanged": "Şifreniz değiştirildi.",
+  "@profilePasswordChanged": {
+    "description": "Snackbar after the user changed their own password."
+  },
+
+  "homeManageOrganization": "Organizasyonu yönet",
+  "@homeManageOrganization": {
+    "description": "Home page button that opens organization management (admins only)."
+  },
+
+  "organizationTitle": "Organizasyon",
+  "@organizationTitle": {
+    "description": "App bar title of the organization page."
+  },
+
+  "organizationAddDepartment": "Bölüm ekle",
+  "@organizationAddDepartment": {
+    "description": "Button and dialog title for adding a department."
+  },
+
+  "organizationAddLine": "Hat ekle",
+  "@organizationAddLine": {
+    "description": "Menu item and dialog title for adding a line to a department."
+  },
+
+  "organizationAddMachine": "Makine ekle",
+  "@organizationAddMachine": {
+    "description": "Menu item and dialog title for adding a machine to a line."
+  },
+
+  "organizationRename": "Yeniden adlandır",
+  "@organizationRename": {
+    "description": "Menu item and dialog title for renaming a department, line or machine."
+  },
+
+  "organizationName": "Ad",
+  "@organizationName": {
+    "description": "Label of the name field in the add/rename dialog."
+  },
+
+  "organizationMachineCode": "Makine kodu",
+  "@organizationMachineCode": {
+    "description": "Label of the machine code field, e.g. PR-04."
+  },
+
+  "organizationCodeInvalid": "Yalnızca harf, rakam ve tire kullanılabilir.",
+  "@organizationCodeInvalid": {
+    "description": "Shown when a machine code has characters the server does not accept."
+  },
+
+  "organizationLineCount": "{count} hat",
+  "@organizationLineCount": {
+    "description": "How many lines a department has.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "organizationMachineCount": "{count} makine",
+  "@organizationMachineCount": {
+    "description": "How many machines a line has.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "organizationNoPlants": "Henüz fabrika yok.",
+  "@organizationNoPlants": {
+    "description": "Shown when the admin can see no plant."
+  },
+
+  "organizationNoDepartments": "Bu fabrikada henüz bölüm yok.",
+  "@organizationNoDepartments": {
+    "description": "Shown when the plant has no departments."
+  },
+
+  "organizationNoLines": "Henüz hat yok.",
+  "@organizationNoLines": {
+    "description": "Shown inside a department without lines."
+  },
+
+  "organizationNoMachines": "Henüz makine yok.",
+  "@organizationNoMachines": {
+    "description": "Shown inside a line without machines."
+  },
+
+  "organizationSaved": "Kaydedildi.",
+  "@organizationSaved": {
+    "description": "Snackbar after a change to the organization."
+  },
+
+    "organizationConflict": "Bu ad veya kod burada zaten kullanılıyor.",
+  "@organizationConflict": {
+    "description": "Shown on HTTP 409 when a name or machine code is taken."
+  },
+
+  "machineTitle": "Makine",
+  "@machineTitle": {
+    "description": "App bar title of the machine page."
+  },
+
+  "machineLabelInfo": "Bu QR kodu makinenin üzerine yapıştırılır. Operatör duruş bildirirken kodu okutarak makineyi seçer.",
+  "@machineLabelInfo": {
+    "description": "Explains what the QR label is for."
+  },
+
+  "machineShareLabel": "Etiketi paylaş",
+  "@machineShareLabel": {
+    "description": "Button that shares the QR label as an image."
+  },
+
+  "machineShareFailed": "Etiket paylaşılamadı.",
+  "@machineShareFailed": {
+    "description": "Shown when the label image could not be created or shared."
+  },
+
+  "machineRegenerate": "Yeni QR üret",
+  "@machineRegenerate": {
+    "description": "Button that replaces the machine's QR code."
+  },
+
+  "machineRegenerateTitle": "Yeni QR kodu üretilsin mi?",
+  "@machineRegenerateTitle": {
+    "description": "Title of the dialog that confirms a new QR code."
+  },
+
+  "machineRegenerateMessage": "Eski etiket hemen çalışmaz hâle gelir. Yeni etiketi yazdırıp makinedeki etiketin yerine yapıştırmanız gerekir.",
+  "@machineRegenerateMessage": {
+    "description": "Body of the dialog that confirms a new QR code."
+  },
+
+  "machineRegenerated": "Yeni QR kodu üretildi. Etiketi yenilemeyi unutmayın.",
+  "@machineRegenerated": {
+    "description": "Snackbar after a new QR code was made."
   }
-}
+}  

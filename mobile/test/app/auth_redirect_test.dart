@@ -65,4 +65,12 @@ void main() {
     expect(authRedirect(admin, AppRoutes.users), isNull);
     expect(authRedirect(signedIn, AppRoutes.forbidden), isNull);
   });
+
+  test('only admins may open the organization page', () {
+    expect(authRedirect(signedIn, AppRoutes.organization), AppRoutes.forbidden);
+    expect(
+      authRedirect(const AuthSignedIn(testAdmin), AppRoutes.organization),
+      isNull,
+    );
+  });
 }

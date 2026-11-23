@@ -9,6 +9,7 @@ import 'package:lean_assistant/app/router/not_found_page.dart';
 import 'package:lean_assistant/features/admin/presentation/users_page.dart';
 import 'package:lean_assistant/features/auth/presentation/auth_event.dart';
 import 'package:lean_assistant/features/auth/presentation/auth_state.dart';
+import 'package:lean_assistant/features/auth/presentation/profile_page.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../helpers/fake_auth.dart';
@@ -39,11 +40,14 @@ void main() {
     expect(find.byType(NotFoundPage), findsOneWidget);
   });
 
-  testWidgets('the sign-out button asks the auth bloc to sign out', (
-    tester,
-  ) async {
+  testWidgets('signs out from the profile page', (tester) async {
     await pumpApp(tester, const AuthSignedIn(testUser));
 
+    await tester.tap(find.byIcon(Icons.account_circle_outlined));
+    await tester.pumpAndSettle();
+    expect(find.byType(ProfilePage), findsOneWidget);
+
+    await tester.ensureVisible(find.byIcon(Icons.logout));
     await tester.tap(find.byIcon(Icons.logout));
 
     verify(() => authBloc.add(const AuthSignOutRequested())).called(1);

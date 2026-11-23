@@ -25,4 +25,10 @@ void main() {
       throwsFormatException,
     );
   });
+
+  test('writes each role the way the API reads it', () {
+    for (final role in UserRole.values) {
+      expect(UserRole.parse(role.apiName), role);
+    }
+  });
 }
