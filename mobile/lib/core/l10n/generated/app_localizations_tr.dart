@@ -333,4 +333,20 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get editAccessSave => 'Kaydet';
+
+  @override
+  String get profileTitle => 'Profil';
+
+  @override
+  String get profilePasswordSection => 'Şifre';
+
+  @override
+  String get profilePasswordInfo =>
+      'Şifrenizi değiştirdiğinizde diğer cihazlardaki oturumlarınız kapanır; bu cihazda oturumunuz açık kalır.';
+
+  @override
+  String get profileChangePassword => 'Şifremi değiştir';
+
+  @override
+  String get profilePasswordChanged => 'Şifreniz değiştirildi.';
 }

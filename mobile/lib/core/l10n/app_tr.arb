@@ -521,8 +521,33 @@
     "description": "Explains the effect of saving on the edit-access page."
   },
 
-  "editAccessSave": "Kaydet",
+    "editAccessSave": "Kaydet",
   "@editAccessSave": {
     "description": "Button that saves the new access."
+  },
+
+  "profileTitle": "Profil",
+  "@profileTitle": {
+    "description": "App bar title of the profile page and tooltip of its button."
+  },
+
+  "profilePasswordSection": "Şifre",
+  "@profilePasswordSection": {
+    "description": "Title of the password card on the profile page."
+  },
+
+  "profilePasswordInfo": "Şifrenizi değiştirdiğinizde diğer cihazlardaki oturumlarınız kapanır; bu cihazda oturumunuz açık kalır.",
+  "@profilePasswordInfo": {
+    "description": "Explains what changing the password does."
+  },
+
+  "profileChangePassword": "Şifremi değiştir",
+  "@profileChangePassword": {
+    "description": "Button on the profile page, and title of the page it opens."
+  },
+
+  "profilePasswordChanged": "Şifreniz değiştirildi.",
+  "@profilePasswordChanged": {
+    "description": "Snackbar after the user changed their own password."
   }
 }

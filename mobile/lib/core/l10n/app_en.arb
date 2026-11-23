@@ -98,5 +98,10 @@
   "userDetailEditAccess": "Change access",
   "userDetailAccessChanged": "Access updated.",
   "editAccessInfo": "Saving closes the user's sessions on every device; they must sign in again with their new access.",
-  "editAccessSave": "Save"
+    "editAccessSave": "Save",
+  "profileTitle": "Profile",
+  "profilePasswordSection": "Password",
+  "profilePasswordInfo": "Changing your password closes your sessions on other devices; you stay signed in on this one.",
+  "profileChangePassword": "Change my password",
+  "profilePasswordChanged": "Your password was changed."
 }

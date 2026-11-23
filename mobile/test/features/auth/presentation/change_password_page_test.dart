@@ -60,4 +60,19 @@ void main() {
       ),
     );
   });
+
+  testWidgets('opened from the profile, it only asks for the passwords', (
+    tester,
+  ) async {
+    await tester.pumpApp(
+      BlocProvider<AuthBloc>.value(
+        value: authBlocIn(const AuthSignedIn(testUser)),
+        child: const ChangePasswordPage(isRequired: false),
+      ),
+    );
+
+    expect(find.text('Şifremi değiştir'), findsOneWidget);
+    expect(find.text('Çıkış yap'), findsNothing);
+    expect(find.textContaining('bir yönetici belirledi'), findsNothing);
+  });
 }

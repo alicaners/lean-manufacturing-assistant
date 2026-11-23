@@ -7,7 +7,7 @@ import 'package:lean_assistant/features/auth/presentation/auth_bloc.dart';
 import 'package:lean_assistant/features/auth/presentation/auth_event.dart';
 
 /// Sends the change-password form. After success it asks [AuthBloc] to reload
-/// the user, who no longer must change the password; the router moves on.
+/// the user, and reports success so a page opened from the profile can close.
 @injectable
 class ChangePasswordCubit extends Cubit<SubmitState> {
   ChangePasswordCubit(this._repository, this._authBloc)
@@ -33,7 +33,10 @@ class ChangePasswordCubit extends Cubit<SubmitState> {
 
     switch (result) {
       case Ok():
+        // A user who had to change the password no longer has to:
+        // the router moves them on once the user is reloaded.
         _authBloc.add(const AuthCheckRequested());
+        emit(const SubmitSucceeded());
       case Err(:final failure):
         emit(SubmitFailed(failure));
     }

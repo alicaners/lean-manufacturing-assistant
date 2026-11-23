@@ -335,4 +335,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editAccessSave => 'Save';
+
+  @override
+  String get profileTitle => 'Profile';
+
+  @override
+  String get profilePasswordSection => 'Password';
+
+  @override
+  String get profilePasswordInfo =>
+      'Changing your password closes your sessions on other devices; you stay signed in on this one.';
+
+  @override
+  String get profileChangePassword => 'Change my password';
+
+  @override
+  String get profilePasswordChanged => 'Your password was changed.';
 }

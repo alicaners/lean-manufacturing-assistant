@@ -35,7 +35,7 @@ void main() {
       currentPassword: 'Temporary-Password-1',
       newPassword: 'My-Own-Password-2',
     ),
-    expect: () => [isA<SubmitInProgress>()],
+    expect: () => [isA<SubmitInProgress>(), isA<SubmitSucceeded>()],
     verify: (_) =>
         verify(() => authBloc.add(const AuthCheckRequested())).called(1),
   );

@@ -691,6 +691,36 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Kaydet'**
   String get editAccessSave;
+
+  /// App bar title of the profile page and tooltip of its button.
+  ///
+  /// In tr, this message translates to:
+  /// **'Profil'**
+  String get profileTitle;
+
+  /// Title of the password card on the profile page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifre'**
+  String get profilePasswordSection;
+
+  /// Explains what changing the password does.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifrenizi değiştirdiğinizde diğer cihazlardaki oturumlarınız kapanır; bu cihazda oturumunuz açık kalır.'**
+  String get profilePasswordInfo;
+
+  /// Button on the profile page, and title of the page it opens.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifremi değiştir'**
+  String get profileChangePassword;
+
+  /// Snackbar after the user changed their own password.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifreniz değiştirildi.'**
+  String get profilePasswordChanged;
 }
 
 class _AppLocalizationsDelegate

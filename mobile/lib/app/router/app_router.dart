@@ -13,6 +13,7 @@ import 'package:lean_assistant/features/auth/presentation/auth_bloc.dart';
 import 'package:lean_assistant/features/auth/presentation/auth_state.dart';
 import 'package:lean_assistant/features/auth/presentation/change_password_page.dart';
 import 'package:lean_assistant/features/auth/presentation/login_page.dart';
+import 'package:lean_assistant/features/auth/presentation/profile_page.dart';
 import 'package:lean_assistant/features/auth/presentation/splash_page.dart';
 import 'package:lean_assistant/features/dashboard/presentation/home_page.dart';
 
@@ -23,6 +24,8 @@ abstract final class AppRoutes {
   static const String login = '/login';
   static const String changePassword = '/change-password';
   static const String forbidden = '/forbidden';
+  static const String profile = '/profile';
+  static const String changeOwnPassword = '/profile/password';
   static const String users = '/users';
   static const String newUser = '/users/new';
   static const String userDetail = '/users/:id';
@@ -62,6 +65,15 @@ GoRouter createRouter(AuthBloc authBloc) {
       GoRoute(
         path: AppRoutes.forbidden,
         builder: (context, state) => const ForbiddenPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.profile,
+        builder: (context, state) => const ProfilePage(),
+      ),
+      GoRoute(
+        path: AppRoutes.changeOwnPassword,
+        builder: (context, state) =>
+            const ChangePasswordPage(isRequired: false),
       ),
       GoRoute(
         path: AppRoutes.users,
