@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:lean_assistant/core/error/result.dart';
 import 'package:lean_assistant/core/network/api_client.dart';
+import 'package:lean_assistant/features/admin/domain/machine_detail.dart';
 import 'package:lean_assistant/features/admin/domain/organization_repository.dart';
 import 'package:lean_assistant/features/admin/domain/plant.dart';
 import 'package:lean_assistant/features/admin/domain/plant_tree.dart';
@@ -72,6 +73,19 @@ class ApiOrganizationRepository implements OrganizationRepository {
       '/api/$collection/$id',
       body: {'name': name},
       parse: _ignore,
+    );
+  }
+
+  @override
+  Future<Result<MachineDetail>> machine(String id) {
+    return _api.get('/api/machines/$id', parse: MachineDetail.fromJson);
+  }
+
+  @override
+  Future<Result<MachineDetail>> regenerateQr(String id) {
+    return _api.post(
+      '/api/machines/$id/regenerate-qr',
+      parse: MachineDetail.fromJson,
     );
   }
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lean_assistant/app/router/app_router.dart';
 import 'package:lean_assistant/app/di/injection.dart';
 import 'package:lean_assistant/core/error/failure.dart';
 import 'package:lean_assistant/core/error/failure_message.dart';
@@ -193,6 +195,7 @@ class _LineTile extends StatelessWidget {
           _EmptyRow(l10n.organizationNoMachines, indent: 72),
         for (final machine in line.machines)
           ListTile(
+            onTap: () => context.push(AppRoutes.machineOf(machine.id)),
             contentPadding: const EdgeInsets.only(left: 72, right: 16),
             leading: const Icon(Icons.precision_manufacturing_outlined),
             title: Text(machine.name),

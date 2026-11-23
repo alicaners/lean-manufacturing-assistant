@@ -5,6 +5,7 @@ import 'package:lean_assistant/app/router/stream_listenable.dart';
 import 'package:lean_assistant/features/admin/domain/managed_user.dart';
 import 'package:lean_assistant/features/admin/presentation/create_user_page.dart';
 import 'package:lean_assistant/features/admin/presentation/edit_access_page.dart';
+import 'package:lean_assistant/features/admin/presentation/machine_page.dart';
 import 'package:lean_assistant/features/admin/presentation/organization_page.dart';
 import 'package:lean_assistant/features/admin/presentation/user_detail_page.dart';
 import 'package:lean_assistant/features/admin/presentation/users_page.dart';
@@ -26,12 +27,16 @@ abstract final class AppRoutes {
   static const String changePassword = '/change-password';
   static const String forbidden = '/forbidden';
   static const String organization = '/organization';
+  static const String machine = '/organization/machines/:id';
   static const String profile = '/profile';
   static const String changeOwnPassword = '/profile/password';
   static const String users = '/users';
   static const String newUser = '/users/new';
   static const String userDetail = '/users/:id';
   static const String editAccess = '/users/:id/access';
+
+  /// The address of one machine's page.
+  static String machineOf(String id) => '/organization/machines/$id';
 
   /// The address of one user's detail page.
   static String userDetailOf(String id) => '/users/$id';
@@ -71,6 +76,11 @@ GoRouter createRouter(AuthBloc authBloc) {
       GoRoute(
         path: AppRoutes.organization,
         builder: (context, state) => const OrganizationPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.machine,
+        builder: (context, state) =>
+            MachinePage(machineId: state.pathParameters['id']!),
       ),
       GoRoute(
         path: AppRoutes.profile,

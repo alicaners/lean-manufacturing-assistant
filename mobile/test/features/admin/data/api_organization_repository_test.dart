@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lean_assistant/core/error/result.dart';
 import 'package:lean_assistant/core/network/api_client.dart';
 import 'package:lean_assistant/features/admin/data/api_organization_repository.dart';
+import 'package:lean_assistant/features/admin/domain/machine_detail.dart';
 import 'package:lean_assistant/features/admin/domain/plant.dart';
 import 'package:lean_assistant/features/admin/domain/plant_tree.dart';
 
@@ -85,5 +86,39 @@ void main() {
     expect(server.requests.single.method, 'PUT');
     expect(server.requests.single.path, '/api/lines/l-1');
     expect(server.requests.single.data, {'name': 'Pres Hattı A'});
+  });
+
+  test('reads one machine with its QR code', () async {
+    final server = FakeJsonServer(
+      200,
+      '{"id":"m-1","factoryId":"p-1","lineId":"l-1","name":"Pres 1",'
+      '"code":"PR-01","qrCode":"abcdefghijklmnopqrstuv"}',
+    );
+
+    final result = await ApiOrganizationRepository(ApiClient(dioFor(server)))
+        .machine('m-1');
+
+    expect(server.requests.single.path, '/api/machines/m-1');
+    final machine = (result as Ok<MachineDetail>).value;
+    expect(machine.code, 'PR-01');
+    expect(machine.qrCode, 'abcdefghijklmnopqrstuv');
+  });
+
+  test('asks for a new QR code', () async {
+    final server = FakeJsonServer(
+      200,
+      '{"id":"m-1","factoryId":"p-1","lineId":"l-1","name":"Pres 1",'
+      '"code":"PR-01","qrCode":"vutsrqponmlkjihgfedcba"}',
+    );
+
+    final result = await ApiOrganizationRepository(ApiClient(dioFor(server)))
+        .regenerateQr('m-1');
+
+    expect(server.requests.single.method, 'POST');
+    expect(server.requests.single.path, '/api/machines/m-1/regenerate-qr');
+    expect(
+      (result as Ok<MachineDetail>).value.qrCode,
+      'vutsrqponmlkjihgfedcba',
+    );
   });
 }

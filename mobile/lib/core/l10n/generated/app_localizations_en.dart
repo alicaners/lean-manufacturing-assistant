@@ -420,4 +420,31 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get organizationConflict =>
       'This name or code is already in use here.';
+
+  @override
+  String get machineTitle => 'Machine';
+
+  @override
+  String get machineLabelInfo =>
+      'This QR code goes on the machine. Operators scan it to choose the machine when they report a stop.';
+
+  @override
+  String get machineShareLabel => 'Share label';
+
+  @override
+  String get machineShareFailed => 'The label could not be shared.';
+
+  @override
+  String get machineRegenerate => 'New QR code';
+
+  @override
+  String get machineRegenerateTitle => 'Make a new QR code?';
+
+  @override
+  String get machineRegenerateMessage =>
+      'The old label stops working at once. Print the new label and put it on the machine in place of the old one.';
+
+  @override
+  String get machineRegenerated =>
+      'New QR code made. Remember to replace the label.';
 }

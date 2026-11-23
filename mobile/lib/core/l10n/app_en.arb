@@ -120,5 +120,13 @@
   "organizationNoLines": "No lines yet.",
   "organizationNoMachines": "No machines yet.",
   "organizationSaved": "Saved.",
-  "organizationConflict": "This name or code is already in use here."
+  "organizationConflict": "This name or code is already in use here.",
+  "machineTitle": "Machine",
+  "machineLabelInfo": "This QR code goes on the machine. Operators scan it to choose the machine when they report a stop.",
+  "machineShareLabel": "Share label",
+  "machineShareFailed": "The label could not be shared.",
+  "machineRegenerate": "New QR code",
+  "machineRegenerateTitle": "Make a new QR code?",
+  "machineRegenerateMessage": "The old label stops working at once. Print the new label and put it on the machine in place of the old one.",
+  "machineRegenerated": "New QR code made. Remember to replace the label."
 }

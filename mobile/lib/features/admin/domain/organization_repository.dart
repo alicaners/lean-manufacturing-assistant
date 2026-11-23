@@ -1,4 +1,5 @@
 import 'package:lean_assistant/core/error/result.dart';
+import 'package:lean_assistant/features/admin/domain/machine_detail.dart';
 import 'package:lean_assistant/features/admin/domain/plant.dart';
 import 'package:lean_assistant/features/admin/domain/plant_tree.dart';
 
@@ -25,4 +26,10 @@ abstract interface class OrganizationRepository {
   });
 
   Future<Result<void>> rename(TreeNodeKind kind, String id, String name);
+
+  /// One machine with its QR code.
+  Future<Result<MachineDetail>> machine(String id);
+
+  /// Replaces the machine's QR code; the old label stops working.
+  Future<Result<MachineDetail>> regenerateQr(String id);
 }

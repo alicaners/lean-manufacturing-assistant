@@ -406,4 +406,31 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get organizationConflict =>
       'Bu ad veya kod burada zaten kullanılıyor.';
+
+  @override
+  String get machineTitle => 'Makine';
+
+  @override
+  String get machineLabelInfo =>
+      'Bu QR kodu makinenin üzerine yapıştırılır. Operatör duruş bildirirken kodu okutarak makineyi seçer.';
+
+  @override
+  String get machineShareLabel => 'Etiketi paylaş';
+
+  @override
+  String get machineShareFailed => 'Etiket paylaşılamadı.';
+
+  @override
+  String get machineRegenerate => 'Yeni QR üret';
+
+  @override
+  String get machineRegenerateTitle => 'Yeni QR kodu üretilsin mi?';
+
+  @override
+  String get machineRegenerateMessage =>
+      'Eski etiket hemen çalışmaz hâle gelir. Yeni etiketi yazdırıp makinedeki etiketin yerine yapıştırmanız gerekir.';
+
+  @override
+  String get machineRegenerated =>
+      'Yeni QR kodu üretildi. Etiketi yenilemeyi unutmayın.';
 }

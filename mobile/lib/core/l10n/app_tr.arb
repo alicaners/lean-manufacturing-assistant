@@ -641,8 +641,48 @@
     "description": "Snackbar after a change to the organization."
   },
 
-  "organizationConflict": "Bu ad veya kod burada zaten kullanılıyor.",
+    "organizationConflict": "Bu ad veya kod burada zaten kullanılıyor.",
   "@organizationConflict": {
     "description": "Shown on HTTP 409 when a name or machine code is taken."
+  },
+
+  "machineTitle": "Makine",
+  "@machineTitle": {
+    "description": "App bar title of the machine page."
+  },
+
+  "machineLabelInfo": "Bu QR kodu makinenin üzerine yapıştırılır. Operatör duruş bildirirken kodu okutarak makineyi seçer.",
+  "@machineLabelInfo": {
+    "description": "Explains what the QR label is for."
+  },
+
+  "machineShareLabel": "Etiketi paylaş",
+  "@machineShareLabel": {
+    "description": "Button that shares the QR label as an image."
+  },
+
+  "machineShareFailed": "Etiket paylaşılamadı.",
+  "@machineShareFailed": {
+    "description": "Shown when the label image could not be created or shared."
+  },
+
+  "machineRegenerate": "Yeni QR üret",
+  "@machineRegenerate": {
+    "description": "Button that replaces the machine's QR code."
+  },
+
+  "machineRegenerateTitle": "Yeni QR kodu üretilsin mi?",
+  "@machineRegenerateTitle": {
+    "description": "Title of the dialog that confirms a new QR code."
+  },
+
+  "machineRegenerateMessage": "Eski etiket hemen çalışmaz hâle gelir. Yeni etiketi yazdırıp makinedeki etiketin yerine yapıştırmanız gerekir.",
+  "@machineRegenerateMessage": {
+    "description": "Body of the dialog that confirms a new QR code."
+  },
+
+  "machineRegenerated": "Yeni QR kodu üretildi. Etiketi yenilemeyi unutmayın.",
+  "@machineRegenerated": {
+    "description": "Snackbar after a new QR code was made."
   }
-}
+}  

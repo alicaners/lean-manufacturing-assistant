@@ -823,6 +823,54 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Bu ad veya kod burada zaten kullanılıyor.'**
   String get organizationConflict;
+
+  /// App bar title of the machine page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Makine'**
+  String get machineTitle;
+
+  /// Explains what the QR label is for.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu QR kodu makinenin üzerine yapıştırılır. Operatör duruş bildirirken kodu okutarak makineyi seçer.'**
+  String get machineLabelInfo;
+
+  /// Button that shares the QR label as an image.
+  ///
+  /// In tr, this message translates to:
+  /// **'Etiketi paylaş'**
+  String get machineShareLabel;
+
+  /// Shown when the label image could not be created or shared.
+  ///
+  /// In tr, this message translates to:
+  /// **'Etiket paylaşılamadı.'**
+  String get machineShareFailed;
+
+  /// Button that replaces the machine's QR code.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni QR üret'**
+  String get machineRegenerate;
+
+  /// Title of the dialog that confirms a new QR code.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni QR kodu üretilsin mi?'**
+  String get machineRegenerateTitle;
+
+  /// Body of the dialog that confirms a new QR code.
+  ///
+  /// In tr, this message translates to:
+  /// **'Eski etiket hemen çalışmaz hâle gelir. Yeni etiketi yazdırıp makinedeki etiketin yerine yapıştırmanız gerekir.'**
+  String get machineRegenerateMessage;
+
+  /// Snackbar after a new QR code was made.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni QR kodu üretildi. Etiketi yenilemeyi unutmayın.'**
+  String get machineRegenerated;
 }
 
 class _AppLocalizationsDelegate
