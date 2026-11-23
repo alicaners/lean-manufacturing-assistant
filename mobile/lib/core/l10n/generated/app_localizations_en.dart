@@ -247,4 +247,68 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get userFormSubmit => 'Create user';
+
+  @override
+  String get commonCancel => 'Cancel';
+
+  @override
+  String get userDetailTitle => 'User';
+
+  @override
+  String get userDetailTemporaryPassword => 'Temporary password';
+
+  @override
+  String get userDetailSelfInfo =>
+      'This is your own account. You cannot deactivate it or reset its password here.';
+
+  @override
+  String get userDetailAccountSection => 'Account status';
+
+  @override
+  String get userDetailActiveInfo =>
+      'The account is active. Deactivating it blocks sign-in and closes open sessions.';
+
+  @override
+  String get userDetailInactiveInfo =>
+      'The account is inactive. The user cannot sign in.';
+
+  @override
+  String get userDetailDeactivate => 'Deactivate';
+
+  @override
+  String get userDetailActivate => 'Activate';
+
+  @override
+  String get userDetailDeactivateTitle => 'Deactivate this user?';
+
+  @override
+  String userDetailDeactivateMessage(String name) {
+    return '$name will no longer be able to sign in, and their sessions on every device will be closed.';
+  }
+
+  @override
+  String get userDetailPasswordSection => 'Password';
+
+  @override
+  String get userDetailPasswordInfo =>
+      'If the user forgot their password, give them a new temporary one. Their sessions on every device are closed and they must change it at first sign-in.';
+
+  @override
+  String get userDetailResetPassword => 'Give temporary password';
+
+  @override
+  String get userDetailResetPasswordTitle => 'New temporary password';
+
+  @override
+  String get userDetailResetPasswordSubmit => 'Set password';
+
+  @override
+  String get userDetailActivated => 'User activated.';
+
+  @override
+  String get userDetailDeactivated => 'User deactivated.';
+
+  @override
+  String get userDetailPasswordReset =>
+      'Temporary password set. Share it with the user in a safe way.';
 }

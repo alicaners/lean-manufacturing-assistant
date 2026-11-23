@@ -52,4 +52,27 @@ class ApiUserAdminRepository implements UserAdminRepository {
       parse: ManagedUser.fromJson,
     );
   }
+
+  @override
+  Future<Result<ManagedUser>> get(String id) {
+    return _api.get('/api/users/$id', parse: ManagedUser.fromJson);
+  }
+
+  @override
+  Future<Result<void>> setActive(String id, {required bool active}) {
+    final action = active ? 'activate' : 'deactivate';
+    return _api.post('/api/users/$id/$action', parse: _noContent);
+  }
+
+  @override
+  Future<Result<void>> resetPassword(String id, String temporaryPassword) {
+    return _api.post(
+      '/api/users/$id/reset-password',
+      body: {'newPassword': temporaryPassword},
+      parse: _noContent,
+    );
+  }
+
+  /// These endpoints answer 204 without a body; there is nothing to read.
+  static void _noContent(Object? _) {}
 }

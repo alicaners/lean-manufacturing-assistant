@@ -16,4 +16,13 @@ abstract interface class UserAdminRepository {
   /// Creates the user with a temporary password they must change at
   /// first sign-in.
   Future<Result<ManagedUser>> create(NewUser user);
+
+  /// The user with [id]. A user of another plant answers "not found".
+  Future<Result<ManagedUser>> get(String id);
+
+  /// Activates or deactivates the user. Deactivating closes their sessions.
+  Future<Result<void>> setActive(String id, {required bool active});
+
+  /// Gives the user a new temporary password and closes their sessions.
+  Future<Result<void>> resetPassword(String id, String temporaryPassword);
 }

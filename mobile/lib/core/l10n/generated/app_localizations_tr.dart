@@ -245,4 +245,68 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get userFormSubmit => 'Kullanıcıyı oluştur';
+
+  @override
+  String get commonCancel => 'Vazgeç';
+
+  @override
+  String get userDetailTitle => 'Kullanıcı';
+
+  @override
+  String get userDetailTemporaryPassword => 'Geçici şifre';
+
+  @override
+  String get userDetailSelfInfo =>
+      'Bu sizin hesabınız. Kendi hesabınızı buradan pasif yapamaz, şifrenizi buradan sıfırlayamazsınız.';
+
+  @override
+  String get userDetailAccountSection => 'Hesap durumu';
+
+  @override
+  String get userDetailActiveInfo =>
+      'Hesap aktif. Pasif yapılırsa kullanıcı giriş yapamaz ve açık oturumları kapanır.';
+
+  @override
+  String get userDetailInactiveInfo =>
+      'Hesap pasif. Kullanıcı giriş yapamıyor.';
+
+  @override
+  String get userDetailDeactivate => 'Pasif yap';
+
+  @override
+  String get userDetailActivate => 'Aktif yap';
+
+  @override
+  String get userDetailDeactivateTitle => 'Kullanıcı pasif yapılsın mı?';
+
+  @override
+  String userDetailDeactivateMessage(String name) {
+    return '$name artık giriş yapamayacak ve tüm cihazlardaki oturumları kapanacak.';
+  }
+
+  @override
+  String get userDetailPasswordSection => 'Şifre';
+
+  @override
+  String get userDetailPasswordInfo =>
+      'Kullanıcı şifresini unuttuysa yeni bir geçici şifre verin. Tüm cihazlardaki oturumları kapanır ve ilk girişte şifresini değiştirmesi istenir.';
+
+  @override
+  String get userDetailResetPassword => 'Geçici şifre ver';
+
+  @override
+  String get userDetailResetPasswordTitle => 'Yeni geçici şifre';
+
+  @override
+  String get userDetailResetPasswordSubmit => 'Şifreyi ver';
+
+  @override
+  String get userDetailActivated => 'Kullanıcı aktif yapıldı.';
+
+  @override
+  String get userDetailDeactivated => 'Kullanıcı pasif yapıldı.';
+
+  @override
+  String get userDetailPasswordReset =>
+      'Geçici şifre verildi. Kullanıcıya güvenli bir yoldan iletin.';
 }

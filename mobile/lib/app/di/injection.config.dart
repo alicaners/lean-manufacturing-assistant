@@ -30,6 +30,8 @@ import 'package:lean_assistant/features/admin/domain/user_admin_repository.dart'
     as _i90;
 import 'package:lean_assistant/features/admin/presentation/create_user_cubit.dart'
     as _i705;
+import 'package:lean_assistant/features/admin/presentation/user_detail_cubit.dart'
+    as _i503;
 import 'package:lean_assistant/features/admin/presentation/user_list_cubit.dart'
     as _i153;
 import 'package:lean_assistant/features/auth/data/api_auth_repository.dart'
@@ -131,6 +133,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i90.UserAdminRepository>(),
         gh<_i188.OrganizationRepository>(),
       ),
+    );
+    gh.factory<_i503.UserDetailCubit>(
+      () => _i503.UserDetailCubit(gh<_i90.UserAdminRepository>()),
     );
     gh.factory<_i153.UserListCubit>(
       () => _i153.UserListCubit(gh<_i90.UserAdminRepository>()),

@@ -535,6 +535,120 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Kullanıcıyı oluştur'**
   String get userFormSubmit;
+
+  /// Button that closes a dialog without doing anything.
+  ///
+  /// In tr, this message translates to:
+  /// **'Vazgeç'**
+  String get commonCancel;
+
+  /// App bar title of the user detail page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı'**
+  String get userDetailTitle;
+
+  /// Label shown when the user still has a temporary password.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçici şifre'**
+  String get userDetailTemporaryPassword;
+
+  /// Shown instead of the actions when an admin opens their own account.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu sizin hesabınız. Kendi hesabınızı buradan pasif yapamaz, şifrenizi buradan sıfırlayamazsınız.'**
+  String get userDetailSelfInfo;
+
+  /// Title of the card with the activate/deactivate action.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesap durumu'**
+  String get userDetailAccountSection;
+
+  /// Explains what deactivating does.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesap aktif. Pasif yapılırsa kullanıcı giriş yapamaz ve açık oturumları kapanır.'**
+  String get userDetailActiveInfo;
+
+  /// Shown for a deactivated user.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesap pasif. Kullanıcı giriş yapamıyor.'**
+  String get userDetailInactiveInfo;
+
+  /// Button that deactivates the user.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pasif yap'**
+  String get userDetailDeactivate;
+
+  /// Button that activates the user again.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktif yap'**
+  String get userDetailActivate;
+
+  /// Title of the dialog that confirms deactivation.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı pasif yapılsın mı?'**
+  String get userDetailDeactivateTitle;
+
+  /// Body of the dialog that confirms deactivation.
+  ///
+  /// In tr, this message translates to:
+  /// **'{name} artık giriş yapamayacak ve tüm cihazlardaki oturumları kapanacak.'**
+  String userDetailDeactivateMessage(String name);
+
+  /// Title of the card with the reset-password action.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifre'**
+  String get userDetailPasswordSection;
+
+  /// Explains what giving a temporary password does.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı şifresini unuttuysa yeni bir geçici şifre verin. Tüm cihazlardaki oturumları kapanır ve ilk girişte şifresini değiştirmesi istenir.'**
+  String get userDetailPasswordInfo;
+
+  /// Button that opens the reset-password dialog.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçici şifre ver'**
+  String get userDetailResetPassword;
+
+  /// Title of the reset-password dialog.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni geçici şifre'**
+  String get userDetailResetPasswordTitle;
+
+  /// Button that sets the new temporary password.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifreyi ver'**
+  String get userDetailResetPasswordSubmit;
+
+  /// Snackbar after activating a user.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı aktif yapıldı.'**
+  String get userDetailActivated;
+
+  /// Snackbar after deactivating a user.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı pasif yapıldı.'**
+  String get userDetailDeactivated;
+
+  /// Snackbar after giving a temporary password.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçici şifre verildi. Kullanıcıya güvenli bir yoldan iletin.'**
+  String get userDetailPasswordReset;
 }
 
 class _AppLocalizationsDelegate

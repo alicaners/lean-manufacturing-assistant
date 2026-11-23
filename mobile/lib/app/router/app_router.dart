@@ -3,6 +3,7 @@ import 'package:lean_assistant/app/router/forbidden_page.dart';
 import 'package:lean_assistant/app/router/not_found_page.dart';
 import 'package:lean_assistant/app/router/stream_listenable.dart';
 import 'package:lean_assistant/features/admin/presentation/create_user_page.dart';
+import 'package:lean_assistant/features/admin/presentation/user_detail_page.dart';
 import 'package:lean_assistant/features/admin/presentation/users_page.dart';
 import 'package:lean_assistant/features/auth/domain/current_user.dart';
 import 'package:lean_assistant/features/auth/domain/permission.dart';
@@ -22,6 +23,10 @@ abstract final class AppRoutes {
   static const String forbidden = '/forbidden';
   static const String users = '/users';
   static const String newUser = '/users/new';
+  static const String userDetail = '/users/:id';
+
+  /// The address of one user's detail page.
+  static String userDetailOf(String id) => '/users/$id';
 }
 
 /// Builds the app's router. Every navigation, and every change of the
@@ -56,9 +61,15 @@ GoRouter createRouter(AuthBloc authBloc) {
         path: AppRoutes.users,
         builder: (context, state) => const UsersPage(),
       ),
+      // Before the detail route, so "new" is not read as a user id.
       GoRoute(
         path: AppRoutes.newUser,
         builder: (context, state) => const CreateUserPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.userDetail,
+        builder: (context, state) =>
+            UserDetailPage(userId: state.pathParameters['id']!),
       ),
     ],
     errorBuilder: (context, state) => const NotFoundPage(),

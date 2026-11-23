@@ -2,7 +2,6 @@ import 'package:lean_assistant/app/di/injection.dart';
 import 'package:lean_assistant/core/error/result.dart';
 import 'package:lean_assistant/core/network/cursor_page.dart';
 import 'package:lean_assistant/features/admin/domain/managed_user.dart';
-import 'package:lean_assistant/features/admin/domain/new_user.dart';
 import 'package:lean_assistant/features/admin/domain/user_admin_repository.dart';
 import 'package:lean_assistant/features/admin/domain/user_filter.dart';
 import 'package:lean_assistant/features/admin/presentation/user_list_cubit.dart';
@@ -22,6 +21,7 @@ class FakeHealthRepository implements HealthRepository {
 }
 
 /// A user list with nobody in it, without any network.
+/// A user list with nobody in it, without any network.
 class _EmptyUserAdminRepository implements UserAdminRepository {
   @override
   Future<Result<CursorPage<ManagedUser>>> list(
@@ -29,8 +29,9 @@ class _EmptyUserAdminRepository implements UserAdminRepository {
     String? cursor,
   }) async => const Ok(CursorPage(items: []));
 
+  // Pages under test never change users.
   @override
-  Future<Result<ManagedUser>> create(NewUser user) =>
+  dynamic noSuchMethod(Invocation invocation) =>
       throw UnimplementedError('Not expected in this test.');
 }
 

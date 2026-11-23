@@ -379,8 +379,109 @@
     "description": "Shown on HTTP 403 when a plant admin picks another plant."
   },
 
-  "userFormSubmit": "Kullanıcıyı oluştur",
+    "userFormSubmit": "Kullanıcıyı oluştur",
   "@userFormSubmit": {
     "description": "Button that creates the user."
+  },
+
+  "commonCancel": "Vazgeç",
+  "@commonCancel": {
+    "description": "Button that closes a dialog without doing anything."
+  },
+
+  "userDetailTitle": "Kullanıcı",
+  "@userDetailTitle": {
+    "description": "App bar title of the user detail page."
+  },
+
+  "userDetailTemporaryPassword": "Geçici şifre",
+  "@userDetailTemporaryPassword": {
+    "description": "Label shown when the user still has a temporary password."
+  },
+
+  "userDetailSelfInfo": "Bu sizin hesabınız. Kendi hesabınızı buradan pasif yapamaz, şifrenizi buradan sıfırlayamazsınız.",
+  "@userDetailSelfInfo": {
+    "description": "Shown instead of the actions when an admin opens their own account."
+  },
+
+  "userDetailAccountSection": "Hesap durumu",
+  "@userDetailAccountSection": {
+    "description": "Title of the card with the activate/deactivate action."
+  },
+
+  "userDetailActiveInfo": "Hesap aktif. Pasif yapılırsa kullanıcı giriş yapamaz ve açık oturumları kapanır.",
+  "@userDetailActiveInfo": {
+    "description": "Explains what deactivating does."
+  },
+
+  "userDetailInactiveInfo": "Hesap pasif. Kullanıcı giriş yapamıyor.",
+  "@userDetailInactiveInfo": {
+    "description": "Shown for a deactivated user."
+  },
+
+  "userDetailDeactivate": "Pasif yap",
+  "@userDetailDeactivate": {
+    "description": "Button that deactivates the user."
+  },
+
+  "userDetailActivate": "Aktif yap",
+  "@userDetailActivate": {
+    "description": "Button that activates the user again."
+  },
+
+  "userDetailDeactivateTitle": "Kullanıcı pasif yapılsın mı?",
+  "@userDetailDeactivateTitle": {
+    "description": "Title of the dialog that confirms deactivation."
+  },
+
+  "userDetailDeactivateMessage": "{name} artık giriş yapamayacak ve tüm cihazlardaki oturumları kapanacak.",
+  "@userDetailDeactivateMessage": {
+    "description": "Body of the dialog that confirms deactivation.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Demo Operatör"
+      }
+    }
+  },
+
+  "userDetailPasswordSection": "Şifre",
+  "@userDetailPasswordSection": {
+    "description": "Title of the card with the reset-password action."
+  },
+
+  "userDetailPasswordInfo": "Kullanıcı şifresini unuttuysa yeni bir geçici şifre verin. Tüm cihazlardaki oturumları kapanır ve ilk girişte şifresini değiştirmesi istenir.",
+  "@userDetailPasswordInfo": {
+    "description": "Explains what giving a temporary password does."
+  },
+
+  "userDetailResetPassword": "Geçici şifre ver",
+  "@userDetailResetPassword": {
+    "description": "Button that opens the reset-password dialog."
+  },
+
+  "userDetailResetPasswordTitle": "Yeni geçici şifre",
+  "@userDetailResetPasswordTitle": {
+    "description": "Title of the reset-password dialog."
+  },
+
+  "userDetailResetPasswordSubmit": "Şifreyi ver",
+  "@userDetailResetPasswordSubmit": {
+    "description": "Button that sets the new temporary password."
+  },
+
+  "userDetailActivated": "Kullanıcı aktif yapıldı.",
+  "@userDetailActivated": {
+    "description": "Snackbar after activating a user."
+  },
+
+  "userDetailDeactivated": "Kullanıcı pasif yapıldı.",
+  "@userDetailDeactivated": {
+    "description": "Snackbar after deactivating a user."
+  },
+
+  "userDetailPasswordReset": "Geçici şifre verildi. Kullanıcıya güvenli bir yoldan iletin.",
+  "@userDetailPasswordReset": {
+    "description": "Snackbar after giving a temporary password."
   }
 }

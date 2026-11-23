@@ -79,4 +79,42 @@ void main() {
     });
     expect((result as Ok<ManagedUser>).value.userName, 'demo.operator');
   });
+
+  test('reads one user', () async {
+    final server = FakeJsonServer(200, operatorUserJson);
+
+    final result = await ApiUserAdminRepository(ApiClient(dioFor(server)))
+        .get('u-1');
+
+    expect(server.requests.single.path, '/api/users/u-1');
+    expect((result as Ok<ManagedUser>).value.fullName, 'Demo Operatör');
+  });
+
+  test('deactivates and activates a user', () async {
+    final server = FakeJsonServer(204, '');
+    final repository = ApiUserAdminRepository(ApiClient(dioFor(server)));
+
+    final deactivated = await repository.setActive('u-1', active: false);
+    final activated = await repository.setActive('u-1', active: true);
+
+    expect(
+      [for (final request in server.requests) request.path],
+      ['/api/users/u-1/deactivate', '/api/users/u-1/activate'],
+    );
+    expect(deactivated, isA<Ok<void>>());
+    expect(activated, isA<Ok<void>>());
+  });
+
+  test('gives a user a new temporary password', () async {
+    final server = FakeJsonServer(204, '');
+
+    final result = await ApiUserAdminRepository(ApiClient(dioFor(server)))
+        .resetPassword('u-1', 'New-Temporary-Password');
+
+    expect(server.requests.single.path, '/api/users/u-1/reset-password');
+    expect(server.requests.single.data, {
+      'newPassword': 'New-Temporary-Password',
+    });
+    expect(result, isA<Ok<void>>());
+  });
 }

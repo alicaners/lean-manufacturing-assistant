@@ -10,6 +10,7 @@ import 'package:lean_assistant/core/widgets/error_view.dart';
 import 'package:lean_assistant/core/widgets/loading_view.dart';
 import 'package:lean_assistant/features/admin/domain/managed_user.dart';
 import 'package:lean_assistant/features/admin/domain/user_filter.dart';
+import 'package:lean_assistant/features/admin/presentation/user_avatar.dart';
 import 'package:lean_assistant/features/admin/presentation/user_list_cubit.dart';
 import 'package:lean_assistant/features/admin/presentation/user_list_state.dart';
 import 'package:lean_assistant/features/auth/domain/current_user.dart';
@@ -213,13 +214,23 @@ class _UserTile extends StatelessWidget {
 
   final ManagedUser user;
 
+  Future<void> _open(BuildContext context) async {
+    final cubit = context.read<UserListCubit>();
+
+    await context.push<void>(AppRoutes.userDetailOf(user.id));
+
+    // The user may have been changed on the detail page.
+    await cubit.load();
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
 
     return ListTile(
-      leading: CircleAvatar(child: Text(_initials(user.fullName))),
+      onTap: () => _open(context),
+      leading: UserAvatar(user.fullName),
       title: Text(user.fullName),
       subtitle: Text('${user.userName} · ${user.role.label(l10n)}'),
       trailing: switch (user) {
@@ -235,14 +246,6 @@ class _UserTile extends StatelessWidget {
       },
     );
   }
-
-  /// "Ayşe Nur Demir" → "AN".
-  static String _initials(String fullName) => fullName
-      .split(' ')
-      .where((part) => part.isNotEmpty)
-      .take(2)
-      .map((part) => part[0].toUpperCase())
-      .join();
 }
 
 /// The last row while more users exist. Being built means the user scrolled
