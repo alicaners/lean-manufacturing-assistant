@@ -202,4 +202,49 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get usersTemporaryPassword =>
       'Temporary password: changed at first sign-in';
+
+  @override
+  String get usersNew => 'New user';
+
+  @override
+  String get usersCreated => 'User created.';
+
+  @override
+  String get userFormFullName => 'Full name';
+
+  @override
+  String get userFormTemporaryPassword => 'Temporary password';
+
+  @override
+  String get userFormPasswordInfo =>
+      'The user replaces this password with their own at first sign-in. Share it with them in a safe way.';
+
+  @override
+  String get userFormRole => 'Role';
+
+  @override
+  String get userFormPlant => 'Plant';
+
+  @override
+  String get userFormAllPlants => 'All plants (system admin)';
+
+  @override
+  String get userFormLine => 'Line';
+
+  @override
+  String get userFormLinesFailed => 'The lines could not be loaded.';
+
+  @override
+  String get userFormUserNameInvalid =>
+      'Only letters, digits, dots, underscores and hyphens are allowed.';
+
+  @override
+  String get userFormUserNameTaken => 'This user name is already in use.';
+
+  @override
+  String get userFormOutsideScope =>
+      'You can only manage users of your own plant.';
+
+  @override
+  String get userFormSubmit => 'Create user';
 }

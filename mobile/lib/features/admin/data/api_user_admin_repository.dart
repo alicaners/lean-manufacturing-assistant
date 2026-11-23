@@ -3,6 +3,7 @@ import 'package:lean_assistant/core/error/result.dart';
 import 'package:lean_assistant/core/network/api_client.dart';
 import 'package:lean_assistant/core/network/cursor_page.dart';
 import 'package:lean_assistant/features/admin/domain/managed_user.dart';
+import 'package:lean_assistant/features/admin/domain/new_user.dart';
 import 'package:lean_assistant/features/admin/domain/user_admin_repository.dart';
 import 'package:lean_assistant/features/admin/domain/user_filter.dart';
 
@@ -32,6 +33,23 @@ class ApiUserAdminRepository implements UserAdminRepository {
       },
       parse: (json) =>
           CursorPage<ManagedUser>.fromJson(json, ManagedUser.fromJson),
+    );
+  }
+
+  @override
+  Future<Result<ManagedUser>> create(NewUser user) {
+    return _api.post(
+      '/api/users',
+      body: {
+        'userName': user.userName,
+        'fullName': user.fullName,
+        'password': user.temporaryPassword,
+        'role': user.role.apiName,
+        // The backend calls a plant "factory".
+        'factoryId': user.plantId,
+        'lineId': user.lineId,
+      },
+      parse: ManagedUser.fromJson,
     );
   }
 }

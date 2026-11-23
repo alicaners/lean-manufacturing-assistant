@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lean_assistant/app/router/forbidden_page.dart';
 import 'package:lean_assistant/app/router/not_found_page.dart';
 import 'package:lean_assistant/app/router/stream_listenable.dart';
+import 'package:lean_assistant/features/admin/presentation/create_user_page.dart';
 import 'package:lean_assistant/features/admin/presentation/users_page.dart';
 import 'package:lean_assistant/features/auth/domain/current_user.dart';
 import 'package:lean_assistant/features/auth/domain/permission.dart';
@@ -20,6 +21,7 @@ abstract final class AppRoutes {
   static const String changePassword = '/change-password';
   static const String forbidden = '/forbidden';
   static const String users = '/users';
+  static const String newUser = '/users/new';
 }
 
 /// Builds the app's router. Every navigation, and every change of the
@@ -53,6 +55,10 @@ GoRouter createRouter(AuthBloc authBloc) {
       GoRoute(
         path: AppRoutes.users,
         builder: (context, state) => const UsersPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.newUser,
+        builder: (context, state) => const CreateUserPage(),
       ),
     ],
     errorBuilder: (context, state) => const NotFoundPage(),

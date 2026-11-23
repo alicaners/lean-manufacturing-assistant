@@ -200,4 +200,49 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get usersTemporaryPassword =>
       'Geçici şifre: ilk girişte değiştirilecek';
+
+  @override
+  String get usersNew => 'Yeni kullanıcı';
+
+  @override
+  String get usersCreated => 'Kullanıcı oluşturuldu.';
+
+  @override
+  String get userFormFullName => 'Ad soyad';
+
+  @override
+  String get userFormTemporaryPassword => 'Geçici şifre';
+
+  @override
+  String get userFormPasswordInfo =>
+      'Kullanıcı ilk girişte bu şifreyi kendi şifresiyle değiştirecek. Şifreyi kendisine güvenli bir yoldan iletin.';
+
+  @override
+  String get userFormRole => 'Rol';
+
+  @override
+  String get userFormPlant => 'Fabrika';
+
+  @override
+  String get userFormAllPlants => 'Tüm fabrikalar (sistem yöneticisi)';
+
+  @override
+  String get userFormLine => 'Hat';
+
+  @override
+  String get userFormLinesFailed => 'Hatlar yüklenemedi.';
+
+  @override
+  String get userFormUserNameInvalid =>
+      'Yalnızca harf, rakam, nokta, alt çizgi ve tire kullanılabilir.';
+
+  @override
+  String get userFormUserNameTaken => 'Bu kullanıcı adı zaten kullanılıyor.';
+
+  @override
+  String get userFormOutsideScope =>
+      'Yalnızca kendi fabrikanızın kullanıcılarını yönetebilirsiniz.';
+
+  @override
+  String get userFormSubmit => 'Kullanıcıyı oluştur';
 }

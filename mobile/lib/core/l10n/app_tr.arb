@@ -309,8 +309,78 @@
     "description": "Shown when no user matches the search and filters."
   },
 
-  "usersTemporaryPassword": "Geçici şifre: ilk girişte değiştirilecek",
+    "usersTemporaryPassword": "Geçici şifre: ilk girişte değiştirilecek",
   "@usersTemporaryPassword": {
     "description": "Tooltip of the key icon next to a user with a temporary password."
+  },
+
+  "usersNew": "Yeni kullanıcı",
+  "@usersNew": {
+    "description": "Button and page title for creating a user."
+  },
+
+  "usersCreated": "Kullanıcı oluşturuldu.",
+  "@usersCreated": {
+    "description": "Snackbar after a user was created."
+  },
+
+  "userFormFullName": "Ad soyad",
+  "@userFormFullName": {
+    "description": "Label of the full name field."
+  },
+
+  "userFormTemporaryPassword": "Geçici şifre",
+  "@userFormTemporaryPassword": {
+    "description": "Label of the password the admin gives a new user."
+  },
+
+  "userFormPasswordInfo": "Kullanıcı ilk girişte bu şifreyi kendi şifresiyle değiştirecek. Şifreyi kendisine güvenli bir yoldan iletin.",
+  "@userFormPasswordInfo": {
+    "description": "Explains the temporary password under its field."
+  },
+
+  "userFormRole": "Rol",
+  "@userFormRole": {
+    "description": "Label of the role dropdown."
+  },
+
+  "userFormPlant": "Fabrika",
+  "@userFormPlant": {
+    "description": "Label of the plant dropdown."
+  },
+
+  "userFormAllPlants": "Tüm fabrikalar (sistem yöneticisi)",
+  "@userFormAllPlants": {
+    "description": "Plant option for an admin who manages every plant."
+  },
+
+  "userFormLine": "Hat",
+  "@userFormLine": {
+    "description": "Label of the production line dropdown."
+  },
+
+  "userFormLinesFailed": "Hatlar yüklenemedi.",
+  "@userFormLinesFailed": {
+    "description": "Shown when the lines of the chosen plant could not be loaded."
+  },
+
+  "userFormUserNameInvalid": "Yalnızca harf, rakam, nokta, alt çizgi ve tire kullanılabilir.",
+  "@userFormUserNameInvalid": {
+    "description": "Shown when the user name has characters the server does not accept."
+  },
+
+  "userFormUserNameTaken": "Bu kullanıcı adı zaten kullanılıyor.",
+  "@userFormUserNameTaken": {
+    "description": "Shown under the user name field on HTTP 409."
+  },
+
+  "userFormOutsideScope": "Yalnızca kendi fabrikanızın kullanıcılarını yönetebilirsiniz.",
+  "@userFormOutsideScope": {
+    "description": "Shown on HTTP 403 when a plant admin picks another plant."
+  },
+
+  "userFormSubmit": "Kullanıcıyı oluştur",
+  "@userFormSubmit": {
+    "description": "Button that creates the user."
   }
 }

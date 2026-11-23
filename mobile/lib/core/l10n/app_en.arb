@@ -58,5 +58,19 @@
   "usersInactive": "Inactive",
   "usersAllRoles": "All roles",
   "usersEmpty": "No users match these filters.",
-  "usersTemporaryPassword": "Temporary password: changed at first sign-in"
+    "usersTemporaryPassword": "Temporary password: changed at first sign-in",
+  "usersNew": "New user",
+  "usersCreated": "User created.",
+  "userFormFullName": "Full name",
+  "userFormTemporaryPassword": "Temporary password",
+  "userFormPasswordInfo": "The user replaces this password with their own at first sign-in. Share it with them in a safe way.",
+  "userFormRole": "Role",
+  "userFormPlant": "Plant",
+  "userFormAllPlants": "All plants (system admin)",
+  "userFormLine": "Line",
+  "userFormLinesFailed": "The lines could not be loaded.",
+  "userFormUserNameInvalid": "Only letters, digits, dots, underscores and hyphens are allowed.",
+  "userFormUserNameTaken": "This user name is already in use.",
+  "userFormOutsideScope": "You can only manage users of your own plant.",
+  "userFormSubmit": "Create user"
 }

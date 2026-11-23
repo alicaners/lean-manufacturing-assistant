@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lean_assistant/app/di/injection.dart';
+import 'package:lean_assistant/app/router/app_router.dart';
 import 'package:lean_assistant/core/error/failure_message.dart';
 import 'package:lean_assistant/core/l10n/l10n.dart';
 import 'package:lean_assistant/core/widgets/empty_view.dart';
@@ -23,6 +25,7 @@ class UsersPage extends StatelessWidget {
       create: (_) => getIt<UserListCubit>()..load(),
       child: Scaffold(
         appBar: AppBar(title: Text(context.l10n.usersTitle)),
+        floatingActionButton: const _NewUserButton(),
         body: const Column(
           children: [
             _SearchField(),
@@ -31,6 +34,32 @@ class UsersPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _NewUserButton extends StatelessWidget {
+  const _NewUserButton();
+
+  Future<void> _create(BuildContext context) async {
+    // Read everything that needs the context before waiting.
+    final cubit = context.read<UserListCubit>();
+    final messenger = ScaffoldMessenger.of(context);
+    final createdMessage = context.l10n.usersCreated;
+
+    final created = await context.push<bool>(AppRoutes.newUser);
+    if (created != true) return;
+
+    messenger.showSnackBar(SnackBar(content: Text(createdMessage)));
+    await cubit.load();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton.extended(
+      onPressed: () => _create(context),
+      icon: const Icon(Icons.person_add_alt_1),
+      label: Text(context.l10n.usersNew),
     );
   }
 }
@@ -158,6 +187,8 @@ class _UserList extends StatelessWidget {
                 child: ListView.builder(
                   // Pull-to-refresh works even when the list is too short to scroll.
                   physics: const AlwaysScrollableScrollPhysics(),
+                  // Room for the "New user" button over the last row.
+                  padding: const EdgeInsets.only(bottom: 88),
                   itemCount: state.users.length + (state.hasMore ? 1 : 0),
                   itemBuilder: (context, index) {
                     if (index < state.users.length) {

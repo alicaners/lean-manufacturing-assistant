@@ -451,6 +451,90 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Geçici şifre: ilk girişte değiştirilecek'**
   String get usersTemporaryPassword;
+
+  /// Button and page title for creating a user.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni kullanıcı'**
+  String get usersNew;
+
+  /// Snackbar after a user was created.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı oluşturuldu.'**
+  String get usersCreated;
+
+  /// Label of the full name field.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ad soyad'**
+  String get userFormFullName;
+
+  /// Label of the password the admin gives a new user.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçici şifre'**
+  String get userFormTemporaryPassword;
+
+  /// Explains the temporary password under its field.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcı ilk girişte bu şifreyi kendi şifresiyle değiştirecek. Şifreyi kendisine güvenli bir yoldan iletin.'**
+  String get userFormPasswordInfo;
+
+  /// Label of the role dropdown.
+  ///
+  /// In tr, this message translates to:
+  /// **'Rol'**
+  String get userFormRole;
+
+  /// Label of the plant dropdown.
+  ///
+  /// In tr, this message translates to:
+  /// **'Fabrika'**
+  String get userFormPlant;
+
+  /// Plant option for an admin who manages every plant.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tüm fabrikalar (sistem yöneticisi)'**
+  String get userFormAllPlants;
+
+  /// Label of the production line dropdown.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hat'**
+  String get userFormLine;
+
+  /// Shown when the lines of the chosen plant could not be loaded.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hatlar yüklenemedi.'**
+  String get userFormLinesFailed;
+
+  /// Shown when the user name has characters the server does not accept.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yalnızca harf, rakam, nokta, alt çizgi ve tire kullanılabilir.'**
+  String get userFormUserNameInvalid;
+
+  /// Shown under the user name field on HTTP 409.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu kullanıcı adı zaten kullanılıyor.'**
+  String get userFormUserNameTaken;
+
+  /// Shown on HTTP 403 when a plant admin picks another plant.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yalnızca kendi fabrikanızın kullanıcılarını yönetebilirsiniz.'**
+  String get userFormOutsideScope;
+
+  /// Button that creates the user.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullanıcıyı oluştur'**
+  String get userFormSubmit;
 }
 
 class _AppLocalizationsDelegate
