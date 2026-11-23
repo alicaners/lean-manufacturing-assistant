@@ -351,4 +351,73 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profilePasswordChanged => 'Your password was changed.';
+
+  @override
+  String get homeManageOrganization => 'Manage organization';
+
+  @override
+  String get organizationTitle => 'Organization';
+
+  @override
+  String get organizationAddDepartment => 'Add department';
+
+  @override
+  String get organizationAddLine => 'Add line';
+
+  @override
+  String get organizationAddMachine => 'Add machine';
+
+  @override
+  String get organizationRename => 'Rename';
+
+  @override
+  String get organizationName => 'Name';
+
+  @override
+  String get organizationMachineCode => 'Machine code';
+
+  @override
+  String get organizationCodeInvalid =>
+      'Only letters, digits and hyphens are allowed.';
+
+  @override
+  String organizationLineCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count lines',
+      one: '1 line',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String organizationMachineCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count machines',
+      one: '1 machine',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get organizationNoPlants => 'There are no plants yet.';
+
+  @override
+  String get organizationNoDepartments => 'This plant has no departments yet.';
+
+  @override
+  String get organizationNoLines => 'No lines yet.';
+
+  @override
+  String get organizationNoMachines => 'No machines yet.';
+
+  @override
+  String get organizationSaved => 'Saved.';
+
+  @override
+  String get organizationConflict =>
+      'This name or code is already in use here.';
 }

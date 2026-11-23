@@ -5,6 +5,7 @@ import 'package:lean_assistant/app/router/stream_listenable.dart';
 import 'package:lean_assistant/features/admin/domain/managed_user.dart';
 import 'package:lean_assistant/features/admin/presentation/create_user_page.dart';
 import 'package:lean_assistant/features/admin/presentation/edit_access_page.dart';
+import 'package:lean_assistant/features/admin/presentation/organization_page.dart';
 import 'package:lean_assistant/features/admin/presentation/user_detail_page.dart';
 import 'package:lean_assistant/features/admin/presentation/users_page.dart';
 import 'package:lean_assistant/features/auth/domain/current_user.dart';
@@ -24,6 +25,7 @@ abstract final class AppRoutes {
   static const String login = '/login';
   static const String changePassword = '/change-password';
   static const String forbidden = '/forbidden';
+  static const String organization = '/organization';
   static const String profile = '/profile';
   static const String changeOwnPassword = '/profile/password';
   static const String users = '/users';
@@ -65,6 +67,10 @@ GoRouter createRouter(AuthBloc authBloc) {
       GoRoute(
         path: AppRoutes.forbidden,
         builder: (context, state) => const ForbiddenPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.organization,
+        builder: (context, state) => const OrganizationPage(),
       ),
       GoRoute(
         path: AppRoutes.profile,
@@ -114,6 +120,7 @@ const Set<String> _entryPages = {
 /// away from screens that would fail for them.
 const Map<String, Permission> _requiredPermissions = {
   AppRoutes.users: Permission.manageUsers,
+  AppRoutes.organization: Permission.manageOrganization,
 };
 
 /// Where the user should be instead of [location], or null to stay there.

@@ -546,8 +546,103 @@
     "description": "Button on the profile page, and title of the page it opens."
   },
 
-  "profilePasswordChanged": "Şifreniz değiştirildi.",
+   "profilePasswordChanged": "Şifreniz değiştirildi.",
   "@profilePasswordChanged": {
     "description": "Snackbar after the user changed their own password."
+  },
+
+  "homeManageOrganization": "Organizasyonu yönet",
+  "@homeManageOrganization": {
+    "description": "Home page button that opens organization management (admins only)."
+  },
+
+  "organizationTitle": "Organizasyon",
+  "@organizationTitle": {
+    "description": "App bar title of the organization page."
+  },
+
+  "organizationAddDepartment": "Bölüm ekle",
+  "@organizationAddDepartment": {
+    "description": "Button and dialog title for adding a department."
+  },
+
+  "organizationAddLine": "Hat ekle",
+  "@organizationAddLine": {
+    "description": "Menu item and dialog title for adding a line to a department."
+  },
+
+  "organizationAddMachine": "Makine ekle",
+  "@organizationAddMachine": {
+    "description": "Menu item and dialog title for adding a machine to a line."
+  },
+
+  "organizationRename": "Yeniden adlandır",
+  "@organizationRename": {
+    "description": "Menu item and dialog title for renaming a department, line or machine."
+  },
+
+  "organizationName": "Ad",
+  "@organizationName": {
+    "description": "Label of the name field in the add/rename dialog."
+  },
+
+  "organizationMachineCode": "Makine kodu",
+  "@organizationMachineCode": {
+    "description": "Label of the machine code field, e.g. PR-04."
+  },
+
+  "organizationCodeInvalid": "Yalnızca harf, rakam ve tire kullanılabilir.",
+  "@organizationCodeInvalid": {
+    "description": "Shown when a machine code has characters the server does not accept."
+  },
+
+  "organizationLineCount": "{count} hat",
+  "@organizationLineCount": {
+    "description": "How many lines a department has.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "organizationMachineCount": "{count} makine",
+  "@organizationMachineCount": {
+    "description": "How many machines a line has.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "organizationNoPlants": "Henüz fabrika yok.",
+  "@organizationNoPlants": {
+    "description": "Shown when the admin can see no plant."
+  },
+
+  "organizationNoDepartments": "Bu fabrikada henüz bölüm yok.",
+  "@organizationNoDepartments": {
+    "description": "Shown when the plant has no departments."
+  },
+
+  "organizationNoLines": "Henüz hat yok.",
+  "@organizationNoLines": {
+    "description": "Shown inside a department without lines."
+  },
+
+  "organizationNoMachines": "Henüz makine yok.",
+  "@organizationNoMachines": {
+    "description": "Shown inside a line without machines."
+  },
+
+  "organizationSaved": "Kaydedildi.",
+  "@organizationSaved": {
+    "description": "Snackbar after a change to the organization."
+  },
+
+  "organizationConflict": "Bu ad veya kod burada zaten kullanılıyor.",
+  "@organizationConflict": {
+    "description": "Shown on HTTP 409 when a name or machine code is taken."
   }
 }

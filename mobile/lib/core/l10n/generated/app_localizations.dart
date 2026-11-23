@@ -721,6 +721,108 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Şifreniz değiştirildi.'**
   String get profilePasswordChanged;
+
+  /// Home page button that opens organization management (admins only).
+  ///
+  /// In tr, this message translates to:
+  /// **'Organizasyonu yönet'**
+  String get homeManageOrganization;
+
+  /// App bar title of the organization page.
+  ///
+  /// In tr, this message translates to:
+  /// **'Organizasyon'**
+  String get organizationTitle;
+
+  /// Button and dialog title for adding a department.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bölüm ekle'**
+  String get organizationAddDepartment;
+
+  /// Menu item and dialog title for adding a line to a department.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hat ekle'**
+  String get organizationAddLine;
+
+  /// Menu item and dialog title for adding a machine to a line.
+  ///
+  /// In tr, this message translates to:
+  /// **'Makine ekle'**
+  String get organizationAddMachine;
+
+  /// Menu item and dialog title for renaming a department, line or machine.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeniden adlandır'**
+  String get organizationRename;
+
+  /// Label of the name field in the add/rename dialog.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ad'**
+  String get organizationName;
+
+  /// Label of the machine code field, e.g. PR-04.
+  ///
+  /// In tr, this message translates to:
+  /// **'Makine kodu'**
+  String get organizationMachineCode;
+
+  /// Shown when a machine code has characters the server does not accept.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yalnızca harf, rakam ve tire kullanılabilir.'**
+  String get organizationCodeInvalid;
+
+  /// How many lines a department has.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} hat'**
+  String organizationLineCount(int count);
+
+  /// How many machines a line has.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} makine'**
+  String organizationMachineCount(int count);
+
+  /// Shown when the admin can see no plant.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz fabrika yok.'**
+  String get organizationNoPlants;
+
+  /// Shown when the plant has no departments.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu fabrikada henüz bölüm yok.'**
+  String get organizationNoDepartments;
+
+  /// Shown inside a department without lines.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz hat yok.'**
+  String get organizationNoLines;
+
+  /// Shown inside a line without machines.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz makine yok.'**
+  String get organizationNoMachines;
+
+  /// Snackbar after a change to the organization.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydedildi.'**
+  String get organizationSaved;
+
+  /// Shown on HTTP 409 when a name or machine code is taken.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu ad veya kod burada zaten kullanılıyor.'**
+  String get organizationConflict;
 }
 
 class _AppLocalizationsDelegate

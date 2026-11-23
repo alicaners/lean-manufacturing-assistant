@@ -34,6 +34,8 @@ import 'package:lean_assistant/features/admin/presentation/create_user_cubit.dar
     as _i705;
 import 'package:lean_assistant/features/admin/presentation/edit_access_cubit.dart'
     as _i571;
+import 'package:lean_assistant/features/admin/presentation/organization_cubit.dart'
+    as _i972;
 import 'package:lean_assistant/features/admin/presentation/user_detail_cubit.dart'
     as _i503;
 import 'package:lean_assistant/features/admin/presentation/user_list_cubit.dart'
@@ -113,6 +115,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i210.AccessOptionsCubit>(
       () => _i210.AccessOptionsCubit(gh<_i188.OrganizationRepository>()),
+    );
+    gh.factory<_i972.OrganizationCubit>(
+      () => _i972.OrganizationCubit(gh<_i188.OrganizationRepository>()),
     );
     gh.lazySingleton<_i90.UserAdminRepository>(
       () => _i449.ApiUserAdminRepository(gh<_i150.ApiClient>()),

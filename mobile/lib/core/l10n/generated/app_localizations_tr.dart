@@ -349,4 +349,61 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get profilePasswordChanged => 'Şifreniz değiştirildi.';
+
+  @override
+  String get homeManageOrganization => 'Organizasyonu yönet';
+
+  @override
+  String get organizationTitle => 'Organizasyon';
+
+  @override
+  String get organizationAddDepartment => 'Bölüm ekle';
+
+  @override
+  String get organizationAddLine => 'Hat ekle';
+
+  @override
+  String get organizationAddMachine => 'Makine ekle';
+
+  @override
+  String get organizationRename => 'Yeniden adlandır';
+
+  @override
+  String get organizationName => 'Ad';
+
+  @override
+  String get organizationMachineCode => 'Makine kodu';
+
+  @override
+  String get organizationCodeInvalid =>
+      'Yalnızca harf, rakam ve tire kullanılabilir.';
+
+  @override
+  String organizationLineCount(int count) {
+    return '$count hat';
+  }
+
+  @override
+  String organizationMachineCount(int count) {
+    return '$count makine';
+  }
+
+  @override
+  String get organizationNoPlants => 'Henüz fabrika yok.';
+
+  @override
+  String get organizationNoDepartments => 'Bu fabrikada henüz bölüm yok.';
+
+  @override
+  String get organizationNoLines => 'Henüz hat yok.';
+
+  @override
+  String get organizationNoMachines => 'Henüz makine yok.';
+
+  @override
+  String get organizationSaved => 'Kaydedildi.';
+
+  @override
+  String get organizationConflict =>
+      'Bu ad veya kod burada zaten kullanılıyor.';
 }

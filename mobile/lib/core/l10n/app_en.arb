@@ -103,5 +103,22 @@
   "profilePasswordSection": "Password",
   "profilePasswordInfo": "Changing your password closes your sessions on other devices; you stay signed in on this one.",
   "profileChangePassword": "Change my password",
-  "profilePasswordChanged": "Your password was changed."
+    "profilePasswordChanged": "Your password was changed.",
+  "homeManageOrganization": "Manage organization",
+  "organizationTitle": "Organization",
+  "organizationAddDepartment": "Add department",
+  "organizationAddLine": "Add line",
+  "organizationAddMachine": "Add machine",
+  "organizationRename": "Rename",
+  "organizationName": "Name",
+  "organizationMachineCode": "Machine code",
+  "organizationCodeInvalid": "Only letters, digits and hyphens are allowed.",
+  "organizationLineCount": "{count, plural, =1{1 line} other{{count} lines}}",
+  "organizationMachineCount": "{count, plural, =1{1 machine} other{{count} machines}}",
+  "organizationNoPlants": "There are no plants yet.",
+  "organizationNoDepartments": "This plant has no departments yet.",
+  "organizationNoLines": "No lines yet.",
+  "organizationNoMachines": "No machines yet.",
+  "organizationSaved": "Saved.",
+  "organizationConflict": "This name or code is already in use here."
 }

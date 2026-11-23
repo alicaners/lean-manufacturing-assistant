@@ -52,11 +52,20 @@ class HomePage extends StatelessWidget {
                 Text(l10n.homeRole(user.role.label(l10n))),
                 const SizedBox(height: 16),
                 // Only roles that may manage users see the way in.
+                // Only roles that may manage users see the way in.
                 if (user.role.can(Permission.manageUsers)) ...[
                   OutlinedButton.icon(
                     onPressed: () => context.push(AppRoutes.users),
                     icon: const Icon(Icons.manage_accounts_outlined),
                     label: Text(l10n.homeManageUsers),
+                  ),
+                  const SizedBox(height: 8),
+                ],
+                if (user.role.can(Permission.manageOrganization)) ...[
+                  OutlinedButton.icon(
+                    onPressed: () => context.push(AppRoutes.organization),
+                    icon: const Icon(Icons.account_tree_outlined),
+                    label: Text(l10n.homeManageOrganization),
                   ),
                   const SizedBox(height: 16),
                 ],

@@ -3,6 +3,7 @@ import 'package:lean_assistant/core/error/result.dart';
 import 'package:lean_assistant/core/network/api_client.dart';
 import 'package:lean_assistant/features/admin/data/api_organization_repository.dart';
 import 'package:lean_assistant/features/admin/domain/plant.dart';
+import 'package:lean_assistant/features/admin/domain/plant_tree.dart';
 
 import '../../../helpers/fake_json_server.dart';
 
@@ -42,5 +43,47 @@ void main() {
       ],
       ['Pres · Pres Hattı 1', 'Pres · Pres Hattı 2', 'Montaj · Montaj Hattı'],
     );
+  });
+
+  test('reads a plant\'s whole tree', () async {
+    final server = FakeJsonServer(
+      200,
+      '{"id":"p-1","name":"İzmir Fabrikası","code":"DEMO-IZM","departments":['
+      '{"id":"d-1","name":"Pres","lines":['
+      '{"id":"l-1","name":"Pres Hattı 1","machines":['
+      '{"id":"m-1","name":"Pres 1","code":"PR-01"}]}]}]}',
+    );
+
+    final result = await ApiOrganizationRepository(ApiClient(dioFor(server)))
+        .tree('p-1');
+
+    final tree = (result as Ok<PlantTree>).value;
+    final line = tree.departments.single.lines.single;
+    expect(tree.code, 'DEMO-IZM');
+    expect(line.name, 'Pres Hattı 1');
+    expect(line.machines.single.code, 'PR-01');
+  });
+
+  test('adds a machine to a line with its code', () async {
+    final server = FakeJsonServer(201, '{}');
+
+    final result = await ApiOrganizationRepository(ApiClient(dioFor(server)))
+        .addMachine('l-1', name: 'Pres 4', code: 'PR-04');
+
+    expect(server.requests.single.method, 'POST');
+    expect(server.requests.single.path, '/api/lines/l-1/machines');
+    expect(server.requests.single.data, {'name': 'Pres 4', 'code': 'PR-04'});
+    expect(result, isA<Ok<void>>());
+  });
+
+  test('renames a line', () async {
+    final server = FakeJsonServer(200, '{}');
+
+    await ApiOrganizationRepository(ApiClient(dioFor(server)))
+        .rename(TreeNodeKind.line, 'l-1', 'Pres Hattı A');
+
+    expect(server.requests.single.method, 'PUT');
+    expect(server.requests.single.path, '/api/lines/l-1');
+    expect(server.requests.single.data, {'name': 'Pres Hattı A'});
   });
 }
